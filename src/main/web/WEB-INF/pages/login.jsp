@@ -7,6 +7,10 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -25,18 +29,19 @@
 </head>
 
 <body class="text-center">
-<form class="form-signin">
+<form method="POST" action="${contextPath}/login" class="form-signin">
   <img class="mb-4" src="https://getbootstrap.com/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72">
   <h1 class="h3 mb-3 font-weight-normal">Please sign in or log in</h1>
   <label for="inputEmail" class="sr-only">Email address</label>
-  <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+  <input name="username" type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
   <label for="inputPassword" class="sr-only">Password</label>
-  <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+  <input name="password" type="password" id="inputPassword" class="form-control" placeholder="Password" required>
   <%--<div class="checkbox mb-3">--%>
     <%--<label>--%>
       <%--<input type="checkbox" value="remember-me"> Remember me--%>
     <%--</label>--%>
   <%--</div>--%>
+  <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
   <button class="btn btn-lg btn-primary btn-block" type="submit">Log in</button><br>
   <%--<button class="btn btn-lg btn-primary btn-block" type="submit">--%>
     <%--<a class="btn btn-lg btn-primary btn-block" href="<c:url value="/registration"/>" target="_blank">Sign in</a>--%>

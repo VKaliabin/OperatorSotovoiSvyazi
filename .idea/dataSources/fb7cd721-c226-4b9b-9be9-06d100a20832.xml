@@ -976,7 +976,7 @@
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="245" parent="230" name="E-MAIL">
+    <column id="245" parent="230" name="EMAIL">
       <Position>7</Position>
       <DataType>varchar(255)|0</DataType>
       <NotNull>1</NotNull>
@@ -993,136 +993,106 @@
       <DataType>tinyint(4)|0</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <key id="248" parent="230" name="PRIMARY">
+    <index id="248" parent="230" name="E-MAIL_UNIQUE">
+      <ColNames>EMAIL</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <index id="249" parent="230" name="PASSWORD_UNIQUE">
+      <ColNames>PASSWORD</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <key id="250" parent="230" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>idCLIENT</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="249" parent="231" name="idCOMPATIBLE_OPTION">
+    <key id="251" parent="230" name="E-MAIL_UNIQUE">
+      <ColNames>EMAIL</ColNames>
+      <UnderlyingIndexName>E-MAIL_UNIQUE</UnderlyingIndexName>
+    </key>
+    <key id="252" parent="230" name="PASSWORD_UNIQUE">
+      <ColNames>PASSWORD</ColNames>
+      <UnderlyingIndexName>PASSWORD_UNIQUE</UnderlyingIndexName>
+    </key>
+    <column id="253" parent="231" name="idCOMPATIBLE_OPTION">
       <Position>1</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="254" parent="231" name="idOPITON">
+      <Position>2</Position>
       <DataType>int(11)|0</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <key id="250" parent="231" name="PRIMARY">
+    <index id="255" parent="231" name="OPTION_CO_idx">
+      <ColNames>idOPITON</ColNames>
+    </index>
+    <key id="256" parent="231" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>idCOMPATIBLE_OPTION</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="251" parent="232" name="idCONTRACT">
+    <foreign-key id="257" parent="231" name="OPTION_CO">
+      <ColNames>idOPITON</ColNames>
+      <RefSchemaName>mydb</RefSchemaName>
+      <RefTableName>option</RefTableName>
+      <RefColNames>idOPTION</RefColNames>
+      <OnUpdate>cascade</OnUpdate>
+      <OnDelete>cascade</OnDelete>
+    </foreign-key>
+    <column id="258" parent="232" name="idCONTRACT">
       <Position>1</Position>
       <DataType>int(11)|0</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="252" parent="232" name="BLOCKED_CONTRACT">
+    <column id="259" parent="232" name="CONTRACT_NUMBER">
       <Position>2</Position>
-      <DataType>tinyint(4)|0</DataType>
-      <ColumnKind>normal</ColumnKind>
-    </column>
-    <column id="253" parent="232" name="CONTRACT_NUMBER">
-      <Position>3</Position>
-      <DataType>varchar(255)|0</DataType>
-      <ColumnKind>normal</ColumnKind>
-    </column>
-    <column id="254" parent="232" name="idCLIENT">
-      <Position>4</Position>
       <DataType>int(11)|0</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="255" parent="232" name="idTARIFF">
+    <column id="260" parent="232" name="idTARIFF">
+      <Position>3</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="261" parent="232" name="BLOCKED_CONTRACT">
+      <Position>4</Position>
+      <DataType>tinyint(4)|0</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="262" parent="232" name="idCLIENT">
       <Position>5</Position>
       <DataType>int(11)|0</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <index id="256" parent="232" name="UK_olrj0irpqqe5huduu570p406t">
-      <ColNames>idTARIFF</ColNames>
+    <index id="263" parent="232" name="CONTRACT_NUMBER_UNIQUE">
+      <ColNames>CONTRACT_NUMBER</ColNames>
       <Unique>1</Unique>
     </index>
-    <key id="257" parent="232" name="PRIMARY">
+    <index id="264" parent="232" name="CONTRACT_TARIFF_idx">
+      <ColNames>idTARIFF</ColNames>
+    </index>
+    <index id="265" parent="232" name="CONTRACT_CLIENT_idx">
+      <ColNames>idCLIENT</ColNames>
+    </index>
+    <key id="266" parent="232" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>idCONTRACT</ColNames>
       <Primary>1</Primary>
     </key>
-    <key id="258" parent="232" name="UK_olrj0irpqqe5huduu570p406t">
-      <ColNames>idTARIFF</ColNames>
-      <UnderlyingIndexName>UK_olrj0irpqqe5huduu570p406t</UnderlyingIndexName>
+    <key id="267" parent="232" name="CONTRACT_NUMBER_UNIQUE">
+      <ColNames>CONTRACT_NUMBER</ColNames>
+      <UnderlyingIndexName>CONTRACT_NUMBER_UNIQUE</UnderlyingIndexName>
     </key>
-    <foreign-key id="259" parent="232" name="FK_olrj0irpqqe5huduu570p406t">
-      <ColNames>idTARIFF</ColNames>
-      <RefSchemaName>mydb</RefSchemaName>
-      <RefTableName>tariff</RefTableName>
-      <RefColNames>idTARIFF</RefColNames>
-    </foreign-key>
-    <column id="260" parent="233" name="idINCOMPATIBLE_OPTION">
-      <Position>1</Position>
-      <DataType>int(11)|0</DataType>
-      <NotNull>1</NotNull>
-      <SequenceIdentity>1</SequenceIdentity>
-      <ColumnKind>normal</ColumnKind>
-    </column>
-    <column id="261" parent="233" name="idOPTION">
-      <Position>2</Position>
-      <DataType>int(11)|0</DataType>
-      <NotNull>1</NotNull>
-      <ColumnKind>normal</ColumnKind>
-    </column>
-    <index id="262" parent="233" name="UK_dfv5k160avhckhfk52rv5w264">
-      <ColNames>idOPTION</ColNames>
-      <Unique>1</Unique>
-    </index>
-    <key id="263" parent="233" name="PRIMARY">
-      <NameSurrogate>1</NameSurrogate>
-      <ColNames>idINCOMPATIBLE_OPTION</ColNames>
-      <Primary>1</Primary>
-    </key>
-    <key id="264" parent="233" name="UK_dfv5k160avhckhfk52rv5w264">
-      <ColNames>idOPTION</ColNames>
-      <UnderlyingIndexName>UK_dfv5k160avhckhfk52rv5w264</UnderlyingIndexName>
-    </key>
-    <column id="265" parent="234" name="idOPTION">
-      <Position>1</Position>
-      <DataType>int(11)|0</DataType>
-      <NotNull>1</NotNull>
-      <SequenceIdentity>1</SequenceIdentity>
-      <ColumnKind>normal</ColumnKind>
-    </column>
-    <column id="266" parent="234" name="NAME_OPTION">
-      <Position>2</Position>
-      <DataType>varchar(100)|0</DataType>
-      <NotNull>1</NotNull>
-      <ColumnKind>normal</ColumnKind>
-    </column>
-    <column id="267" parent="234" name="PRICE_OPTION">
-      <Position>3</Position>
-      <DataType>int(11)|0</DataType>
-      <NotNull>1</NotNull>
-      <ColumnKind>normal</ColumnKind>
-    </column>
-    <column id="268" parent="234" name="CONNECTION_COST_OPTION">
-      <Position>4</Position>
-      <DataType>int(11)|0</DataType>
-      <NotNull>1</NotNull>
-      <ColumnKind>normal</ColumnKind>
-    </column>
-    <column id="269" parent="234" name="idTARIFF">
-      <Position>5</Position>
-      <DataType>int(11)|0</DataType>
-      <NotNull>1</NotNull>
-      <ColumnKind>normal</ColumnKind>
-    </column>
-    <index id="270" parent="234" name="OPTION_TARIFF_idx">
-      <ColNames>idTARIFF</ColNames>
-    </index>
-    <key id="271" parent="234" name="PRIMARY">
-      <NameSurrogate>1</NameSurrogate>
-      <ColNames>idOPTION</ColNames>
-      <Primary>1</Primary>
-    </key>
-    <foreign-key id="272" parent="234" name="OPTION_TARIFF">
+    <foreign-key id="268" parent="232" name="CONTRACT_TARIFF">
       <ColNames>idTARIFF</ColNames>
       <RefSchemaName>mydb</RefSchemaName>
       <RefTableName>tariff</RefTableName>
@@ -1130,83 +1100,187 @@
       <OnUpdate>cascade</OnUpdate>
       <OnDelete>cascade</OnDelete>
     </foreign-key>
-    <column id="273" parent="235" name="idPAIR_OPTION">
-      <Position>1</Position>
-      <DataType>int(11)|0</DataType>
-      <NotNull>1</NotNull>
-      <ColumnKind>normal</ColumnKind>
-    </column>
-    <key id="274" parent="235" name="PRIMARY">
-      <NameSurrogate>1</NameSurrogate>
-      <ColNames>idPAIR_OPTION</ColNames>
-      <Primary>1</Primary>
-    </key>
-    <column id="275" parent="236" name="idROLES">
+    <foreign-key id="269" parent="232" name="CONTRACT_CLIENT">
+      <ColNames>idCLIENT</ColNames>
+      <RefSchemaName>mydb</RefSchemaName>
+      <RefTableName>client</RefTableName>
+      <RefColNames>idCLIENT</RefColNames>
+      <OnUpdate>cascade</OnUpdate>
+      <OnDelete>cascade</OnDelete>
+    </foreign-key>
+    <column id="270" parent="233" name="idINCOMPATIBLE_OPTION">
       <Position>1</Position>
       <DataType>int(11)|0</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="276" parent="236" name="TYPE_USER">
+    <column id="271" parent="233" name="idOPTION">
       <Position>2</Position>
-      <DataType>varchar(255)|0</DataType>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <key id="277" parent="236" name="PRIMARY">
+    <index id="272" parent="233" name="OPTION_ICO_idx">
+      <ColNames>idOPTION</ColNames>
+    </index>
+    <key id="273" parent="233" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
-      <ColNames>idROLES</ColNames>
+      <ColNames>idINCOMPATIBLE_OPTION</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="278" parent="237" name="idTARIFF">
+    <foreign-key id="274" parent="233" name="OPTION_ICO">
+      <ColNames>idOPTION</ColNames>
+      <RefSchemaName>mydb</RefSchemaName>
+      <RefTableName>option</RefTableName>
+      <RefColNames>idOPTION</RefColNames>
+      <OnUpdate>cascade</OnUpdate>
+      <OnDelete>cascade</OnDelete>
+    </foreign-key>
+    <column id="275" parent="234" name="idOPTION">
       <Position>1</Position>
       <DataType>int(11)|0</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="279" parent="237" name="NAME_TARIFF">
+    <column id="276" parent="234" name="NAME_OPTION">
       <Position>2</Position>
       <DataType>varchar(100)|0</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="280" parent="237" name="PRICE_TARIFF">
+    <column id="277" parent="234" name="PRICE_OPTION">
       <Position>3</Position>
       <DataType>int(11)|0</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <key id="281" parent="237" name="PRIMARY">
-      <NameSurrogate>1</NameSurrogate>
+    <column id="278" parent="234" name="CONNECTION_COST_OPTION">
+      <Position>4</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="279" parent="234" name="idTARIFF">
+      <Position>5</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <index id="280" parent="234" name="OPTION_TARIFF_idx">
       <ColNames>idTARIFF</ColNames>
+    </index>
+    <key id="281" parent="234" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>idOPTION</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="282" parent="238" name="idUSER">
+    <foreign-key id="282" parent="234" name="OPTION_TARIFF">
+      <ColNames>idTARIFF</ColNames>
+      <RefSchemaName>mydb</RefSchemaName>
+      <RefTableName>tariff</RefTableName>
+      <RefColNames>idTARIFF</RefColNames>
+      <OnUpdate>cascade</OnUpdate>
+      <OnDelete>cascade</OnDelete>
+    </foreign-key>
+    <column id="283" parent="235" name="idPAIR_OPTION">
       <Position>1</Position>
       <DataType>int(11)|0</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="283" parent="238" name="idROLE">
+    <column id="284" parent="235" name="idCOMPATIBLE_OPTION">
       <Position>2</Position>
       <DataType>int(11)|0</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <index id="284" parent="238" name="FK_Client_idx">
+    <index id="285" parent="235" name="CO_PO_idx">
+      <ColNames>idCOMPATIBLE_OPTION</ColNames>
+    </index>
+    <key id="286" parent="235" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>idPAIR_OPTION</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <foreign-key id="287" parent="235" name="CO_PO">
+      <ColNames>idCOMPATIBLE_OPTION</ColNames>
+      <RefSchemaName>mydb</RefSchemaName>
+      <RefTableName>compatible_option</RefTableName>
+      <RefColNames>idCOMPATIBLE_OPTION</RefColNames>
+      <OnUpdate>cascade</OnUpdate>
+      <OnDelete>cascade</OnDelete>
+    </foreign-key>
+    <column id="288" parent="236" name="idROLES">
+      <Position>1</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="289" parent="236" name="TYPE_USER">
+      <Position>2</Position>
+      <DataType>varchar(50)|0</DataType>
+      <NotNull>1</NotNull>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <key id="290" parent="236" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>idROLES</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="291" parent="237" name="idTARIFF">
+      <Position>1</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="292" parent="237" name="NAME_TARIFF">
+      <Position>2</Position>
+      <DataType>varchar(100)|0</DataType>
+      <NotNull>1</NotNull>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="293" parent="237" name="PRICE_TARIFF">
+      <Position>3</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <key id="294" parent="237" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>idTARIFF</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="295" parent="238" name="idUSER">
+      <Position>1</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="296" parent="238" name="idROLE">
+      <Position>2</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <index id="297" parent="238" name="FK_Client_idx">
       <ColNames>idUSER</ColNames>
     </index>
-    <index id="285" parent="238" name="FK_Role_idx">
+    <index id="298" parent="238" name="FK_Role_idx">
       <ColNames>idROLE</ColNames>
     </index>
-    <foreign-key id="286" parent="238" name="FK_Client">
+    <foreign-key id="299" parent="238" name="FK_Client">
       <ColNames>idUSER</ColNames>
       <RefSchemaName>mydb</RefSchemaName>
       <RefTableName>client</RefTableName>
       <RefColNames>idCLIENT</RefColNames>
+      <OnUpdate>cascade</OnUpdate>
+      <OnDelete>cascade</OnDelete>
     </foreign-key>
-    <foreign-key id="287" parent="238" name="FK_Role">
+    <foreign-key id="300" parent="238" name="FK_Role">
       <ColNames>idROLE</ColNames>
       <RefSchemaName>mydb</RefSchemaName>
       <RefTableName>roles</RefTableName>

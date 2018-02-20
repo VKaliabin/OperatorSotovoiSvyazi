@@ -7,13 +7,15 @@
 		http://www.springframework.org/schema/security
 		http://www.springframework.org/schema/security/spring-security.xsd">
 
+    <!--<beans:bean id="clientValidator" class="project.validator.ClientValidator" />-->
+
     <http auto-config="true">
         <intercept-url pattern="/" access="hasAnyRole('user', 'admin')"/>
-        <intercept-url pattern="/welcome" access="hasAnyRole('user', 'admin')"/>
+        <intercept-url pattern="/welcome" access="hasRole('user')"/>
         <intercept-url pattern="/admin" access="hasRole('admin')"/>
 
         <form-login login-page="/login" default-target-url="/welcome" authentication-failure-url="/login?error"
-                    username-parameter="eMail" password-parameter="password"/>
+                    username-parameter="emailOfEmail" password-parameter="password"/>
 
         <logout logout-success-url="/login?logout"/>
     </http>

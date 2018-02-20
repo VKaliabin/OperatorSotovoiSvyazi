@@ -8,7 +8,7 @@ import java.util.Set;
 public class RoleEntity {
     @Id
     @Column(name = "idROLES")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int idRoles;
 
     @Column(name = "TYPE_USER")

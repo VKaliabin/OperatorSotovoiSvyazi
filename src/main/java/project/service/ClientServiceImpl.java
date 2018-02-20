@@ -9,6 +9,7 @@ import project.dao.RoleDao;
 import project.model.ClientEntity;
 import project.model.RoleEntity;
 
+import javax.management.relation.Role;
 import javax.management.relation.RoleInfoNotFoundException;
 import java.util.HashSet;
 import java.util.List;
@@ -28,41 +29,37 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public void save(ClientEntity client) {
-       client.setPassword(bCryptPasswordEncoder.encode(client.getPassword()));
-//        client.setPassword(client.getPassword());
-        Set<RoleEntity> roles = new HashSet<>();
-        roles.add(roleDao.getOne(1));
-        client.setRoles(roles);
+        client.setPassword(bCryptPasswordEncoder.encode(client.getPassword()));
+        client.setRoles(new HashSet<>(roleDao.findAll()));
         clientDao.save(client);
     }
-
     @Override
-    public ClientEntity findByClientEmail(String clientEmail) {
-        return clientDao.findByClientEmail(clientEmail);
+    public ClientEntity findByEMail(String clientEmail) {
+        return clientDao.findByEmailOfEmail(clientEmail);
     }
 
-    @Override
-    public void addClient(ClientEntity client) {
-        clientDao.addClient(client);
-    }
-
-    @Override
-    public void updateClient(ClientEntity client) {
-        clientDao.updateClient(client);
-    }
-
-    @Override
-    public void removeClient(int id) {
-        clientDao.removeClient(id);
-    }
-
-    @Override
-    public ClientEntity getClientId(int id) {
-        return clientDao.getClientId(id);
-    }
-
-    @Override
-    public List<ClientEntity> listClients() {
-        return clientDao.listClients();
-    }
+//    @Override
+//    public void addClient(ClientEntity client) {
+//        clientDao.addClient(client);
+//    }
+//
+//    @Override
+//    public void updateClient(ClientEntity client) {
+//        clientDao.updateClient(client);
+//    }
+//
+//    @Override
+//    public void removeClient(int id) {
+//        clientDao.removeClient(id);
+//    }
+//
+//    @Override
+//    public ClientEntity getClientId(int id) {
+//        return clientDao.getClientId(id);
+//    }
+//
+//    @Override
+//    public List<ClientEntity> listClients() {
+//        return clientDao.listClients();
+//    }
 }

@@ -9,7 +9,7 @@ import java.util.Set;
 public class ClientEntity {
     @Id
     @Column(name = "idCLIENT")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int idClient;
 
     @Column(name = "NAME")
@@ -27,8 +27,8 @@ public class ClientEntity {
     @Column(name = "ADRESS")
     private String adress;
 
-    @Column(name = "E-MAIL")
-    private String eMail;
+    @Column(name = "EMAIL")
+    private String emailOfEmail;
 
     @Column(name = "PASSWORD")
     private String password;
@@ -125,11 +125,11 @@ public class ClientEntity {
 
 
     public String geteMail() {
-        return eMail;
+        return emailOfEmail;
     }
 
     public void seteMail(String eMail) {
-        this.eMail = eMail;
+        this.emailOfEmail = eMail;
     }
 
 
@@ -163,7 +163,7 @@ public class ClientEntity {
         if (dateOfBirth != null ? !dateOfBirth.equals(that.dateOfBirth) : that.dateOfBirth != null) return false;
         if (passportData != null ? !passportData.equals(that.passportData) : that.passportData != null) return false;
         if (adress != null ? !adress.equals(that.adress) : that.adress != null) return false;
-        if (eMail != null ? !eMail.equals(that.eMail) : that.eMail != null) return false;
+        if (emailOfEmail != null ? !emailOfEmail.equals(that.emailOfEmail) : that.emailOfEmail != null) return false;
         if (password != null ? !password.equals(that.password) : that.password != null) return false;
         if (existingClient != null ? !existingClient.equals(that.existingClient) : that.existingClient != null)
             return false;
@@ -179,7 +179,7 @@ public class ClientEntity {
         result = 31 * result + (dateOfBirth != null ? dateOfBirth.hashCode() : 0);
         result = 31 * result + (passportData != null ? passportData.hashCode() : 0);
         result = 31 * result + (adress != null ? adress.hashCode() : 0);
-        result = 31 * result + (eMail != null ? eMail.hashCode() : 0);
+        result = 31 * result + (emailOfEmail != null ? emailOfEmail.hashCode() : 0);
         result = 31 * result + (password != null ? password.hashCode() : 0);
         result = 31 * result + (existingClient != null ? existingClient.hashCode() : 0);
         return result;

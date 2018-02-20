@@ -1,12 +1,13 @@
 package project.validator;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 import project.model.ClientEntity;
 import project.service.ClientService;
-
+@Component
 public class ClientValidator implements Validator {
     @Autowired
     private ClientService clientService;
@@ -19,16 +20,16 @@ public class ClientValidator implements Validator {
     @Override
     public void validate(Object o, Errors errors) {
         ClientEntity client = (ClientEntity) o;
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "eMail", "Required");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "eMail", "NotEmpty");
 
 //        if (user.getUsername().length() < 8 || user.getUsername().length() > 32) {
 //            errors.rejectValue("eMail", "Size.userForm.username");
 //        }
-        if (clientService.findByClientEmail(client.geteMail()) != null) {
+        if (clientService.findByEMail(client.geteMail()) != null) {
             errors.rejectValue("eMail", "Duplicate.userForm.username");
         }
 
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "Required");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "NotEmpty");
         if (client.getPassword().length() < 4) {
             errors.rejectValue("password", "Size.userForm.password");
         }

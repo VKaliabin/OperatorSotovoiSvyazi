@@ -8,6 +8,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -18,7 +19,7 @@ public class SecurityServiceImpl implements SecurityService{
     private AuthenticationManager authenticationManager;
 
     @Autowired
-    private ClientDetailServiceImpl clientDetailService;
+    private UserDetailsService clientDetailService;
 
     @Override
     public String findLoggedInUsername() {
@@ -39,9 +40,13 @@ public class SecurityServiceImpl implements SecurityService{
 
         if (authenticationToken.isAuthenticated()) {
             SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+            logger.debug("current user role = {}", SecurityContextHolder.getContext().getAuthentication().getAuthorities());
 
             logger.debug(String.format("Successfully %s auto logged in", clientEmail));
         }
     }
+
+
+
 }
 

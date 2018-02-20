@@ -24,9 +24,9 @@ public class ClientDetailServiceImpl implements UserDetailsService {
     private ClientDao clientDao;
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String clientEmail) throws UsernameNotFoundException {
-        ClientEntity client = clientDao.findByClientEmail(clientEmail);
+        ClientEntity client = clientDao.findByEmailOfEmail(clientEmail);
 
         Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
 

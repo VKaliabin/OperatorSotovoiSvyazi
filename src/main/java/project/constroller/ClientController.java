@@ -1,6 +1,8 @@
 package project.constroller;
 
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,6 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 import project.model.ClientEntity;
 import project.service.ClientService;
 import project.service.SecurityService;
+import project.service.SecurityServiceImpl;
 import project.validator.ClientValidator;
 
 @Controller
@@ -25,25 +28,33 @@ public class ClientController {
     private SecurityService securityService;
     @Autowired
     private ClientValidator clientValidator;
-
+    private static final Logger logger = LoggerFactory.getLogger(ClientController.class);
     @RequestMapping("addClient")
     public ModelAndView addClient(@ModelAttribute ClientEntity client){
         return new ModelAndView("index");
     }
+
     @RequestMapping("removeClient")
     public ModelAndView removeClient(@PathVariable("id") int id){
-        clientService.removeClient(id);
+//        clientService.removeClient(id);
         return new ModelAndView();
     }
 
     @RequestMapping(value = "/registration", method = RequestMethod.GET)
-    public ModelAndView registrationClient(){
-//        clientService.removeClient(id);
-        return new ModelAndView("registration");
+    public String registration(Model model) {
+        model.addAttribute("userForm", new ClientEntity());
+//        ModelAndView modelAndView = new ModelAndView();
+//        modelAndView.addObject("userForm", new ClientEntity());
+        return "registration";
     }
 
     @RequestMapping(value = "/registration", method = RequestMethod.POST)
     public String registration(@ModelAttribute("userForm") ClientEntity userForm, BindingResult bindingResult, Model model) {
+
+        logger.debug(userForm.toString());
+//        System.out.println(userForm.toString());
+        logger.debug("/////////////////////////////////////////////////");
+
         clientValidator.validate(userForm, bindingResult);
 
         if (bindingResult.hasErrors()) {
@@ -54,7 +65,8 @@ public class ClientController {
 
         securityService.autoLogin(userForm.geteMail(), userForm.getConfirmPassword());
 
-        return "redirect:/home";
+
+        return "redirect:/welcome";
     }
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String login(Model model, String error, String logout) {
@@ -68,6 +80,16 @@ public class ClientController {
 
         return "login";
     }
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    public String login(String username, String password) {
+        System.out.println(username);
+        System.out.println(password);
+        return "login";
+    }
+
+
+
+
     @RequestMapping(value = {"/", "/welcome"}, method = RequestMethod.GET)
     public String welcome(Model model) {
         return "welcome";

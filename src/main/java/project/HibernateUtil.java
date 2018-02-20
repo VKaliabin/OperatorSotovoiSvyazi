@@ -31,6 +31,11 @@ public class HibernateUtil {
         delete(entity);
     }
 
+    public ClientEntity findByEmail(String email){
+       Session session = sessionFactory.getCurrentSession();
+        return (ClientEntity) session.get(ClientEntity.class, email);
+    }
+
     @SuppressWarnings("unchecked")
     public <T> List<T> fetchAll(Class<T> entityClass) {
         return sessionFactory.getCurrentSession().createQuery(" FROM "+entityClass.getName()).list();

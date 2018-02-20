@@ -7,12 +7,10 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="Operator" />
-        <module name="OperatorSotovoiSvyazi" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="Operator" target="1.8" />
-      <module name="OperatorSotovoiSvyazi" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>
