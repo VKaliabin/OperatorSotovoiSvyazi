@@ -72,11 +72,11 @@
                     </div>
                 </spring:bind>
 
-                <spring:bind path="eMail">
+                <spring:bind path="emailOfEmail">
                     <div class="mb-3">
-                        <label for="email">Email</label>
-                        <form:input type="text" class="form-control" id="email" placeholder="Email"
-                                    path="eMail" autofocus="true"/>
+                        <label for="emailOfEmail">Email</label>
+                        <form:input type="text" class="form-control" id="emailOfEmail" placeholder="Email"
+                                    path="emailOfEmail" autofocus="true"/>
                     </div>
                 </spring:bind>
 
@@ -90,16 +90,19 @@
 
                 <spring:bind path="password">
                     <div class="mb-3 ${status.error ? 'has-error' : ''}">
-                        <form:input type="password" path="password" class="form-control" placeholder="Password"></form:input>
-                        <form:errors path="password"></form:errors>
+                        <label for="password"> Password</label>
+                        <form:input type="password" path="password" class="form-control" placeholder="Password"
+                        id="password"/>
+                        <form:errors path="password"/>
                     </div>
                 </spring:bind>
 
                 <spring:bind path="confirmPassword">
                     <div class="form-group ${status.error ? 'has-error' : ''}">
-                        <form:input type="password" path="confirmPassword" class="form-control"
-                                    placeholder="Confirm your password"></form:input>
-                        <form:errors path="confirmPassword"></form:errors>
+                        <label for="confirmpassword">Confirm passord</label>
+                        <form:input type="password" path="confirmPassword" class="form-control" id ="confirmpassword"
+                                    placeholder="Confirm your password"/>
+                        <form:errors path="confirmPassword"/>
                     </div>
                 </spring:bind>
 
@@ -108,7 +111,8 @@
                 <div id="datetimepicker4" class="input-append">
                     <spring:bind path="dateOfBirth">
                     <div class="input-group" style="width: 30%;">
-                        <form:input class="form-control" data-format="yyyy-MM-dd" type="text" id="birthday" path="dateOfBirth"></form:input>
+                        <form:input class="form-control" data-format="yyyy-MM-dd" type="text" id="birthday" path="dateOfBirth"
+                        placeholder="2010-10-10"/>
                         <span class=" add-on input-group-addon" id="basic-addon1">
                                 <i data-time-icon="icon-time" data-date-icon="icon-calendar" class="fa fa-calendar"></i>
                             </span>

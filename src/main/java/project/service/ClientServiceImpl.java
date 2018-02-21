@@ -11,6 +11,7 @@ import project.model.RoleEntity;
 
 import javax.management.relation.Role;
 import javax.management.relation.RoleInfoNotFoundException;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -30,7 +31,11 @@ public class ClientServiceImpl implements ClientService {
     @Override
     public void save(ClientEntity client) {
         client.setPassword(bCryptPasswordEncoder.encode(client.getPassword()));
-        client.setRoles(new HashSet<>(roleDao.findAll()));
+        RoleEntity roleEntity = new RoleEntity();
+        roleEntity.setIdRoles(2);
+        roleEntity.setTypeUser("ROLE_USER");
+//        roleDao.getOne(2);
+        client.setRoles(new HashSet<>(Arrays.asList(roleEntity)));
         clientDao.save(client);
     }
     @Override

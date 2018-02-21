@@ -124,14 +124,13 @@ public class ClientEntity {
     }
 
 
-    public String geteMail() {
+    public String getEmailOfEmail() {
         return emailOfEmail;
     }
 
-    public void seteMail(String eMail) {
-        this.emailOfEmail = eMail;
+    public void setEmailOfEmail(String emailOfEmail) {
+        this.emailOfEmail = emailOfEmail;
     }
-
 
     public String getPassword() {
         return password;

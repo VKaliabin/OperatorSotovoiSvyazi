@@ -20,16 +20,16 @@ public class ClientValidator implements Validator {
     @Override
     public void validate(Object o, Errors errors) {
         ClientEntity client = (ClientEntity) o;
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "eMail", "NotEmpty");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "emailOfEmail", "Required");
 
 //        if (user.getUsername().length() < 8 || user.getUsername().length() > 32) {
 //            errors.rejectValue("eMail", "Size.userForm.username");
 //        }
-        if (clientService.findByEMail(client.geteMail()) != null) {
-            errors.rejectValue("eMail", "Duplicate.userForm.username");
+        if (clientService.findByEMail(client.getEmailOfEmail()) != null) {
+            errors.rejectValue("emailOfEmail", "Duplicate.userForm.name");
         }
 
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "NotEmpty");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "Required");
         if (client.getPassword().length() < 4) {
             errors.rejectValue("password", "Size.userForm.password");
         }

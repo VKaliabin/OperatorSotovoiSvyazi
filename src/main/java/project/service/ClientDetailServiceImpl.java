@@ -33,6 +33,6 @@ public class ClientDetailServiceImpl implements UserDetailsService {
         for(RoleEntity role:client.getRoles()){
             grantedAuthorities.add(new SimpleGrantedAuthority(role.getTypeUser()));
         }
-        return new org.springframework.security.core.userdetails.User(client.geteMail(), client.getPassword(), grantedAuthorities);
+        return new org.springframework.security.core.userdetails.User(client.getEmailOfEmail(), client.getPassword(), grantedAuthorities);
     }
 }

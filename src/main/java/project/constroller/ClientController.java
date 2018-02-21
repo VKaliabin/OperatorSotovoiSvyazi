@@ -4,6 +4,9 @@ package project.constroller;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AbstractAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -63,7 +66,7 @@ public class ClientController {
 
         clientService.save(userForm);
 
-        securityService.autoLogin(userForm.geteMail(), userForm.getConfirmPassword());
+        securityService.autoLogin(userForm.getEmailOfEmail(), userForm.getConfirmPassword());
 
 
         return "redirect:/welcome";
@@ -80,18 +83,18 @@ public class ClientController {
 
         return "login";
     }
-    @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public String login(String username, String password) {
-        System.out.println(username);
-        System.out.println(password);
-        return "login";
-    }
+//    @RequestMapping(value = "/login", method = RequestMethod.POST)
+//    public String login(String username, String password) {
+//        System.out.println(username);
+//        System.out.println(password);
+//        return "login";
+//    }
 
 
-
-
-    @RequestMapping(value = {"/", "/welcome"}, method = RequestMethod.GET)
+    @RequestMapping(value = {"/","/welcome"}, method = RequestMethod.GET)
     public String welcome(Model model) {
+
+        model.addAttribute("user","ee@eee");
         return "welcome";
     }
 
