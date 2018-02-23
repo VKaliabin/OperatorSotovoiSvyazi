@@ -10,11 +10,31 @@ public class IncompatibleOptionEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idIncompatibleOption;
 
-    @OneToOne(optional=false, cascade=CascadeType.ALL)
-    @JoinColumn (name="idOPTION")
-    private OptionEntity option;
+//    @OneToOne(optional=false, cascade=CascadeType.ALL)
+//    @JoinColumn (name="idOPTION")
+//    private OptionEntity option;
+
+    @OneToOne(optional = false, cascade = CascadeType.ALL)
+    @JoinColumn(name = "idTARIFF")
+    private TariffEntity tariff;
 
 
+
+//    public OptionEntity getOption() {
+//        return option;
+//    }
+//
+//    public void setOption(OptionEntity option) {
+//        this.option = option;
+//    }
+
+    public TariffEntity getTariff() {
+        return tariff;
+    }
+
+    public void setTariff(TariffEntity tariff) {
+        this.tariff = tariff;
+    }
 
     public int getIdIncompatibleOption() {
         return idIncompatibleOption;

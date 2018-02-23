@@ -16,17 +16,49 @@ public class TariffEntity {
     @Basic
     @Column(name = "PRICE_TARIFF")
     private int priceTariff;
+
+    @OneToOne(optional = false, mappedBy = "tariff")
+    private IncompatibleOptionEntity incOption;
+
+    @OneToOne(optional = false, mappedBy = "tariff")
+    private CompatibleOptionEntity comOption;
+
     @OneToMany (mappedBy="tariff", fetch=FetchType.EAGER)
     private Set<OptionEntity> options;
 
-    @OneToOne (optional=false, mappedBy="tariff")
-    private ContractEntity contract;
+    @OneToMany (mappedBy="tariff", fetch=FetchType.EAGER)
+    private Set<ContractEntity> contracts;
 
+    public CompatibleOptionEntity getComOption() {
+        return comOption;
+    }
+
+    public void setComOption(CompatibleOptionEntity comOption) {
+        this.comOption = comOption;
+    }
+
+    public IncompatibleOptionEntity getIncOption() {
+        return incOption;
+    }
+
+    public void setIncOption(IncompatibleOptionEntity incOption) {
+        this.incOption = incOption;
+    }
+
+    public void setOptions(Set<OptionEntity> options) {
+        this.options = options;
+    }
+
+    public void setContracts(Set<ContractEntity> contracts) {
+        this.contracts = contracts;
+    }
+
+
+    public Set<ContractEntity> getContracts(){return contracts;}
 
     public Set<OptionEntity> getOptions(){
         return options;
     }
-
 
 
     public int getIdTariff() {
@@ -54,6 +86,7 @@ public class TariffEntity {
     public void setPriceTariff(int priceTariff) {
         this.priceTariff = priceTariff;
     }
+
 
     @Override
     public boolean equals(Object o) {

@@ -22,9 +22,6 @@ public class ClientValidator implements Validator {
         ClientEntity client = (ClientEntity) o;
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "emailOfEmail", "Required");
 
-//        if (user.getUsername().length() < 8 || user.getUsername().length() > 32) {
-//            errors.rejectValue("eMail", "Size.userForm.username");
-//        }
         if (clientService.findByEMail(client.getEmailOfEmail()) != null) {
             errors.rejectValue("emailOfEmail", "Duplicate.userForm.name");
         }

@@ -17,36 +17,37 @@ import java.util.List;
 import java.util.Set;
 
 @Service
-//@Transactional
+
 public class ClientServiceImpl implements ClientService {
 
     @Autowired
     private ClientDao clientDao;
-    @Autowired
-    private RoleDao roleDao;
 
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
+    public void setClientDao(ClientDao clientDao) {
+        this.clientDao = clientDao;
+    }
+
+
     @Override
-    public void save(ClientEntity client) {
+    @Transactional
+    public void addClient(ClientEntity client) {
         client.setPassword(bCryptPasswordEncoder.encode(client.getPassword()));
         RoleEntity roleEntity = new RoleEntity();
         roleEntity.setIdRoles(2);
         roleEntity.setTypeUser("ROLE_USER");
-//        roleDao.getOne(2);
         client.setRoles(new HashSet<>(Arrays.asList(roleEntity)));
-        clientDao.save(client);
+        clientDao.addClient(client);
     }
     @Override
+    @Transactional
     public ClientEntity findByEMail(String clientEmail) {
         return clientDao.findByEmailOfEmail(clientEmail);
     }
 
-//    @Override
-//    public void addClient(ClientEntity client) {
-//        clientDao.addClient(client);
-//    }
+
 //
 //    @Override
 //    public void updateClient(ClientEntity client) {

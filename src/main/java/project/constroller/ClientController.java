@@ -5,102 +5,84 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import project.dao.ClientDao;
 import project.model.ClientEntity;
+import project.model.ContractEntity;
+import project.model.OptionEntity;
+import project.model.RoleEntity;
 import project.service.ClientService;
+import project.service.ContractService;
 import project.service.SecurityService;
 import project.service.SecurityServiceImpl;
 import project.validator.ClientValidator;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+
 @Controller
 public class ClientController {
-
 
     @Autowired
     private ClientService clientService;
     @Autowired
-    private SecurityService securityService;
-    @Autowired
-    private ClientValidator clientValidator;
+    private ContractService contractService;
+
     private static final Logger logger = LoggerFactory.getLogger(ClientController.class);
-    @RequestMapping("addClient")
-    public ModelAndView addClient(@ModelAttribute ClientEntity client){
-        return new ModelAndView("index");
-    }
-
-    @RequestMapping("removeClient")
-    public ModelAndView removeClient(@PathVariable("id") int id){
-//        clientService.removeClient(id);
-        return new ModelAndView();
-    }
-
-    @RequestMapping(value = "/registration", method = RequestMethod.GET)
-    public String registration(Model model) {
-        model.addAttribute("userForm", new ClientEntity());
-//        ModelAndView modelAndView = new ModelAndView();
-//        modelAndView.addObject("userForm", new ClientEntity());
-        return "registration";
-    }
-
-    @RequestMapping(value = "/registration", method = RequestMethod.POST)
-    public String registration(@ModelAttribute("userForm") ClientEntity userForm, BindingResult bindingResult, Model model) {
-
-        logger.debug(userForm.toString());
-//        System.out.println(userForm.toString());
-        logger.debug("/////////////////////////////////////////////////");
-
-        clientValidator.validate(userForm, bindingResult);
-
-        if (bindingResult.hasErrors()) {
-            return "registration";
-        }
-
-        clientService.save(userForm);
-
-        securityService.autoLogin(userForm.getEmailOfEmail(), userForm.getConfirmPassword());
-
-
-        return "redirect:/welcome";
-    }
-    @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public String login(Model model, String error, String logout) {
-        if (error != null) {
-            model.addAttribute("error", "Username or password is incorrect.");
-        }
-
-        if (logout != null) {
-            model.addAttribute("message", "Logged out successfully.");
-        }
-
-        return "login";
-    }
-//    @RequestMapping(value = "/login", method = RequestMethod.POST)
-//    public String login(String username, String password) {
-//        System.out.println(username);
-//        System.out.println(password);
-//        return "login";
-//    }
 
 
     @RequestMapping(value = {"/","/welcome"}, method = RequestMethod.GET)
     public String welcome(Model model) {
+        Authentication authentication  = SecurityContextHolder.getContext().getAuthentication();
 
-        model.addAttribute("user","ee@eee");
+        User user = (User) authentication.getPrincipal();
+        model.addAttribute("user", user.getUsername());
+
+        ClientEntity clientEntity = clientService.findByEMail(user.getUsername());
+        model.addAttribute("contracts", clientEntity.getContracts());
         return "welcome";
     }
 
-    @RequestMapping(value = "/admin", method = RequestMethod.GET)
-    public String admin(Model model) {
-        return "admin";
+
+    @RequestMapping(value = "/block", method = RequestMethod.GET)
+    public String block(Model model, @RequestParam(value = "id") int id) {
+        logger.debug("contract id ={}", id );
+
+        Authentication authentication  = SecurityContextHolder.getContext().getAuthentication();
+        User user = (User) authentication.getPrincipal();
+        model.addAttribute("user", user.getUsername());
+
+        ClientEntity clientEntity = clientService.findByEMail(user.getUsername());
+        ContractEntity contractEntity = contractService.getContract(id);
+
+        contractEntity.setBlockedContract("Unblocked");
+        model.addAttribute("contracts", clientEntity.getContracts());
+        return "welcome";
+    }
+
+    @RequestMapping(value = "/unblock", method = RequestMethod.GET)
+    public String unblock(Model model, @RequestParam(value = "id") int id) {
+        logger.debug("contract id ={}", id );
+
+        Authentication authentication  = SecurityContextHolder.getContext().getAuthentication();
+        User user = (User) authentication.getPrincipal();
+        model.addAttribute("user", user.getUsername());
+
+        ClientEntity clientEntity = clientService.findByEMail(user.getUsername());
+        ContractEntity contractEntity = contractService.getContract(id);
+
+        contractEntity.setBlockedContract("Blocked");
+        model.addAttribute("contracts", clientEntity.getContracts());
+        return "welcome";
     }
 
 }

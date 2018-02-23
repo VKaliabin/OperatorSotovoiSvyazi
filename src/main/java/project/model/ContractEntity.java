@@ -1,6 +1,7 @@
 package project.model;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name = "contract")
@@ -14,10 +15,14 @@ public class ContractEntity {
     private String contractNumber;
     @Basic
     @Column(name = "BLOCKED_CONTRACT")
-    private Byte blockedContract;
+    private String blockedContract;
 
+    @ManyToMany(fetch=FetchType.EAGER)
+    @JoinTable(name = "connected_options", joinColumns = @JoinColumn(name = "idContract"),
+    inverseJoinColumns = @JoinColumn(name = "idOption"))
+    private Set<OptionEntity> options;
 
-    @OneToOne (optional=false, cascade=CascadeType.ALL)
+    @ManyToOne (optional=false, cascade=CascadeType.ALL)
     @JoinColumn (name="idTARIFF")
     private TariffEntity tariff;
 
@@ -25,6 +30,13 @@ public class ContractEntity {
     @JoinColumn (name="idCLIENT")
     private ClientEntity clientEntity;
 
+    public Set<OptionEntity> getOptions() {
+        return options;
+    }
+
+    public void setOptions(Set<OptionEntity> options) {
+        this.options = options;
+    }
 
     public int getIdContract() {
         return idContract;
@@ -34,6 +46,17 @@ public class ContractEntity {
         this.idContract = idContract;
     }
 
+    public void setTariff(TariffEntity tariff) {
+        this.tariff = tariff;
+    }
+
+    public TariffEntity getTariff() {
+        return tariff;
+    }
+
+    public ClientEntity getClientEntity() {
+        return clientEntity;
+    }
 
     public String getContractNumber() {
         return contractNumber;
@@ -44,11 +67,11 @@ public class ContractEntity {
     }
 
 
-    public Byte getBlockedContract() {
+    public String getBlockedContract() {
         return blockedContract;
     }
 
-    public void setBlockedContract(Byte blockedContract) {
+    public void setBlockedContract(String blockedContract) {
         this.blockedContract = blockedContract;
     }
 

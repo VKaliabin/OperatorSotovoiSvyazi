@@ -35,7 +35,7 @@
     <img class="mb-4" src="https://getbootstrap.com/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72">
     <div class="form-group ${error != null ? 'has-error' : ''}">
 
-        <h1 class="h3 mb-3 font-weight-normal">Please sign in or log in</h1>
+        <h1 class="h3 mb-3 font-weight-normal">Please log in</h1>
 
         <label for="inputEmail" class="sr-only">Email address</label>
         <span>${message}</span>
@@ -51,7 +51,7 @@
         </button>
         <br>
 
-        <a class="btn btn-lg btn-primary btn-block" style="background-color: #343a40; border-color: #343a40 ;" href="registration">Sign in</a>
+        <a class="btn btn-lg btn-primary btn-block" style="background-color: #343a40; border-color: #343a40 ;" href="registration">Registration</a>
     </div>
 </form>
 </body>

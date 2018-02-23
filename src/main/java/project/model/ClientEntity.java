@@ -9,8 +9,8 @@ import java.util.Set;
 public class ClientEntity {
     @Id
     @Column(name = "idCLIENT")
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private int idClient;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer idClient;
 
     @Column(name = "NAME")
     private String name;
@@ -65,9 +65,7 @@ public class ClientEntity {
 
     public ClientEntity(){}
 
-    public Set<ContractEntity> getContracts(){
-        return contracts;
-    }
+    public Set<ContractEntity> getContracts(){return contracts;}
 
 
     public int getIdClient() {

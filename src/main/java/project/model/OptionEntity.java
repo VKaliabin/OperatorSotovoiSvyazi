@@ -1,9 +1,10 @@
 package project.model;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
-@Table(name = "option")
+@Table(name = "options")
 public class OptionEntity {
     @Id
     @Column(name = "idOPTION")
@@ -19,14 +20,51 @@ public class OptionEntity {
     @Column(name = "CONNECTION_COST_OPTION")
     private int connectionCostOption;
 
+    @ManyToMany(mappedBy = "options")
+    private Set<ContractEntity> contracts;
 
     @ManyToOne (optional=false, cascade=CascadeType.ALL)
     @JoinColumn (name="idTARIFF")
     private TariffEntity tariff;
+//
+//    @OneToOne (optional=false, mappedBy="option")
+//    private IncompatibleOptionEntity incOption;
 
-    @OneToOne (optional=false, mappedBy="option")
-    private IncompatibleOptionEntity incOption;
+//    @OneToMany (mappedBy="optionEntity", fetch=FetchType.EAGER)
+//    private Set<CompatibleOptionEntity> comOption;
 
+    public Set<ContractEntity> getContracts() {
+        return contracts;
+    }
+
+    public void setContracts(Set<ContractEntity> contracts) {
+        this.contracts = contracts;
+    }
+
+
+    public TariffEntity getTariff() {
+        return tariff;
+    }
+
+    public void setTariff(TariffEntity tariff) {
+        this.tariff = tariff;
+    }
+
+//    public IncompatibleOptionEntity getIncOption() {
+//        return incOption;
+//    }
+//
+//    public void setIncOption(IncompatibleOptionEntity incOption) {
+//        this.incOption = incOption;
+//    }
+
+//    public Set<CompatibleOptionEntity> getComOption() {
+//        return comOption;
+//    }
+//
+//    public void setComOption(Set<CompatibleOptionEntity> comOption) {
+//        this.comOption = comOption;
+//    }
 
     public int getIdOption() {
         return idOption;

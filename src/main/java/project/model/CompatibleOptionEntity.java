@@ -1,9 +1,6 @@
 package project.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "compatible_option")
@@ -12,6 +9,29 @@ public class CompatibleOptionEntity {
     @Column(name = "idCOMPATIBLE_OPTION")
     private int idCompatibleOption;
 
+    @OneToOne(optional = false, cascade = CascadeType.ALL)
+    @JoinColumn(name = "idTARIFF")
+    private TariffEntity tariff;
+
+//    @ManyToOne(optional=false, cascade=CascadeType.ALL)
+//    @JoinColumn (name="idOPTION")
+//    private OptionEntity optionEntity;
+
+//    public OptionEntity getOption() {
+//        return optionEntity;
+//    }
+//
+//    public void setOption(OptionEntity option) {
+//        this.optionEntity = option;
+//    }
+
+    public TariffEntity getTariff() {
+        return tariff;
+    }
+
+    public void setTariff(TariffEntity tariff) {
+        this.tariff = tariff;
+    }
 
     public int getIdCompatibleOption() {
         return idCompatibleOption;
