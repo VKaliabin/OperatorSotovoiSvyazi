@@ -12,7 +12,7 @@ public interface ClientDao {
 //    public void updateClient(ClientEntity client);
 //    public void removeClient(int id);
 //    public ClientEntity getClientId (int id);
-//    public List<ClientEntity> listClients();
+    public List<ClientEntity> listClients();
 
 
 

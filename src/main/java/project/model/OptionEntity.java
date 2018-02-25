@@ -1,6 +1,7 @@
 package project.model;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -21,7 +22,7 @@ public class OptionEntity {
     private int connectionCostOption;
 
     @ManyToMany(mappedBy = "options")
-    private Set<ContractEntity> contracts;
+    private List<ContractEntity> contracts;
 
     @ManyToOne (optional=false, cascade=CascadeType.ALL)
     @JoinColumn (name="idTARIFF")
@@ -33,11 +34,11 @@ public class OptionEntity {
 //    @OneToMany (mappedBy="optionEntity", fetch=FetchType.EAGER)
 //    private Set<CompatibleOptionEntity> comOption;
 
-    public Set<ContractEntity> getContracts() {
+    public List<ContractEntity> getContracts() {
         return contracts;
     }
 
-    public void setContracts(Set<ContractEntity> contracts) {
+    public void setContracts(List<ContractEntity> contracts) {
         this.contracts = contracts;
     }
 

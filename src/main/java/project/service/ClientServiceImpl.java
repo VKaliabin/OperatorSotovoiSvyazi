@@ -64,8 +64,9 @@ public class ClientServiceImpl implements ClientService {
 //        return clientDao.getClientId(id);
 //    }
 //
-//    @Override
-//    public List<ClientEntity> listClients() {
-//        return clientDao.listClients();
-//    }
+    @Override
+    @Transactional
+    public List<ClientEntity> listClients() {
+        return clientDao.listClients();
+    }
 }

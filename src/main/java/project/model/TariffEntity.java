@@ -1,6 +1,7 @@
 package project.model;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -17,46 +18,46 @@ public class TariffEntity {
     @Column(name = "PRICE_TARIFF")
     private int priceTariff;
 
-    @OneToOne(optional = false, mappedBy = "tariff")
-    private IncompatibleOptionEntity incOption;
-
-    @OneToOne(optional = false, mappedBy = "tariff")
-    private CompatibleOptionEntity comOption;
-
-    @OneToMany (mappedBy="tariff", fetch=FetchType.EAGER)
-    private Set<OptionEntity> options;
+//    @OneToOne(optional = false, mappedBy = "tariff")
+//    private IncompatibleOptionEntity incOption;
+//
+//    @OneToOne(optional = false, mappedBy = "tariff")
+//    private CompatibleOptionEntity comOption;
 
     @OneToMany (mappedBy="tariff", fetch=FetchType.EAGER)
-    private Set<ContractEntity> contracts;
+    private List<OptionEntity> options;
 
-    public CompatibleOptionEntity getComOption() {
-        return comOption;
-    }
+    @OneToMany (mappedBy="tariff", fetch=FetchType.EAGER)
+    private List<ContractEntity> contracts;
 
-    public void setComOption(CompatibleOptionEntity comOption) {
-        this.comOption = comOption;
-    }
+//    public CompatibleOptionEntity getComOption() {
+//        return comOption;
+//    }
+//
+//    public void setComOption(CompatibleOptionEntity comOption) {
+//        this.comOption = comOption;
+//    }
+//
+//    public IncompatibleOptionEntity getIncOption() {
+//        return incOption;
+//    }
+//
+//    public void setIncOption(IncompatibleOptionEntity incOption) {
+//        this.incOption = incOption;
+//    }
 
-    public IncompatibleOptionEntity getIncOption() {
-        return incOption;
-    }
-
-    public void setIncOption(IncompatibleOptionEntity incOption) {
-        this.incOption = incOption;
-    }
-
-    public void setOptions(Set<OptionEntity> options) {
+    public void setOptions(List<OptionEntity> options) {
         this.options = options;
     }
 
-    public void setContracts(Set<ContractEntity> contracts) {
+    public void setContracts(List<ContractEntity> contracts) {
         this.contracts = contracts;
     }
 
 
-    public Set<ContractEntity> getContracts(){return contracts;}
+    public List<ContractEntity> getContracts(){return contracts;}
 
-    public Set<OptionEntity> getOptions(){
+    public List<OptionEntity> getOptions(){
         return options;
     }
 

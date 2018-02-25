@@ -1,6 +1,7 @@
 package project.model;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -20,7 +21,7 @@ public class ContractEntity {
     @ManyToMany(fetch=FetchType.EAGER)
     @JoinTable(name = "connected_options", joinColumns = @JoinColumn(name = "idContract"),
     inverseJoinColumns = @JoinColumn(name = "idOption"))
-    private Set<OptionEntity> options;
+    private List<OptionEntity> options;
 
     @ManyToOne (optional=false, cascade=CascadeType.ALL)
     @JoinColumn (name="idTARIFF")
@@ -30,11 +31,11 @@ public class ContractEntity {
     @JoinColumn (name="idCLIENT")
     private ClientEntity clientEntity;
 
-    public Set<OptionEntity> getOptions() {
+    public List<OptionEntity> getOptions() {
         return options;
     }
 
-    public void setOptions(Set<OptionEntity> options) {
+    public void setOptions(List<OptionEntity> options) {
         this.options = options;
     }
 

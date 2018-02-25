@@ -5,6 +5,8 @@ import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import project.model.ClientEntity;
@@ -17,7 +19,7 @@ import java.util.List;
 @Repository
 public class HibernateUtil {
 
-
+    private static final Logger logger = LoggerFactory.getLogger(HibernateUtil.class);
     private static SessionFactory sessionFactory;
 
     public void setSessionFactory(SessionFactory sessionFactory) {
@@ -49,15 +51,28 @@ public class HibernateUtil {
 
         return (ClientEntity) query.uniqueResult(); }
 
-    public <T> List fetchAllById(String query, int id) {
-        SQLQuery sql =sessionFactory.getCurrentSession().createSQLQuery(query);
+    public <T> List fetchAllById(String query, Class<T> entityClass, int id) {
+        SQLQuery sql =sessionFactory.getCurrentSession().createSQLQuery(query).addEntity(entityClass);
         sql.setParameter("id", id);
         return sql.list();
     }
 
+    public void deleteConnecOption(String query, int id){
+        SQLQuery sqlQuery = sessionFactory.getCurrentSession().createSQLQuery(query);
+        sqlQuery.setParameter("id", id);
+    }
+    public void addConnectOption(String query, int idContract, int idOption){
+        SQLQuery sqlQuery = sessionFactory.getCurrentSession().createSQLQuery(query);
+        sqlQuery.setParameter("idCon", idContract);
+        sqlQuery.setParameter("idOpt", idOption);
+    }
     @SuppressWarnings("unchecked")
     public <T> List<T> fetchAll(Class<T> entityClass) {
         return sessionFactory.getCurrentSession().createQuery(" FROM " + entityClass.getName()).list();
+
+    }
+    public void deleteAllById(Serializable id,String query){
+        sessionFactory.getCurrentSession().createSQLQuery(query);
     }
 
     @SuppressWarnings("rawtypes")

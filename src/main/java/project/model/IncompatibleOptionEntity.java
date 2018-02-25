@@ -14,9 +14,9 @@ public class IncompatibleOptionEntity {
 //    @JoinColumn (name="idOPTION")
 //    private OptionEntity option;
 
-    @OneToOne(optional = false, cascade = CascadeType.ALL)
-    @JoinColumn(name = "idTARIFF")
-    private TariffEntity tariff;
+//    @OneToOne(optional = false, cascade = CascadeType.ALL)
+//    @JoinColumn(name = "idTARIFF")
+//    private TariffEntity tariff;
 
 
 
@@ -28,13 +28,13 @@ public class IncompatibleOptionEntity {
 //        this.option = option;
 //    }
 
-    public TariffEntity getTariff() {
-        return tariff;
-    }
-
-    public void setTariff(TariffEntity tariff) {
-        this.tariff = tariff;
-    }
+//    public TariffEntity getTariff() {
+//        return tariff;
+//    }
+//
+//    public void setTariff(TariffEntity tariff) {
+//        this.tariff = tariff;
+//    }
 
     public int getIdIncompatibleOption() {
         return idIncompatibleOption;

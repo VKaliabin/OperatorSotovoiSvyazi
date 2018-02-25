@@ -15,15 +15,25 @@ public class ContractDaoImpl implements ContractDao {
     private HibernateUtil hibernateUtil;
 
     @Override
-    public ContractEntity getContract(int idClient) {
-//       return hibernateUtil.findByEmail();
-       return null;
+    public ContractEntity getContract(int idContcract) {
+       return (ContractEntity) hibernateUtil.fetchById(idContcract, ContractEntity.class );
+//       return null;
     }
 
+    @Override
+    public ContractEntity update(ContractEntity contract) {
+        return hibernateUtil.update(contract);
+    }
 
     @Override
-    public List<OptionEntity> getOptionsByContractId(int idContract) {
-        String query = "select op.* from connected_options co, options op where co.idContract = :id and  co.idOption = op.idOPTION";
-        return hibernateUtil.fetchAllById(query, idContract);
+    public void deleteConnectOptions(int idContract) {
+        String query = "delete from connected_options where idContract=:id";
+        hibernateUtil.deleteConnecOption(query, idContract);
+    }
+
+    @Override
+    public void addConnectOptions(int idContract, int idOption) {
+        String query = "insert into connected_options (idContract, idOption) values (:idCon, :idOpt)";
+        hibernateUtil.addConnectOption(query,idContract,idOption);
     }
 }

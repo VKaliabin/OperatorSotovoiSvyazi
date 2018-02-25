@@ -2,6 +2,7 @@ package project.model;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -37,7 +38,7 @@ public class ClientEntity {
     private Byte existingClient;
 
     @OneToMany (mappedBy="clientEntity", fetch=FetchType.EAGER)
-    private Set<ContractEntity> contracts;
+    private List<ContractEntity> contracts;
 
     @ManyToMany
     @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "idUSER"),
@@ -65,7 +66,7 @@ public class ClientEntity {
 
     public ClientEntity(){}
 
-    public Set<ContractEntity> getContracts(){return contracts;}
+    public List<ContractEntity> getContracts(){return contracts;}
 
 
     public int getIdClient() {

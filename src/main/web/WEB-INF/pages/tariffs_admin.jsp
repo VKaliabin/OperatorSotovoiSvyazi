@@ -40,7 +40,7 @@
 
     <ul class="navbar-nav px-3">
         <li class="nav-item text-nowrap">
-            <a class="nav-link" href="/login?logout">Log out (${user})</a>
+            <a class="nav-link" href="/login?logout">Log out(${user})</a>
         </li>
     </ul>
 </nav>
@@ -51,20 +51,26 @@
             <div class="sidebar-sticky">
                 <ul class="nav flex-column">
                     <li class="nav-item">
-                        <a class="nav-link active" href="#">
-                            <p style="font-size: 24px">Contract</p>
-                            <span class="sr-only">(current)</span>
+                        <a class="nav-link" href="/admin">
+                            <p style="font-size: 24px">Clients</p>
+
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/tariffs_user">
+                        <a class="nav-link" href="#">
+                            <p style="font-size: 24px">Contracts</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#">
                             <p style="font-size: 24px">Tariffs</p>
+                            <span class="sr-only">(current)</span>
                         </a>
                     </li>
                     <%--<li class="nav-item">--%>
-                        <%--<a class="nav-link">--%>
-                            <%--<p style="font-size: 24px">Options</p>--%>
-                        <%--</a>--%>
+                    <%--<a class="nav-link">--%>
+                    <%--<p style="font-size: 24px">Options</p>--%>
+                    <%--</a>--%>
                     <%--</li>--%>
 
                 </ul>
@@ -74,8 +80,8 @@
 
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
             <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
-                <h1 class="h2">Contracts</h1>
-
+                <h1 class="h2">Tariffs</h1>
+                <a class="btn  btn-success" style="width: 150px;" href="/addnewtariff">Add new tariff</a>
             </div>
 
 
@@ -84,47 +90,32 @@
                 <table class="table table-striped table-sm">
                     <thead>
                     <tr>
-                        <th>Your Number</th>
-                        <th>Tariff</th>
-                        <th>Options</th>
-                        <th>Action</th>
-                        <%--<th>Header</th>--%>
+                        <th style="width: 600px">Name of the tariff</th>
+                        <th style="width: 600px">Price</th>
+                        <th style="width: 600px">Available options</th>
+                        <th style="width: 100px"></th>
+                        <th style="width: 100px"></th>
                     </tr>
                     </thead>
                     <tbody>
-                    <c:forEach items="${contracts}" var="contract">
-                        <c:choose>
-                            <c:when test="${contract.getBlockedContract() == 'Unblocked'}">
-                                <tr style="font-size: 18px; background-color: #dbe7ef;">
-                            </c:when>
-                            <c:otherwise>
-                                <tr style="font-size: 18px; background-color: #efc5c5;">
-                            </c:otherwise>
-                        </c:choose>
-
-
-                            <td>${contract.getContractNumber()}</td>
-                            <td>
-                                <a >${contract.getTariff().getNameTariff()}</a></td>
-                            <td>
-                                <c:forEach items="${contract.getOptions()}" var="options">
-                                    ${options.getNameOption()}<br>
+                    <c:forEach items="${tariffs}" var="tariff">
+                        <tr>
+                            <td style="font-size: 20px">${tariff.getNameTariff()}</td>
+                            <td style="font-size: 18px">${tariff.getPriceTariff()}</td>
+                            <td style="font-size: 18px">
+                                <c:forEach items="${tariff.getOptions()}" var="option">
+                                    ${option.getNameOption()}<br>
                                 </c:forEach>
                             </td>
                             <td>
-                                <c:choose>
-                                    <c:when test="${contract.getBlockedContract() == 'Unblocked'}">
-                                        <a class="btn btn-lg btn-danger" href="/block?id=${contract.getIdContract()}"><i class="fa fa-minus-square" ></i></a>
-                                    </c:when>
-                                    <c:otherwise>
-                                        <a class="btn btn-lg btn-primary" href="/unblock?id=${contract.getIdContract()}"><i class="fa fa-plus-square"></i></a>
-                                    </c:otherwise>
-                                </c:choose>
+                                <a class="btn btn-sm btn-outline-primary" style="width: 100px;" href="">Edit</a>
                             </td>
-                            <%--<td>sit</td>--%>
-
+                            <td>
+                                <a class="btn btn-sm btn-warning" style="width: 100px;" href="">Delete</a>
+                            </td>
                         </tr>
                     </c:forEach>
+
                     </tbody>
                 </table>
             </div>

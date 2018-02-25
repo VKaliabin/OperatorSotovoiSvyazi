@@ -9,9 +9,9 @@ public class CompatibleOptionEntity {
     @Column(name = "idCOMPATIBLE_OPTION")
     private int idCompatibleOption;
 
-    @OneToOne(optional = false, cascade = CascadeType.ALL)
-    @JoinColumn(name = "idTARIFF")
-    private TariffEntity tariff;
+//    @OneToOne(optional = false, cascade = CascadeType.ALL)
+//    @JoinColumn(name = "idTARIFF")
+//    private TariffEntity tariff;
 
 //    @ManyToOne(optional=false, cascade=CascadeType.ALL)
 //    @JoinColumn (name="idOPTION")
@@ -25,13 +25,13 @@ public class CompatibleOptionEntity {
 //        this.optionEntity = option;
 //    }
 
-    public TariffEntity getTariff() {
-        return tariff;
-    }
-
-    public void setTariff(TariffEntity tariff) {
-        this.tariff = tariff;
-    }
+//    public TariffEntity getTariff() {
+//        return tariff;
+//    }
+//
+//    public void setTariff(TariffEntity tariff) {
+//        this.tariff = tariff;
+//    }
 
     public int getIdCompatibleOption() {
         return idCompatibleOption;

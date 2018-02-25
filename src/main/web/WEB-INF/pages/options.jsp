@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri = "http://java.sun.com/jsp/jstl/functions" prefix = "fn" %>
 <%--
   Created by IntelliJ IDEA.
   User: MASTER
@@ -31,7 +32,6 @@
 
     <!-- Custom styles for this template -->
     <link href="/resources/css/dashboard.css" rel="stylesheet">
-    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
 </head>
 
 <body>
@@ -51,20 +51,20 @@
             <div class="sidebar-sticky">
                 <ul class="nav flex-column">
                     <li class="nav-item">
-                        <a class="nav-link active" href="#">
+                        <a class="nav-link" href="/welcome">
                             <p style="font-size: 24px">Contract</p>
-                            <span class="sr-only">(current)</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/tariffs_user">
+                        <a class="nav-link active" href="/tariffs_user">
                             <p style="font-size: 24px">Tariffs</p>
+                            <span class="sr-only">(current)</span>
                         </a>
                     </li>
                     <%--<li class="nav-item">--%>
-                        <%--<a class="nav-link">--%>
-                            <%--<p style="font-size: 24px">Options</p>--%>
-                        <%--</a>--%>
+                    <%--<a class="nav-link">--%>
+                    <%--<p style="font-size: 24px">Options</p>--%>
+                    <%--</a>--%>
                     <%--</li>--%>
 
                 </ul>
@@ -74,59 +74,79 @@
 
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
             <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
-                <h1 class="h2">Contracts</h1>
+                <%--<h1 class="h2">Contract</h1>--%>
 
             </div>
 
+            <c:choose>
+                <c:when test="${tariff.getIdTariff()== currentTariff}">
+                    <h2>${tariff.getNameTariff()}(Current tariff)</h2>
+                </c:when>
+                <c:otherwise>
+                    <h2>${tariff.getNameTariff()}</h2>
+                </c:otherwise>
+            </c:choose>
 
-            <%--<h2>Section title</h2>--%>
             <div class="table-responsive">
+                <form method="post" action="changeOptions">
+                    <input type="hidden" name="idContract" value="${idContract}">
+                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                    <input type="hidden" name="switch" value="${tariff.getIdTariff()}">
                 <table class="table table-striped table-sm">
                     <thead>
+                    <h5>Available options for the tariff</h5>
                     <tr>
-                        <th>Your Number</th>
-                        <th>Tariff</th>
-                        <th>Options</th>
-                        <th>Action</th>
-                        <%--<th>Header</th>--%>
+                        <th>...</th>
+                        <th style="width: 600px">Name of the Option</th>
+                        <th style="width: 600px">Price</th>
+                        <th style="width: 600px">Cost of the connection</th>
                     </tr>
                     </thead>
                     <tbody>
-                    <c:forEach items="${contracts}" var="contract">
-                        <c:choose>
-                            <c:when test="${contract.getBlockedContract() == 'Unblocked'}">
-                                <tr style="font-size: 18px; background-color: #dbe7ef;">
-                            </c:when>
-                            <c:otherwise>
-                                <tr style="font-size: 18px; background-color: #efc5c5;">
-                            </c:otherwise>
-                        </c:choose>
+                    <c:forEach items="${options}" var="option">
+                        <tr>
+                            <td>
+                                <c:set var="contains" value="false" />
+                                <c:forEach items="${connectedOptions}" var="connected">
+                                    <%--<c:choose>--%>
+                                        <c:if test="${connected.getIdOption() == option.getIdOption()}">
+
+                                                <input name="checkbox" type="checkbox" checked value="${option.getIdOption()}"/>
+                                                <c:set var="contains" value="true" />
 
 
-                            <td>${contract.getContractNumber()}</td>
-                            <td>
-                                <a >${contract.getTariff().getNameTariff()}</a></td>
-                            <td>
-                                <c:forEach items="${contract.getOptions()}" var="options">
-                                    ${options.getNameOption()}<br>
+                                        </c:if>
+                                    <%--</c:choose>--%>
                                 </c:forEach>
+                                <c:if test="${contains == false}">
+                                    <input name="checkbox" type="checkbox" value="${option.getIdOption()}"/>
+                                </c:if>
+
                             </td>
                             <td>
-                                <c:choose>
-                                    <c:when test="${contract.getBlockedContract() == 'Unblocked'}">
-                                        <a class="btn btn-lg btn-danger" href="/block?id=${contract.getIdContract()}"><i class="fa fa-minus-square" ></i></a>
-                                    </c:when>
-                                    <c:otherwise>
-                                        <a class="btn btn-lg btn-primary" href="/unblock?id=${contract.getIdContract()}"><i class="fa fa-plus-square"></i></a>
-                                    </c:otherwise>
-                                </c:choose>
+                                    <%--<div class="custom-control custom-checkbox">--%>
+                                    ${option.getNameOption()}
+                                    <%--</div>--%>
                             </td>
-                            <%--<td>sit</td>--%>
-
+                            <td>${option.getPriceOption()}</td>
+                            <td>${option.getConnectionCostOption()}</td>
                         </tr>
                     </c:forEach>
                     </tbody>
                 </table>
+                <c:choose>
+
+                    <c:when test="${tariff.getIdTariff()== currentTariff}">
+                        <button class="btn  btn-warning" style="width: 200px;">Submit</button>
+                    </c:when>
+                    <c:otherwise>
+
+                        <button class="btn  btn-success" style="width: 200px;">Switch to this tariff</button>
+                    </c:otherwise>
+                </c:choose>
+                </form>
+                <a class="btn  btn-primary" style="width: 200px;background-color: #343a40; border-color: #343a40 ; font-weight: bold;" href="tariffs_user">Back</a>
+
             </div>
         </main>
     </div>
@@ -146,38 +166,6 @@
 <script src="https://unpkg.com/feather-icons/dist/feather.min.js"></script>
 <script>
     feather.replace()
-</script>
-
-<!-- Graphs -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
-<script>
-    var ctx = document.getElementById("myChart");
-    var myChart = new Chart(ctx, {
-        type: 'line',
-        data: {
-            labels: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
-            datasets: [{
-                data: [15339, 21345, 18483, 24003, 23489, 24092, 12034],
-                lineTension: 0,
-                backgroundColor: 'transparent',
-                borderColor: '#007bff',
-                borderWidth: 4,
-                pointBackgroundColor: '#007bff'
-            }]
-        },
-        options: {
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        beginAtZero: false
-                    }
-                }]
-            },
-            legend: {
-                display: false,
-            }
-        }
-    });
 </script>
 </body>
 </html>

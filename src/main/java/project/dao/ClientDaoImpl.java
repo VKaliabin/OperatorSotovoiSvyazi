@@ -26,7 +26,7 @@ public class ClientDaoImpl implements ClientDao{
        return hibernateUtil.findByEmail(email);
     }
 
-        @Override
+    @Override
     public void addClient(ClientEntity client) {
         hibernateUtil.add(client);
         logger.info("Client successfully added. Client details: " + client);
@@ -55,12 +55,8 @@ public class ClientDaoImpl implements ClientDao{
 //
 //    }
 //
-//    @Override
-//    public List<ClientEntity> listClients() {
-//        List<ClientEntity> clientsList = hibernateUtil.fetchAll(ClientEntity.class);
-//        for (ClientEntity client: clientsList){
-//            logger.info("Client list: " + client);
-//        }
-//        return clientsList;
-//    }
+    @Override
+    public List<ClientEntity> listClients() {
+        return hibernateUtil.fetchAll(ClientEntity.class);
+    }
 }
