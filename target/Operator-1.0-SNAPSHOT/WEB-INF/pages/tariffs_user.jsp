@@ -40,7 +40,7 @@
 
     <ul class="navbar-nav px-3">
         <li class="nav-item text-nowrap">
-            <a class="nav-link" href="/logout">Log out(${user})</a>
+            <a class="nav-link" href="/logout">Log out (${user})</a>
         </li>
     </ul>
 </nav>
@@ -51,28 +51,21 @@
             <div class="sidebar-sticky">
                 <ul class="nav flex-column">
                     <li class="nav-item">
-                        <a class="nav-link" href="/admin">
-                            <p style="font-size: 24px">Clients</p>
-
+                        <a class="nav-link" href="/welcome">
+                            <p style="font-size: 24px">Contract</p>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">
-                            <p style="font-size: 24px">Contracts</p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/tariffs_admin">
+                        <a class="nav-link active" href="#">
                             <p style="font-size: 24px">Tariffs</p>
-
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" href="/options_admin" >
-                            <p style="font-size: 24px">Options</p>
                             <span class="sr-only">(current)</span>
                         </a>
                     </li>
+                    <%--<li class="nav-item">--%>
+                    <%--<a class="nav-link">--%>
+                    <%--<p style="font-size: 24px">Options</p>--%>
+                    <%--</a>--%>
+                    <%--</li>--%>
 
                 </ul>
 
@@ -81,60 +74,63 @@
 
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
             <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
-                <h1 class="h2">New option</h1>
+                <%--<h1 class="h2">Contract</h1>--%>
+
             </div>
 
+            <c:forEach items="${contracts}" var="contract">
+                <c:choose>
+                    <c:when test="${contract.getBlockedContract() == 'Blocked'}">
+                        <h2>${contract.getContractNumber()}
+                            <a style="color: #b70711;font-size:30px "> (Contract is blocked)</a></h2>
+                    </c:when>
+                    <c:otherwise>
+                        <h2>${contract.getContractNumber()}</h2>
+                    </c:otherwise>
+                </c:choose>
+                <div class="table-responsive">
 
-            <%--<h2>Section title</h2>--%>
+                    <table class="table table-striped table-sm">
+                        <thead>
+                        <tr>
+                            <th style="width: 400px">Name of the Tariff</th>
+                            <th style="width: 400px">Price</th>
+                            <th style="width: 400px">Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            <c:forEach items="${tariffs}" var="tariff">
+                                <tr style="font-size: 18px;">
+                                    <c:choose>
+                                    <c:when test="${contract.getTariff().getIdTariff()==tariff.getIdTariff()}">
+                                <td>${tariff.getNameTariff()}(Current tariff)</td>
+                                    </c:when>
+                                        <c:otherwise>
+                                            <td>${tariff.getNameTariff()}</td>
+                                        </c:otherwise>
+                                    </c:choose>
+                                <td>${tariff.getPriceTariff()}</td>
+                                    <c:choose>
+                                        <c:when test="${contract.getBlockedContract() == 'Blocked'}">
+                                            <td>
+                                                ---
+                                            </td>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <td>
+                                                <a style="color: #420083; font-size: 16px;" href="/show_tariff?id=${tariff.getIdTariff()}&currentTar=${contract.getTariff().getIdTariff()}&idContract=${contract.getIdContract()}">Show <i class="fa fa-chevron-circle-right"></i></a>
+                                            </td>
+                                        </c:otherwise>
+                                    </c:choose>
 
-            <form:form method="POST" action="/new_option" modelAttribute="option" class="form-signin">
-                <div class="row">
-                    <spring:bind path="nameOption">
-                        <div class="col-md-3 mb-3">
-                            <label for="optionName">Name of an option</label>
-                            <form:input type="text" class="form-control" id="optionName"
-                                        path="nameOption" autofocus="true"/>
-                            <form:errors path="nameOption"/>
-                        </div>
-                    </spring:bind>
-
-                    <spring:bind path="priceOption">
-                        <div class="col-md-3 mb-3">
-                            <label for="optionPrice">Price</label>
-                            <form:input type="text" class="form-control" id="optionPrice"
-                                        path="priceOption" autofocus="true"/>
-                        </div>
-                    </spring:bind>
-
-                    <spring:bind path="connectionCostOption">
-                        <div class="col-md-3 mb-3">
-                            <label for="optionConCost">Connection cost</label>
-                            <form:input type="number" class="form-control" id="optionConCost"
-                                        path="connectionCostOption" autofocus="true"/>
-                        </div>
-                    </spring:bind>
-
-                    <%--<spring:bind path="tariff">--%>
-                        <div class="col-md-3 mb-3">
-                            <label for="tariff">Tariff</label>
-                            <select name="id" id="id" class="custom-select d-block w-100" id="tariff" required>
-                                <option value="">Choose...</option>
-                                <c:forEach items="${tariffs}" var="tariff">
-                                    <option value="${tariff.getIdTariff()}"  >${tariff.getNameTariff()}</option>
-                                </c:forEach>
-
-                            </select>
-                            <div class="invalid-feedback">
-                                Please select a tariff for an option.
-                            </div>
-                        </div>
-                    <%--</spring:bind>--%>
-
-
+                                </>
+                            </c:forEach>
+                        </tbody>
+                    </table>
 
                 </div>
-                <button class="btn btn-primary btn-block" style="width: 150px" type="submit">Add new option</button>
-            </form:form>
+            </c:forEach>
+
 
         </main>
     </div>
