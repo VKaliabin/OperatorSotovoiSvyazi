@@ -77,6 +77,7 @@
                         <label for="emailOfEmail">Email</label>
                         <form:input type="text" class="form-control" id="emailOfEmail" placeholder="Email"
                                     path="emailOfEmail" autofocus="true"/>
+                        <form:errors path="emailOfEmail"/>
                     </div>
                 </spring:bind>
 

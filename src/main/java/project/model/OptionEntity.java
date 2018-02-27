@@ -24,7 +24,7 @@ public class OptionEntity {
     @ManyToMany(mappedBy = "options")
     private List<ContractEntity> contracts;
 
-    @ManyToOne (optional=false, cascade=CascadeType.ALL)
+    @ManyToOne (optional=false)
     @JoinColumn (name="idTARIFF")
     private TariffEntity tariff;
 //
@@ -33,6 +33,7 @@ public class OptionEntity {
 
 //    @OneToMany (mappedBy="optionEntity", fetch=FetchType.EAGER)
 //    private Set<CompatibleOptionEntity> comOption;
+    public OptionEntity(){};
 
     public List<ContractEntity> getContracts() {
         return contracts;

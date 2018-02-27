@@ -46,6 +46,7 @@ public class TariffEntity {
 //        this.incOption = incOption;
 //    }
 
+    public TariffEntity(){}
     public void setOptions(List<OptionEntity> options) {
         this.options = options;
     }

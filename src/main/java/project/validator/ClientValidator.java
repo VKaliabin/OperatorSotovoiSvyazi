@@ -23,7 +23,7 @@ public class ClientValidator implements Validator {
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "emailOfEmail", "Required");
 
         if (clientService.findByEMail(client.getEmailOfEmail()) != null) {
-            errors.rejectValue("emailOfEmail", "Duplicate.userForm.name");
+            errors.rejectValue("emailOfEmail", "Duplicate.userForm.username");
         }
 
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "Required");

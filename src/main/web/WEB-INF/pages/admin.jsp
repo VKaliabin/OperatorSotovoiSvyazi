@@ -40,7 +40,7 @@
 
     <ul class="navbar-nav px-3">
         <li class="nav-item text-nowrap">
-            <a class="nav-link" href="/login?logout">Log out(${user})</a>
+            <a class="nav-link" href="/logout">Log out(${user})</a>
         </li>
     </ul>
 </nav>
@@ -51,7 +51,7 @@
             <div class="sidebar-sticky">
                 <ul class="nav flex-column">
                     <li class="nav-item">
-                        <a class="nav-link active" href="#">
+                        <a class="nav-link active" href="/admin">
                             <p style="font-size: 24px">Clients</p>
                             <span class="sr-only">(current)</span>
                         </a>
@@ -66,11 +66,11 @@
                             <p style="font-size: 24px">Tariffs</p>
                         </a>
                     </li>
-                    <%--<li class="nav-item">--%>
-                    <%--<a class="nav-link">--%>
-                    <%--<p style="font-size: 24px">Options</p>--%>
-                    <%--</a>--%>
-                    <%--</li>--%>
+                    <li class="nav-item">
+                        <a class="nav-link" href = "/options_admin">
+                            <p style="font-size: 24px">Options</p>
+                        </a>
+                    </li>
 
                 </ul>
 

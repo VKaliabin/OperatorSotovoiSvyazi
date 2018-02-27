@@ -20,6 +20,12 @@ public class OptionServiceImpl implements OptionService{
 
     @Override
     @Transactional
+    public List<OptionEntity> listAllOptions() {
+        return optionDao.listAllOptions();
+    }
+
+    @Override
+    @Transactional
     public void addOption(OptionEntity optionEntity) {
         optionDao.addOption(optionEntity);
     }

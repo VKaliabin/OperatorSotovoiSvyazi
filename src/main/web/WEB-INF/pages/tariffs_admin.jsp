@@ -62,16 +62,16 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" href="#">
+                        <a class="nav-link active" href="/tariffs_admin">
                             <p style="font-size: 24px">Tariffs</p>
                             <span class="sr-only">(current)</span>
                         </a>
                     </li>
-                    <%--<li class="nav-item">--%>
-                    <%--<a class="nav-link">--%>
-                    <%--<p style="font-size: 24px">Options</p>--%>
-                    <%--</a>--%>
-                    <%--</li>--%>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/options_admin">
+                            <p style="font-size: 24px">Options</p>
+                        </a>
+                    </li>
 
                 </ul>
 
@@ -108,10 +108,10 @@
                                 </c:forEach>
                             </td>
                             <td>
-                                <a class="btn btn-sm btn-outline-primary" style="width: 100px;" href="">Edit</a>
+                                <a class="btn btn-sm btn-outline-primary" style="width: 100px;" href="/edit_tariff?id=${tariff.getIdTariff()}">Edit</a>
                             </td>
                             <td>
-                                <a class="btn btn-sm btn-warning" style="width: 100px;" href="">Delete</a>
+                                <a class="btn btn-sm btn-warning" style="width: 100px;" href="/delete_tariff?id=${tariff.getIdTariff()}">Delete</a>
                             </td>
                         </tr>
                     </c:forEach>

@@ -62,16 +62,21 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" href="/tariffs_admin">
+                        <a class="nav-link" href="/tariffs_admin">
                             <p style="font-size: 24px">Tariffs</p>
-                            <span class="sr-only">(current)</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/options_admin">
+                        <a class="nav-link active" href="/options_admin">
                             <p style="font-size: 24px">Options</p>
+                            <span class="sr-only">(current)</span>
                         </a>
                     </li>
+                    <%--<li class="nav-item">--%>
+                    <%--<a class="nav-link">--%>
+                    <%--<p style="font-size: 24px">Options</p>--%>
+                    <%--</a>--%>
+                    <%--</li>--%>
 
                 </ul>
 
@@ -80,35 +85,43 @@
 
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
             <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
-                <h1 class="h2">New Tariff</h1>
+                <h1 class="h2">Options</h1>
+                <a class="btn  btn-success" style="width: 150px;" href="/addnewoption">Add new option</a>
             </div>
 
 
             <%--<h2>Section title</h2>--%>
+            <div class="table-responsive">
+                <table class="table table-striped table-sm">
+                    <thead>
+                    <tr>
+                        <th style="width: 600px">Name of an option</th>
+                        <th style="width: 600px">Price</th>
+                        <th style="width: 600px">Connection cost</th>
+                        <th style="width: 100px">Available to the tariff </th>
+                        <th style="width: 100px"></th>
+                        <th style="width: 100px"></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <c:forEach items="${options}" var="option">
+                        <tr>
+                            <td style="font-size: 20px">${option.getNameOption()}</td>
+                            <td style="font-size: 18px">${option.getPriceOption()}</td>
+                            <td style="font-size: 18px">${option.getConnectionCostOption()}</td>
+                            <td style="font-size: 18px">${option.getTariff().getNameTariff()}</td>
+                            <td>
+                                <a class="btn btn-sm btn-outline-primary" style="width: 100px;" href="">Edit</a>
+                            </td>
+                            <td>
+                                <a class="btn btn-sm btn-warning" style="width: 100px;" href="/delete_option?id=${option.getIdOption()}">Delete</a>
+                            </td>
+                        </tr>
+                    </c:forEach>
 
-               <form:form method="POST" action="/new_tariff" modelAttribute="tariff" class="form-signin">
-                   <div class="row">
-                       <spring:bind path="nameTariff">
-                           <div class="col-md-3 mb-3">
-                               <label for="tariffName">Name of a tariff</label>
-                               <form:input type="text" class="form-control" id="tariffName"
-                                            path="nameTariff" autofocus="true"/>
-                           </div>
-                       </spring:bind>
-
-                       <spring:bind path="priceTariff">
-                           <div class="col-md-3 mb-3">
-                               <label for="tariffPrice">Price</label>
-                               <form:input type="text" class="form-control" id="tariffPrice"
-                                           path="priceTariff" autofocus="true"/>
-                           </div>
-                       </spring:bind>
-
-
-                   </div>
-                   <button class="btn btn-primary btn-block" style="width: 150px" type="submit">Add new tariff</button>
-               </form:form>
-
+                    </tbody>
+                </table>
+            </div>
         </main>
     </div>
 </div>

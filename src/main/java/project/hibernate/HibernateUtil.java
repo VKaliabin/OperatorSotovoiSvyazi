@@ -1,17 +1,12 @@
-package project;
+package project.hibernate;
 
 import org.hibernate.Query;
 import org.hibernate.SQLQuery;
-import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import project.model.ClientEntity;
-import project.model.ContractEntity;
-import project.model.OptionEntity;
 
 import java.io.Serializable;
 import java.util.List;

@@ -1,10 +1,8 @@
 package project.dao;
 
-import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import project.HibernateUtil;
-import project.model.OptionEntity;
+import project.hibernate.HibernateUtil;
 import project.model.TariffEntity;
 
 import java.util.List;
@@ -30,5 +28,10 @@ public class TariffDaoImpl implements TariffDao {
     @Override
     public void add(TariffEntity tariffEntity) {
         hibernateUtil.add(tariffEntity);
+    }
+
+    @Override
+    public void remove(int idTariff) {
+        hibernateUtil.delete(idTariff, TariffEntity.class);
     }
 }

@@ -2,12 +2,8 @@ package project.dao;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import project.HibernateUtil;
-import project.model.ClientEntity;
+import project.hibernate.HibernateUtil;
 import project.model.ContractEntity;
-import project.model.OptionEntity;
-
-import java.util.List;
 
 @Repository
 public class ContractDaoImpl implements ContractDao {

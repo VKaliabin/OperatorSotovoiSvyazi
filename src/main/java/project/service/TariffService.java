@@ -12,4 +12,6 @@ public interface TariffService {
     public TariffEntity update(TariffEntity tariffEntity);
 
     public void add(TariffEntity tariffEntity);
+
+    public void remove(int idTariff);
 }

@@ -44,7 +44,7 @@
                 </props>
             </property>
     </bean>
-    <bean id="hibernateUtil" class="project.HibernateUtil">
+    <bean id="hibernateUtil" class="project.hibernate.HibernateUtil">
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
     <bean id="clientDao" class="project.dao.ClientDaoImpl">

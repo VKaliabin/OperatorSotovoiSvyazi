@@ -4,10 +4,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import project.HibernateUtil;
+import project.hibernate.HibernateUtil;
 import project.model.ClientEntity;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Repository

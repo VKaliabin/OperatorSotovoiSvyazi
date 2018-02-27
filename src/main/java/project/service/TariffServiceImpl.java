@@ -35,4 +35,10 @@ public class TariffServiceImpl implements TariffService {
     public void add(TariffEntity tariffEntity) {
         tariffDao.add(tariffEntity);
     }
+
+    @Override
+    @Transactional
+    public void remove(int idTariff) {
+        tariffDao.remove(idTariff);
+    }
 }

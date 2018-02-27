@@ -1,5 +1,4 @@
-package project.constroller;
-
+package project.controller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,7 +14,6 @@ import project.model.ContractEntity;
 import project.model.OptionEntity;
 import project.model.TariffEntity;
 import project.service.*;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,7 +32,7 @@ public class ClientController {
     private static final Logger logger = LoggerFactory.getLogger(ClientController.class);
 
 
-    @RequestMapping(value = {"/","/welcome"}, method = RequestMethod.GET)
+    @RequestMapping(value = {"/welcome"}, method = RequestMethod.GET)
     public String welcome(Model model) {
         Authentication authentication  = SecurityContextHolder.getContext().getAuthentication();
 
@@ -109,7 +107,7 @@ public class ClientController {
         model.addAttribute("connectedOptions", currentOptions);
         model.addAttribute("idContract", idContract);
 
-        return "options";
+        return "options_user";
     }
     @RequestMapping(value = "/changeOptions", method = RequestMethod.POST)
     public String changeOptions(Model model,@RequestParam(value = "checkbox",required = false)int[] checkboxValue,

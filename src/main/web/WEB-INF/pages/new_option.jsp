@@ -62,14 +62,15 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" href="/tariffs_admin">
+                        <a class="nav-link" href="/tariffs_admin">
                             <p style="font-size: 24px">Tariffs</p>
-                            <span class="sr-only">(current)</span>
+
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/options_admin">
+                        <a class="nav-link active" href="/options_admin" >
                             <p style="font-size: 24px">Options</p>
+                            <span class="sr-only">(current)</span>
                         </a>
                     </li>
 
@@ -80,34 +81,60 @@
 
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
             <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
-                <h1 class="h2">New Tariff</h1>
+                <h1 class="h2">New option</h1>
             </div>
 
 
             <%--<h2>Section title</h2>--%>
 
-               <form:form method="POST" action="/new_tariff" modelAttribute="tariff" class="form-signin">
-                   <div class="row">
-                       <spring:bind path="nameTariff">
-                           <div class="col-md-3 mb-3">
-                               <label for="tariffName">Name of a tariff</label>
-                               <form:input type="text" class="form-control" id="tariffName"
-                                            path="nameTariff" autofocus="true"/>
-                           </div>
-                       </spring:bind>
+            <form:form method="POST" action="/new_option" modelAttribute="option" class="form-signin">
+                <div class="row">
+                    <spring:bind path="nameOption">
+                        <div class="col-md-3 mb-3">
+                            <label for="optionName">Name of an option</label>
+                            <form:input type="text" class="form-control" id="optionName"
+                                        path="nameOption" autofocus="true"/>
+                            <form:errors path="nameOption"/>
+                        </div>
+                    </spring:bind>
 
-                       <spring:bind path="priceTariff">
-                           <div class="col-md-3 mb-3">
-                               <label for="tariffPrice">Price</label>
-                               <form:input type="text" class="form-control" id="tariffPrice"
-                                           path="priceTariff" autofocus="true"/>
-                           </div>
-                       </spring:bind>
+                    <spring:bind path="priceOption">
+                        <div class="col-md-3 mb-3">
+                            <label for="optionPrice">Price</label>
+                            <form:input type="text" class="form-control" id="optionPrice"
+                                        path="priceOption" autofocus="true"/>
+                        </div>
+                    </spring:bind>
+
+                    <spring:bind path="connectionCostOption">
+                        <div class="col-md-3 mb-3">
+                            <label for="optionConCost">Connection cost</label>
+                            <form:input type="number" min="1" class="form-control" id="optionConCost"
+                                        path="connectionCostOption" autofocus="true"/>
+                        </div>
+                    </spring:bind>
+
+                    <%--<spring:bind path="tariff">--%>
+                        <div class="col-md-3 mb-3">
+                            <label for="tariff">Tariff</label>
+                            <select name="id" id="id" class="custom-select d-block w-100" id="tariff" required>
+                                <option value="">Choose...</option>
+                                <c:forEach items="${tariffs}" var="tariff">
+                                    <option value="${tariff.getIdTariff()}"  >${tariff.getNameTariff()}</option>
+                                </c:forEach>
+
+                            </select>
+                            <div class="invalid-feedback">
+                                Please select a tariff for an option.
+                            </div>
+                        </div>
+                    <%--</spring:bind>--%>
 
 
-                   </div>
-                   <button class="btn btn-primary btn-block" style="width: 150px" type="submit">Add new tariff</button>
-               </form:form>
+
+                </div>
+                <button class="btn btn-primary btn-block" style="width: 150px" type="submit">Add new option</button>
+            </form:form>
 
         </main>
     </div>
