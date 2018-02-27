@@ -5,19 +5,14 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import project.dao.ClientDao;
-import project.dao.RoleDao;
 import project.model.ClientEntity;
 import project.model.RoleEntity;
-
-import javax.management.relation.Role;
-import javax.management.relation.RoleInfoNotFoundException;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
+
 
 @Service
-
 public class ClientServiceImpl implements ClientService {
 
     @Autowired
@@ -47,23 +42,24 @@ public class ClientServiceImpl implements ClientService {
         return clientDao.findByEmailOfEmail(clientEmail);
     }
 
+    @Override
+    @Transactional
+    public void updateClient(ClientEntity client) {
+        clientDao.updateClient(client);
+    }
 
-//
-//    @Override
-//    public void updateClient(ClientEntity client) {
-//        clientDao.updateClient(client);
-//    }
-//
-//    @Override
-//    public void removeClient(int id) {
-//        clientDao.removeClient(id);
-//    }
-//
-//    @Override
-//    public ClientEntity getClientId(int id) {
-//        return clientDao.getClientId(id);
-//    }
-//
+    @Override
+    @Transactional
+    public void removeClient(int id) {
+        clientDao.removeClient(id);
+    }
+
+    @Override
+    @Transactional
+    public ClientEntity getClientId(int id) {
+        return clientDao.getClientId(id);
+    }
+
     @Override
     @Transactional
     public List<ClientEntity> listClients() {

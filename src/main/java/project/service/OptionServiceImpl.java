@@ -5,13 +5,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import project.dao.OptionDao;
 import project.model.OptionEntity;
-
 import java.util.List;
 
 @Service
 public class OptionServiceImpl implements OptionService{
     @Autowired
     private OptionDao optionDao;
+
     @Override
     @Transactional
     public List<OptionEntity> listOptions(int idTariff){

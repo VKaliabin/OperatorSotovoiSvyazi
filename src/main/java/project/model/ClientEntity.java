@@ -68,7 +68,6 @@ public class ClientEntity {
 
     public List<ContractEntity> getContracts(){return contracts;}
 
-
     public int getIdClient() {
         return idClient;
     }

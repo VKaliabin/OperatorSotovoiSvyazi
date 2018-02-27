@@ -7,7 +7,7 @@
 		http://www.springframework.org/schema/security
 		http://www.springframework.org/schema/security/spring-security.xsd">
 
-    <!--<beans:bean id="clientValidator" class="project.validator.ClientValidator" />-->
+    <beans:bean id="clientValidator" class="project.validator.ClientValidator" />
 
     <http auto-config="true">
         <intercept-url pattern="/" access="hasAnyRole('ROLE_USER', 'ROLE_ADMIN')"/>

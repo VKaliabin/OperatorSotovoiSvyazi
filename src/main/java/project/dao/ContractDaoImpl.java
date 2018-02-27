@@ -13,7 +13,6 @@ public class ContractDaoImpl implements ContractDao {
     @Override
     public ContractEntity getContract(int idContcract) {
        return (ContractEntity) hibernateUtil.fetchById(idContcract, ContractEntity.class );
-//       return null;
     }
 
     @Override
@@ -25,11 +24,5 @@ public class ContractDaoImpl implements ContractDao {
     public void deleteConnectOptions(int idContract) {
         String query = "delete from connected_options where idContract=:id";
         hibernateUtil.deleteConnecOption(query, idContract);
-    }
-
-    @Override
-    public void addConnectOptions(int idContract, int idOption) {
-        String query = "insert into connected_options (idContract, idOption) values (:idCon, :idOpt)";
-        hibernateUtil.addConnectOption(query,idContract,idOption);
     }
 }

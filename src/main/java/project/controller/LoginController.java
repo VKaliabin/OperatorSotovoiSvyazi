@@ -14,7 +14,6 @@ import project.model.ClientEntity;
 import project.service.ClientService;
 import project.service.SecurityService;
 import project.validator.ClientValidator;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -59,7 +58,7 @@ public class LoginController {
         if (auth != null){
             new SecurityContextLogoutHandler().logout(request, response, auth);
         }
-        return "redirect:/login?logout";//You can redirect wherever you want, but generally it's a good practice to show login screen again.
+        return "redirect:/login?logout";
     }
 
 }

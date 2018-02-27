@@ -10,14 +10,9 @@ import org.springframework.transaction.annotation.Transactional;
 import project.dao.ClientDao;
 import project.model.ClientEntity;
 import project.model.RoleEntity;
-
 import java.util.HashSet;
 import java.util.Set;
 
-/*
-*  Implementation of {@link org.springframework.security.core.userdetails.UserDetailsService} interface.
-*
-* */
 public class ClientDetailServiceImpl implements UserDetailsService {
 
     @Autowired

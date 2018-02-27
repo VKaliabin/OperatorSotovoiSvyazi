@@ -1,7 +1,6 @@
 package project.service;
 
 import project.model.OptionEntity;
-
 import java.util.List;
 
 public interface OptionService {

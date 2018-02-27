@@ -10,6 +10,7 @@ import java.util.List;
 public class OptionsDaoImpl implements OptionDao {
     @Autowired
     private HibernateUtil hibernateUtil;
+
     @Override
     public List<OptionEntity> listOptions(int id) {
         String query = "select * from options where idTARIFF=:id";

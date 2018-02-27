@@ -7,7 +7,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 import project.model.ClientEntity;
-
 import java.io.Serializable;
 import java.util.List;
 
@@ -56,11 +55,7 @@ public class HibernateUtil {
         SQLQuery sqlQuery = sessionFactory.getCurrentSession().createSQLQuery(query);
         sqlQuery.setParameter("id", id);
     }
-    public void addConnectOption(String query, int idContract, int idOption){
-        SQLQuery sqlQuery = sessionFactory.getCurrentSession().createSQLQuery(query);
-        sqlQuery.setParameter("idCon", idContract);
-        sqlQuery.setParameter("idOpt", idOption);
-    }
+
     @SuppressWarnings("unchecked")
     public <T> List<T> fetchAll(Class<T> entityClass) {
         return sessionFactory.getCurrentSession().createQuery(" FROM " + entityClass.getName()).list();

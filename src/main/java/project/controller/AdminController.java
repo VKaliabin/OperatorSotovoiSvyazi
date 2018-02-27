@@ -1,9 +1,8 @@
 package project.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -19,7 +18,6 @@ import project.service.ClientService;
 import project.service.OptionService;
 import project.service.TariffService;
 import project.validator.OptionValidator;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,6 +33,7 @@ public class AdminController extends AuthenticationService {
     @Autowired
     private OptionValidator optionValidator;
 
+    private static final Logger logger = LoggerFactory.getLogger(ClientController.class);
 
     @Override
     public void authentication(Model model) {
@@ -126,15 +125,12 @@ public class AdminController extends AuthenticationService {
         optionValidator.validate(option, bindingResult);
         if (bindingResult.hasErrors()) {
             model.addAttribute("tariffs", tariffService.listTariffs());
-            return "new_option";
-        }
+            return "new_option"; }
 
         if (idTariff != 0) {
             TariffEntity tariffEntity = tariffService.getTariff(idTariff);
             option.setTariff(tariffEntity);
-            optionService.addOption(option);
-        }
-
+            optionService.addOption(option); }
 
         return "redirect:/options_admin";
     }
@@ -156,10 +152,8 @@ public class AdminController extends AuthenticationService {
         List<ClientEntity> clientList = clientService.listClients();
         List<ClientEntity> clientContract = new ArrayList<>();
         for (ClientEntity clients : clientList) {
-            if (clients.getContracts().equals(null)) {
-
-                clientContract.add(clients);
-            }
+            if (clients.getContracts().isEmpty()) {
+                clientContract.add(clients); }
         }
         model.addAttribute("clients", clientContract);
         return "contracts_admin";

@@ -1,10 +1,10 @@
 package project.dao;
 
 import project.model.OptionEntity;
-
 import java.util.List;
 
 public interface OptionDao {
+
     public List<OptionEntity> listOptions(int idTariff);
 
     public List<OptionEntity> listAllOptions();
