@@ -57,7 +57,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" href="#">
+                        <a class="nav-link active" href="/contracts">
                             <p style="font-size: 24px">Contracts</p>
                             <span class="sr-only">(current)</span>
                         </a>
@@ -68,7 +68,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href = "/options_admin">
+                        <a class="nav-link" href="/options_admin">
                             <p style="font-size: 24px">Options</p>
                         </a>
                     </li>
@@ -90,11 +90,12 @@
                 <table class="table table-striped table-sm">
                     <thead>
                     <tr>
-                        <th>Name</th>
-                        <th>Surname</th>
-                        <th>Date of birth</th>
-                        <th>Email</th>
-                        <th></th>
+                        <th style="width: 300px">Name</th>
+                        <th style="width: 300px">Surname</th>
+                        <th style="width: 300px">Date of birth</th>
+                        <th style="width: 300px">Email</th>
+                        <th style="width: 300px"></th>
+                        <th style="width: 300px"></th>
                     </tr>
                     </thead>
                     <tbody>
@@ -104,6 +105,15 @@
                             <td>${client.getSurname()}</td>
                             <td>${client.getDateOfBirth()}</td>
                             <td>${client.getEmailOfEmail()}</td>
+                            <td>
+                                <a class="btn btn-sm btn-primary" style="width: 200px;"
+                                   href="/show_client?id=${client.getIdClient()}">Show details</a>
+
+                            </td>
+                            <td>
+                                <a class="btn btn-sm btn-outline-primary" style="width: 200px;"
+                                   href="/new_contract?id=${client.getIdClient()}">Make a contract</a>
+                            </td>
                         </tr>
                     </c:forEach>
 
@@ -130,36 +140,5 @@
     feather.replace()
 </script>
 
-<!-- Graphs -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
-<script>
-    var ctx = document.getElementById("myChart");
-    var myChart = new Chart(ctx, {
-        type: 'line',
-        data: {
-            labels: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
-            datasets: [{
-                data: [15339, 21345, 18483, 24003, 23489, 24092, 12034],
-                lineTension: 0,
-                backgroundColor: 'transparent',
-                borderColor: '#007bff',
-                borderWidth: 4,
-                pointBackgroundColor: '#007bff'
-            }]
-        },
-        options: {
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        beginAtZero: false
-                    }
-                }]
-            },
-            legend: {
-                display: false,
-            }
-        }
-    });
-</script>
 </body>
 </html>

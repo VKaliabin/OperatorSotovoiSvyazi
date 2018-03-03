@@ -21,7 +21,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <%--<link rel="icon" href="../../../../favicon.ico">--%>
 
     <title>Dashboard Template for Bootstrap</title>
 
@@ -61,11 +60,7 @@
                             <span class="sr-only">(current)</span>
                         </a>
                     </li>
-                    <%--<li class="nav-item">--%>
-                    <%--<a class="nav-link">--%>
-                    <%--<p style="font-size: 24px">Options</p>--%>
-                    <%--</a>--%>
-                    <%--</li>--%>
+
 
                 </ul>
 
@@ -74,7 +69,7 @@
 
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
             <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
-                <%--<h1 class="h2">Contract</h1>--%>
+
 
             </div>
 
@@ -99,32 +94,35 @@
                         </tr>
                         </thead>
                         <tbody>
-                            <c:forEach items="${tariffs}" var="tariff">
-                                <tr style="font-size: 18px;">
-                                    <c:choose>
+                        <c:forEach items="${tariffs}" var="tariff">
+                            <tr style="font-size: 18px;">
+                                <c:choose>
                                     <c:when test="${contract.getTariff().getIdTariff()==tariff.getIdTariff()}">
-                                <td>${tariff.getNameTariff()}(Current tariff)</td>
+                                        <td>${tariff.getNameTariff()}(Current tariff)</td>
                                     </c:when>
-                                        <c:otherwise>
-                                            <td>${tariff.getNameTariff()}</td>
-                                        </c:otherwise>
-                                    </c:choose>
+                                    <c:otherwise>
+                                        <td>${tariff.getNameTariff()}</td>
+                                    </c:otherwise>
+                                </c:choose>
                                 <td>${tariff.getPriceTariff()}</td>
-                                    <c:choose>
-                                        <c:when test="${contract.getBlockedContract() == 'Blocked'}">
-                                            <td>
-                                                ---
-                                            </td>
-                                        </c:when>
-                                        <c:otherwise>
-                                            <td>
-                                                <a style="color: #420083; font-size: 16px;" href="/show_tariff?id=${tariff.getIdTariff()}&currentTar=${contract.getTariff().getIdTariff()}&idContract=${contract.getIdContract()}">Show <i class="fa fa-chevron-circle-right"></i></a>
-                                            </td>
-                                        </c:otherwise>
-                                    </c:choose>
+                                <c:choose>
+                                    <c:when test="${contract.getBlockedContract() == 'Blocked' || contract.getAdminBlock() == 'Y'}">
+                                        <td>
+                                            ---
+                                        </td>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <td>
+                                            <a style="color: #420083; font-size: 16px;"
+                                               href="/show_tariff?id=${tariff.getIdTariff()}&currentTar=${contract.getTariff().getIdTariff()}&idContract=${contract.getIdContract()}">Show
+                                                <i class="fa fa-chevron-circle-right"></i></a>
+                                        </td>
+                                    </c:otherwise>
+                                </c:choose>
 
-                                </>
-                            </c:forEach>
+                            </
+                            >
+                        </c:forEach>
                         </tbody>
                     </table>
 
@@ -152,36 +150,5 @@
     feather.replace()
 </script>
 
-<!-- Graphs -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
-<script>
-    var ctx = document.getElementById("myChart");
-    var myChart = new Chart(ctx, {
-        type: 'line',
-        data: {
-            labels: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
-            datasets: [{
-                data: [15339, 21345, 18483, 24003, 23489, 24092, 12034],
-                lineTension: 0,
-                backgroundColor: 'transparent',
-                borderColor: '#007bff',
-                borderWidth: 4,
-                pointBackgroundColor: '#007bff'
-            }]
-        },
-        options: {
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        beginAtZero: false
-                    }
-                }]
-            },
-            legend: {
-                display: false,
-            }
-        }
-    });
-</script>
 </body>
 </html>

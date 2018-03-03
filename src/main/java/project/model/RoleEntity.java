@@ -1,7 +1,8 @@
 package project.model;
 
 import javax.persistence.*;
-import java.util.Set;
+import java.util.List;
+
 
 @Entity
 @Table(name = "roles")
@@ -14,18 +15,19 @@ public class RoleEntity {
     @Column(name = "TYPE_USER")
     private String typeUser;
 
-    @ManyToMany(mappedBy = "roles")
-    private Set<ClientEntity> users;
+    @ManyToMany(mappedBy = "roles", fetch = FetchType.EAGER)
+    private List<ClientEntity> users;
 
-    public Set<ClientEntity> getUsers() {
+    public List<ClientEntity> getUsers() {
         return users;
     }
 
-    public void setUsers(Set<ClientEntity> users) {
+    public void setUsers(List<ClientEntity> users) {
         this.users = users;
     }
 
-    public RoleEntity(){}
+    public RoleEntity() {
+    }
 
     public int getIdRoles() {
         return idRoles;

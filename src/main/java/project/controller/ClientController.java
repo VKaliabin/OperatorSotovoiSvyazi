@@ -13,12 +13,17 @@ import project.model.ClientEntity;
 import project.model.ContractEntity;
 import project.model.OptionEntity;
 import project.model.TariffEntity;
-import project.service.*;
+import project.service.api.ClientService;
+import project.service.api.ContractService;
+import project.service.api.OptionService;
+import project.service.api.TariffService;
+import project.utils.ContractModel;
 import java.util.ArrayList;
 import java.util.List;
 
 @Controller
 public class ClientController {
+    private static final Logger logger = LoggerFactory.getLogger(ClientController.class);
 
     @Autowired
     private ClientService clientService;
@@ -29,19 +34,21 @@ public class ClientController {
     @Autowired
     private OptionService optionService;
 
-    private static final Logger logger = LoggerFactory.getLogger(ClientController.class);
 
-
-    @RequestMapping(value = {"/welcome"}, method = RequestMethod.GET)
+    @RequestMapping(value = {"/", "/welcome"}, method = RequestMethod.GET)
     public String welcome(Model model) {
-        Authentication authentication  = SecurityContextHolder.getContext().getAuthentication();
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         User user = (User) authentication.getPrincipal();
         model.addAttribute("user", user.getUsername());
 
         ClientEntity clientEntity = clientService.findByEMail(user.getUsername());
         model.addAttribute("contracts", clientEntity.getContracts());
-        return "welcome";
+        if (clientEntity.getExistingClient().equals("Blocked")) {
+            return "blocked_user";
+        } else {
+            return "welcome";
+        }
     }
 
 
@@ -51,7 +58,7 @@ public class ClientController {
         contractEntity.setBlockedContract("Blocked");
         contractService.update(contractEntity);
 
-        Authentication authentication  = SecurityContextHolder.getContext().getAuthentication();
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         User user = (User) authentication.getPrincipal();
         model.addAttribute("user", user.getUsername());
 
@@ -62,11 +69,11 @@ public class ClientController {
 
     @RequestMapping(value = "/unblock", method = RequestMethod.GET)
     public String unblock(Model model, @RequestParam(value = "id") int id) {
-        logger.debug("contract id ={}", id );
+        logger.debug("contract id ={}", id);
         ContractEntity contractEntity = contractService.getContract(id);
         contractEntity.setBlockedContract("Unblocked");
         contractService.update(contractEntity);
-        Authentication authentication  = SecurityContextHolder.getContext().getAuthentication();
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         User user = (User) authentication.getPrincipal();
         model.addAttribute("user", user.getUsername());
 
@@ -76,8 +83,8 @@ public class ClientController {
     }
 
     @RequestMapping(value = "/tariffs_user", method = RequestMethod.GET)
-    public String tariffs(Model model){
-        Authentication authentication  = SecurityContextHolder.getContext().getAuthentication();
+    public String tariffs(Model model) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         User user = (User) authentication.getPrincipal();
         model.addAttribute("user", user.getUsername());
 
@@ -88,11 +95,12 @@ public class ClientController {
         model.addAttribute("tariffs", tarifs);
         return "tariffs_user";
     }
+
     @RequestMapping(value = "/show_tariff", method = RequestMethod.GET)
     public String showTariff(Model model, @RequestParam(value = "id") int id,
                              @RequestParam(value = "currentTar") int currentTar,
-                             @RequestParam(value = "idContract") int idContract){
-        Authentication authentication  = SecurityContextHolder.getContext().getAuthentication();
+                             @RequestParam(value = "idContract") int idContract) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         User user = (User) authentication.getPrincipal();
         model.addAttribute("user", user.getUsername());
 
@@ -105,29 +113,35 @@ public class ClientController {
 
         List<OptionEntity> currentOptions = contractService.getContract(idContract).getOptions();
         model.addAttribute("connectedOptions", currentOptions);
-        model.addAttribute("idContract", idContract);
-
+        ContractEntity contractEntity = contractService.getContract(idContract);
+//        logger.debug("Send contract entyty = {}", contractEntity);
+        model.addAttribute("contractEntity", contractEntity);
+        model.addAttribute("contract", new ContractModel());
         return "options_user";
     }
+
     @RequestMapping(value = "/changeOptions", method = RequestMethod.POST)
-    public String changeOptions(Model model,@RequestParam(value = "checkbox",required = false)int[] checkboxValue,
-                                @RequestParam(value = "switch", required = false)Integer idTariff,
-                                @RequestParam("idContract") int idContract){
+    public String changeOptions(Model model, @RequestParam(value = "checkbox", required = false) int[] checkboxValue,
+                                @RequestParam(value = "switch", required = false) Integer idTariff,
+                                @RequestParam("idContract") int idContract) {
         contractService.deleteConnectOptions(idContract);
         ContractEntity contractEntity = contractService.getContract(idContract);
         List<OptionEntity> listConOptions = new ArrayList<>();
 
-        if(idTariff != contractEntity.getTariff().getIdTariff()){
-          contractEntity.setTariff(tariffService.getTariff(idTariff));}
+        if (idTariff != contractEntity.getTariff().getIdTariff()) {
+            contractEntity.setTariff(tariffService.getTariff(idTariff));
+        }
 
         if (checkboxValue != null) {
             for (int aCheckboxValue : checkboxValue) {
-                listConOptions.add(optionService.getOption(aCheckboxValue));}}
+                listConOptions.add(optionService.getOption(aCheckboxValue));
+            }
+        }
 
-            contractEntity.setOptions(listConOptions);
-            contractService.update(contractEntity);
+        contractEntity.setOptions(listConOptions);
+        contractService.update(contractEntity);
 
-        Authentication authentication  = SecurityContextHolder.getContext().getAuthentication();
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         User user = (User) authentication.getPrincipal();
         model.addAttribute("user", user.getUsername());
 

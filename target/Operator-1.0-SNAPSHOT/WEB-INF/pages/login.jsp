@@ -46,12 +46,14 @@
         <input name="password" type="password" id="inputPassword" class="form-control" placeholder="Password" required>
         <span>${error}</span>
         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-        <button class="btn btn-lg btn-primary btn-block" style="background-color: #343a40; border-color: #343a40 ;" type="submit">
+        <button class="btn btn-lg btn-primary btn-block" style="background-color: #343a40; border-color: #343a40 ;"
+                type="submit">
             Log in
         </button>
         <br>
 
-        <a class="btn btn-lg btn-primary btn-block" style="background-color: #343a40; border-color: #343a40 ;" href="registration">Registration</a>
+        <a class="btn btn-lg btn-primary btn-block" style="background-color: #343a40; border-color: #343a40 ;"
+           href="registration">Registration</a>
     </div>
 </form>
 </body>

@@ -23,10 +23,10 @@ public class TariffEntity {
 //    @OneToOne(optional = false, mappedBy = "tariff")
 //    private CompatibleOptionEntity comOption;
 
-    @OneToMany (mappedBy="tariff", fetch=FetchType.EAGER)
+    @OneToMany(mappedBy = "tariff", fetch = FetchType.EAGER)
     private List<OptionEntity> options;
 
-    @OneToMany (mappedBy="tariff", fetch=FetchType.EAGER)
+    @OneToMany(mappedBy = "tariff", fetch = FetchType.EAGER)
     private List<ContractEntity> contracts;
 
 //    public CompatibleOptionEntity getComOption() {
@@ -45,7 +45,9 @@ public class TariffEntity {
 //        this.incOption = incOption;
 //    }
 
-    public TariffEntity(){}
+    public TariffEntity() {
+    }
+
     public void setOptions(List<OptionEntity> options) {
         this.options = options;
     }
@@ -55,9 +57,11 @@ public class TariffEntity {
     }
 
 
-    public List<ContractEntity> getContracts(){return contracts;}
+    public List<ContractEntity> getContracts() {
+        return contracts;
+    }
 
-    public List<OptionEntity> getOptions(){
+    public List<OptionEntity> getOptions() {
         return options;
     }
 

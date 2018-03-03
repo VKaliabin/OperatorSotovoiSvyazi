@@ -57,7 +57,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">
+                        <a class="nav-link" href="/contracts">
                             <p style="font-size: 24px">Contracts</p>
                         </a>
                     </li>
@@ -72,11 +72,6 @@
                             <span class="sr-only">(current)</span>
                         </a>
                     </li>
-                    <%--<li class="nav-item">--%>
-                    <%--<a class="nav-link">--%>
-                    <%--<p style="font-size: 24px">Options</p>--%>
-                    <%--</a>--%>
-                    <%--</li>--%>
 
                 </ul>
 
@@ -90,7 +85,6 @@
             </div>
 
 
-            <%--<h2>Section title</h2>--%>
             <div class="table-responsive">
                 <table class="table table-striped table-sm">
                     <thead>
@@ -98,7 +92,7 @@
                         <th style="width: 600px">Name of an option</th>
                         <th style="width: 600px">Price</th>
                         <th style="width: 600px">Connection cost</th>
-                        <th style="width: 100px">Available to the tariff </th>
+                        <th style="width: 100px">Available to the tariff</th>
                         <th style="width: 100px"></th>
                         <th style="width: 100px"></th>
                     </tr>
@@ -114,7 +108,8 @@
                                 <a class="btn btn-sm btn-outline-primary" style="width: 100px;" href="">Edit</a>
                             </td>
                             <td>
-                                <a class="btn btn-sm btn-warning" style="width: 100px;" href="/delete_option?id=${option.getIdOption()}">Delete</a>
+                                <a class="btn btn-sm btn-warning" style="width: 100px;"
+                                   href="/delete_option?id=${option.getIdOption()}">Delete</a>
                             </td>
                         </tr>
                     </c:forEach>
@@ -142,36 +137,5 @@
     feather.replace()
 </script>
 
-<!-- Graphs -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
-<script>
-    var ctx = document.getElementById("myChart");
-    var myChart = new Chart(ctx, {
-        type: 'line',
-        data: {
-            labels: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
-            datasets: [{
-                data: [15339, 21345, 18483, 24003, 23489, 24092, 12034],
-                lineTension: 0,
-                backgroundColor: 'transparent',
-                borderColor: '#007bff',
-                borderWidth: 4,
-                pointBackgroundColor: '#007bff'
-            }]
-        },
-        options: {
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        beginAtZero: false
-                    }
-                }]
-            },
-            legend: {
-                display: false,
-            }
-        }
-    });
-</script>
 </body>
 </html>

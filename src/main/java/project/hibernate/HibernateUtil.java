@@ -43,15 +43,16 @@ public class HibernateUtil {
                 createQuery("from ClientEntity where EMAIL=:email");
         query.setParameter("email", email);
 
-        return (ClientEntity) query.uniqueResult(); }
+        return (ClientEntity) query.uniqueResult();
+    }
 
     public <T> List fetchAllById(String query, Class<T> entityClass, int id) {
-        SQLQuery sql =sessionFactory.getCurrentSession().createSQLQuery(query).addEntity(entityClass);
+        SQLQuery sql = sessionFactory.getCurrentSession().createSQLQuery(query).addEntity(entityClass);
         sql.setParameter("id", id);
         return sql.list();
     }
 
-    public void deleteConnecOption(String query, int id){
+    public void deleteConnecOption(String query, int id) {
         SQLQuery sqlQuery = sessionFactory.getCurrentSession().createSQLQuery(query);
         sqlQuery.setParameter("id", id);
     }
@@ -61,7 +62,8 @@ public class HibernateUtil {
         return sessionFactory.getCurrentSession().createQuery(" FROM " + entityClass.getName()).list();
 
     }
-    public void deleteAllById(Serializable id,String query){
+
+    public void deleteAllById(Serializable id, String query) {
         sessionFactory.getCurrentSession().createSQLQuery(query);
     }
 

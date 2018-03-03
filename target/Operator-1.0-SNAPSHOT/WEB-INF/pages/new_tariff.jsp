@@ -57,7 +57,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">
+                        <a class="nav-link" href="/contracts">
                             <p style="font-size: 24px">Contracts</p>
                         </a>
                     </li>
@@ -86,28 +86,28 @@
 
             <%--<h2>Section title</h2>--%>
 
-               <form:form method="POST" action="/new_tariff" modelAttribute="tariff" class="form-signin">
-                   <div class="row">
-                       <spring:bind path="nameTariff">
-                           <div class="col-md-3 mb-3">
-                               <label for="tariffName">Name of a tariff</label>
-                               <form:input type="text" class="form-control" id="tariffName"
-                                            path="nameTariff" autofocus="true"/>
-                           </div>
-                       </spring:bind>
+            <form:form method="POST" action="/new_tariff" modelAttribute="tariff" class="form-signin">
+                <div class="row">
+                    <spring:bind path="nameTariff">
+                        <div class="col-md-3 mb-3">
+                            <label for="tariffName">Name of a tariff</label>
+                            <form:input type="text" class="form-control" id="tariffName"
+                                        path="nameTariff" autofocus="true"/>
+                        </div>
+                    </spring:bind>
 
-                       <spring:bind path="priceTariff">
-                           <div class="col-md-3 mb-3">
-                               <label for="tariffPrice">Price</label>
-                               <form:input type="number" class="form-control" id="tariffPrice"
-                                           path="priceTariff" autofocus="true"/>
-                           </div>
-                       </spring:bind>
+                    <spring:bind path="priceTariff">
+                        <div class="col-md-3 mb-3">
+                            <label for="tariffPrice">Price</label>
+                            <form:input type="number" class="form-control" id="tariffPrice"
+                                        path="priceTariff" autofocus="true"/>
+                        </div>
+                    </spring:bind>
 
 
-                   </div>
-                   <button class="btn btn-primary btn-block" style="width: 150px" type="submit">Add new tariff</button>
-               </form:form>
+                </div>
+                <button class="btn btn-primary btn-block" style="width: 150px" type="submit">Add new tariff</button>
+            </form:form>
 
         </main>
     </div>
@@ -129,36 +129,5 @@
     feather.replace()
 </script>
 
-<!-- Graphs -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
-<script>
-    var ctx = document.getElementById("myChart");
-    var myChart = new Chart(ctx, {
-        type: 'line',
-        data: {
-            labels: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
-            datasets: [{
-                data: [15339, 21345, 18483, 24003, 23489, 24092, 12034],
-                lineTension: 0,
-                backgroundColor: 'transparent',
-                borderColor: '#007bff',
-                borderWidth: 4,
-                pointBackgroundColor: '#007bff'
-            }]
-        },
-        options: {
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        beginAtZero: false
-                    }
-                }]
-            },
-            legend: {
-                display: false,
-            }
-        }
-    });
-</script>
 </body>
 </html>

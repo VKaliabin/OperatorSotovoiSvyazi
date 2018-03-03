@@ -21,7 +21,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <%--<link rel="icon" href="../../../../favicon.ico">--%>
 
     <title>Dashboard Template for Bootstrap</title>
 
@@ -57,7 +56,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">
+                        <a class="nav-link" href="/contracts">
                             <p style="font-size: 24px">Contracts</p>
                         </a>
                     </li>
@@ -108,10 +107,12 @@
                                 </c:forEach>
                             </td>
                             <td>
-                                <a class="btn btn-sm btn-outline-primary" style="width: 100px;" href="/edit_tariff?id=${tariff.getIdTariff()}">Edit</a>
+                                <a class="btn btn-sm btn-outline-primary" style="width: 100px;"
+                                   href="/edit_tariff?id=${tariff.getIdTariff()}">Edit</a>
                             </td>
                             <td>
-                                <a class="btn btn-sm btn-warning" style="width: 100px;" href="/delete_tariff?id=${tariff.getIdTariff()}">Delete</a>
+                                <a class="btn btn-sm btn-warning" style="width: 100px;"
+                                   href="/delete_tariff?id=${tariff.getIdTariff()}">Delete</a>
                             </td>
                         </tr>
                     </c:forEach>
@@ -139,36 +140,5 @@
     feather.replace()
 </script>
 
-<!-- Graphs -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
-<script>
-    var ctx = document.getElementById("myChart");
-    var myChart = new Chart(ctx, {
-        type: 'line',
-        data: {
-            labels: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
-            datasets: [{
-                data: [15339, 21345, 18483, 24003, 23489, 24092, 12034],
-                lineTension: 0,
-                backgroundColor: 'transparent',
-                borderColor: '#007bff',
-                borderWidth: 4,
-                pointBackgroundColor: '#007bff'
-            }]
-        },
-        options: {
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        beginAtZero: false
-                    }
-                }]
-            },
-            legend: {
-                display: false,
-            }
-        }
-    });
-</script>
 </body>
 </html>

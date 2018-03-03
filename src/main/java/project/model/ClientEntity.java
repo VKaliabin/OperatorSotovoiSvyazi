@@ -35,12 +35,12 @@ public class ClientEntity {
     private String password;
 
     @Column(name = "EXISTING_CLIENT")
-    private Byte existingClient;
+    private String existingClient;
 
-    @OneToMany (mappedBy="clientEntity", fetch=FetchType.EAGER)
+    @OneToMany(mappedBy = "clientEntity", fetch = FetchType.EAGER)
     private List<ContractEntity> contracts;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "idUSER"),
             inverseJoinColumns = @JoinColumn(name = "idROLE"))
     private Set<RoleEntity> roles;
@@ -64,9 +64,16 @@ public class ClientEntity {
         this.confirmPassword = confirmPassword;
     }
 
-    public ClientEntity(){}
+    public ClientEntity() {
+    }
 
-    public List<ContractEntity> getContracts(){return contracts;}
+    public List<ContractEntity> getContracts() {
+        return contracts;
+    }
+
+    public void setContracts(List<ContractEntity> contracts) {
+        this.contracts = contracts;
+    }
 
     public int getIdClient() {
         return idClient;
@@ -139,11 +146,11 @@ public class ClientEntity {
     }
 
 
-    public Byte getExistingClient() {
+    public String getExistingClient() {
         return existingClient;
     }
 
-    public void setExistingClient(Byte existingClient) {
+    public void setExistingClient(String existingClient) {
         this.existingClient = existingClient;
     }
 

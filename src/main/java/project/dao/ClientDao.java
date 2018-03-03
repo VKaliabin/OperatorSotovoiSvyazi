@@ -2,7 +2,6 @@ package project.dao;
 
 
 import project.model.ClientEntity;
-
 import java.util.List;
 
 public interface ClientDao {
@@ -13,7 +12,6 @@ public interface ClientDao {
     public void removeClient(int id);
     public ClientEntity getClientId (int id);
     public List<ClientEntity> listClients();
-
 
 
 }

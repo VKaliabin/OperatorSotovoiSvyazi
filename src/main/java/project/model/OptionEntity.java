@@ -2,7 +2,6 @@ package project.model;
 
 import javax.persistence.*;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Table(name = "options")
@@ -24,16 +23,19 @@ public class OptionEntity {
     @ManyToMany(mappedBy = "options")
     private List<ContractEntity> contracts;
 
-    @ManyToOne (optional=false)
-    @JoinColumn (name="idTARIFF")
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "idTARIFF")
     private TariffEntity tariff;
 //
 //    @OneToOne (optional=false, mappedBy="option")
 //    private IncompatibleOptionEntity incOption;
 
-//    @OneToMany (mappedBy="optionEntity", fetch=FetchType.EAGER)
+    //    @OneToMany (mappedBy="optionEntity", fetch=FetchType.EAGER)
 //    private Set<CompatibleOptionEntity> comOption;
-    public OptionEntity(){};
+    public OptionEntity() {
+    }
+
+    ;
 
     public List<ContractEntity> getContracts() {
         return contracts;

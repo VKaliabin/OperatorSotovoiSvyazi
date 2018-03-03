@@ -40,9 +40,8 @@ public class ClientDaoImpl implements ClientDao{
 
     @Override
     public ClientEntity getClientId(int id) {
-        ClientEntity client = new ClientEntity();
-        hibernateUtil.fetchById(id, ClientEntity.class);
-        return client;
+
+        return hibernateUtil.fetchById(id, ClientEntity.class);
     }
 
     @Override

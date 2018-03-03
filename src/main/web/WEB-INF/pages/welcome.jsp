@@ -21,7 +21,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <%--<link rel="icon" href="../../../../favicon.ico">--%>
 
     <title>Dashboard Template for Bootstrap</title>
 
@@ -51,7 +50,7 @@
             <div class="sidebar-sticky">
                 <ul class="nav flex-column">
                     <li class="nav-item">
-                        <a class="nav-link active" href="#">
+                        <a class="nav-link active" href="/welcome">
                             <p style="font-size: 24px">Contract</p>
                             <span class="sr-only">(current)</span>
                         </a>
@@ -61,11 +60,6 @@
                             <p style="font-size: 24px">Tariffs</p>
                         </a>
                     </li>
-                    <%--<li class="nav-item">--%>
-                        <%--<a class="nav-link">--%>
-                            <%--<p style="font-size: 24px">Options</p>--%>
-                        <%--</a>--%>
-                    <%--</li>--%>
 
                 </ul>
 
@@ -79,50 +73,54 @@
             </div>
 
 
-            <%--<h2>Section title</h2>--%>
             <div class="table-responsive">
                 <table class="table table-striped table-sm">
                     <thead>
-                    <tr>
+                    <tr style="font-size: 20px">
                         <th>Your Number</th>
                         <th>Tariff</th>
                         <th>Options</th>
                         <th>Action</th>
-                        <%--<th>Header</th>--%>
                     </tr>
                     </thead>
                     <tbody>
                     <c:forEach items="${contracts}" var="contract">
                         <c:choose>
                             <c:when test="${contract.getBlockedContract() == 'Unblocked'}">
-                                <tr style="font-size: 18px; background-color: #dbe7ef;">
                             </c:when>
                             <c:otherwise>
                                 <tr style="font-size: 18px; background-color: #efc5c5;">
                             </c:otherwise>
                         </c:choose>
 
-
-                            <td>${contract.getContractNumber()}</td>
-                            <td>
-                                <a >${contract.getTariff().getNameTariff()}</a></td>
-                            <td>
-                                <c:forEach items="${contract.getOptions()}" var="options">
-                                    ${options.getNameOption()}<br>
-                                </c:forEach>
-                            </td>
-                            <td>
-                                <c:choose>
-                                    <c:when test="${contract.getBlockedContract() == 'Unblocked'}">
-                                        <a class="btn btn-lg btn-danger" href="/block?id=${contract.getIdContract()}"><i class="fa fa-minus-square" ></i></a>
-                                    </c:when>
-                                    <c:otherwise>
-                                        <a class="btn btn-lg btn-primary" href="/unblock?id=${contract.getIdContract()}"><i class="fa fa-plus-square"></i></a>
-                                    </c:otherwise>
-                                </c:choose>
-                            </td>
-                            <%--<td>sit</td>--%>
-
+                        <td style="font-size: 20px">${contract.getContractNumber()}</td>
+                        <td style="font-size: 20px"><a>${contract.getTariff().getNameTariff()}</a></td>
+                        <td style="font-size: 20px">
+                            <c:forEach items="${contract.getOptions()}" var="options">
+                                ${options.getNameOption()}<br>
+                            </c:forEach>
+                        </td>
+                        <td>
+                            <c:choose>
+                                <c:when test="${contract.getAdminBlock() == 'Y'}">
+                                    <a style="font-size: 20px; color: #ac2925">Your number is blocked</a>
+                                </c:when>
+                                <c:otherwise>
+                                    <c:choose>
+                                        <c:when test="${contract.getBlockedContract() == 'Unblocked'}">
+                                            <a class="btn btn-lg btn-danger"
+                                               href="/block?id=${contract.getIdContract()}"><i
+                                                    class="fa fa-minus-square"></i></a>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <a class="btn btn-lg btn-primary"
+                                               href="/unblock?id=${contract.getIdContract()}"><i
+                                                    class="fa fa-plus-square"></i></a>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </c:otherwise>
+                            </c:choose>
+                        </td>
                         </tr>
                     </c:forEach>
                     </tbody>
@@ -148,36 +146,5 @@
     feather.replace()
 </script>
 
-<!-- Graphs -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
-<script>
-    var ctx = document.getElementById("myChart");
-    var myChart = new Chart(ctx, {
-        type: 'line',
-        data: {
-            labels: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
-            datasets: [{
-                data: [15339, 21345, 18483, 24003, 23489, 24092, 12034],
-                lineTension: 0,
-                backgroundColor: 'transparent',
-                borderColor: '#007bff',
-                borderWidth: 4,
-                pointBackgroundColor: '#007bff'
-            }]
-        },
-        options: {
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        beginAtZero: false
-                    }
-                }]
-            },
-            legend: {
-                display: false,
-            }
-        }
-    });
-</script>
 </body>
 </html>

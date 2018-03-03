@@ -51,7 +51,7 @@
         <property name="hibernateUtil" ref="hibernateUtil"/>
     </bean>
 
-    <bean id="clientService" class="project.service.ClientServiceImpl">
+    <bean id="clientService" class="project.service.impl.ClientServiceImpl">
         <property name="clientDao" ref="clientDao"/>
     </bean>
             <bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">

@@ -2,6 +2,7 @@ package project.model;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "contract")
@@ -16,19 +17,24 @@ public class ContractEntity {
     @Basic
     @Column(name = "BLOCKED_CONTRACT")
     private String blockedContract;
+    @Column(name = "ADMIN_BLOCK")
+    private String adminBlock;
 
-    @ManyToMany(fetch=FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "connected_options", joinColumns = @JoinColumn(name = "idContract"),
-    inverseJoinColumns = @JoinColumn(name = "idOption"))
+            inverseJoinColumns = @JoinColumn(name = "idOption"))
     private List<OptionEntity> options;
 
-    @ManyToOne (optional=false, cascade=CascadeType.ALL)
-    @JoinColumn (name="idTARIFF")
+    @ManyToOne(optional = false, cascade = CascadeType.ALL)
+    @JoinColumn(name = "idTARIFF")
     private TariffEntity tariff;
 
-    @ManyToOne (optional=false, cascade=CascadeType.ALL)
-    @JoinColumn (name="idCLIENT")
+    @ManyToOne(optional = false, cascade = CascadeType.ALL)
+    @JoinColumn(name = "idCLIENT")
     private ClientEntity clientEntity;
+
+    public ContractEntity() {
+    }
 
     public List<OptionEntity> getOptions() {
         return options;
@@ -58,6 +64,10 @@ public class ContractEntity {
         return clientEntity;
     }
 
+    public void setClientEntity(ClientEntity clientEntity) {
+        this.clientEntity = clientEntity;
+    }
+
     public String getContractNumber() {
         return contractNumber;
     }
@@ -75,27 +85,31 @@ public class ContractEntity {
         this.blockedContract = blockedContract;
     }
 
+    public String getAdminBlock() {
+        return adminBlock;
+    }
+
+    public void setAdminBlock(String adminBlock) {
+        this.adminBlock = adminBlock;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         ContractEntity that = (ContractEntity) o;
-
-        if (idContract != that.idContract) return false;
-        if (contractNumber != null ? !contractNumber.equals(that.contractNumber) : that.contractNumber != null)
-            return false;
-        if (blockedContract != null ? !blockedContract.equals(that.blockedContract) : that.blockedContract != null)
-            return false;
-
-        return true;
+        return idContract == that.idContract &&
+                Objects.equals(contractNumber, that.contractNumber) &&
+                Objects.equals(blockedContract, that.blockedContract) &&
+                Objects.equals(adminBlock, that.adminBlock) &&
+                Objects.equals(options, that.options) &&
+                Objects.equals(tariff, that.tariff) &&
+                Objects.equals(clientEntity, that.clientEntity);
     }
 
     @Override
     public int hashCode() {
-        int result = idContract;
-        result = 31 * result + (contractNumber != null ? contractNumber.hashCode() : 0);
-        result = 31 * result + (blockedContract != null ? blockedContract.hashCode() : 0);
-        return result;
+
+        return Objects.hash(idContract, contractNumber, blockedContract, adminBlock, options, tariff, clientEntity);
     }
 }

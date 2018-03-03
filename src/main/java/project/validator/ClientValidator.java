@@ -5,14 +5,15 @@ import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
+import project.dao.ClientDao;
 import project.model.ClientEntity;
-import project.service.ClientService;
 
 @Component
 public class ClientValidator implements Validator {
+//    @Autowired
+//    private ClientService clientService;
     @Autowired
-    private ClientService clientService;
-
+    private ClientDao clientDao;
     @Override
     public boolean supports(Class<?> aClass) {
         return ClientEntity.class.equals(aClass);
@@ -23,7 +24,7 @@ public class ClientValidator implements Validator {
         ClientEntity client = (ClientEntity) o;
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "emailOfEmail", "Required");
 
-        if (clientService.findByEMail(client.getEmailOfEmail()) != null) {
+        if (clientDao.findByEmailOfEmail(client.getEmailOfEmail()) != null) {
             errors.rejectValue("emailOfEmail", "Duplicate.userForm.username");
         }
 

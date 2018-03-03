@@ -41,4 +41,5 @@ public class OptionsDaoImpl implements OptionDao {
     public OptionEntity getOption(int idOption) {
         return hibernateUtil.fetchById(idOption, OptionEntity.class);
     }
+
 }

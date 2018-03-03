@@ -12,7 +12,29 @@
     <http auto-config="true">
         <intercept-url pattern="/" access="hasAnyRole('ROLE_USER', 'ROLE_ADMIN')"/>
         <intercept-url pattern="/welcome" access="hasRole('ROLE_USER')"/>
+        <intercept-url pattern="/block" access="hasRole('ROLE_USER')"/>
+        <intercept-url pattern="/unblock" access="hasRole('ROLE_USER')"/>
+        <intercept-url pattern="/tariffs_user" access="hasRole('ROLE_USER')"/>
+        <intercept-url pattern="/show_tariff" access="hasRole('ROLE_USER')"/>
+        <intercept-url pattern="/changeOptions" access="hasRole('ROLE_USER')"/>
         <intercept-url pattern="/admin" access="hasRole('ROLE_ADMIN')"/>
+        <intercept-url pattern="/tariffs_admin" access="hasRole('ROLE_ADMIN')"/>
+        <intercept-url pattern="/options_admin" access="hasRole('ROLE_ADMIN')"/>
+        <intercept-url pattern="/addnewtariff" access="hasRole('ROLE_ADMIN')"/>
+        <intercept-url pattern="/new_tariff" access="hasRole('ROLE_ADMIN')"/>
+        <intercept-url pattern="/delete_tariff" access="hasRole('ROLE_ADMIN')"/>
+        <intercept-url pattern="/addnewoption" access="hasRole('ROLE_ADMIN')"/>
+        <intercept-url pattern="/new_option" access="hasRole('ROLE_ADMIN')"/>
+        <intercept-url pattern="/delete_option" access="hasRole('ROLE_ADMIN')"/>
+        <intercept-url pattern="/contracts" access="hasRole('ROLE_ADMIN')"/>
+        <intercept-url pattern="/new_contract" access="hasRole('ROLE_ADMIN')"/>
+        <intercept-url pattern="/addContract" access="hasRole('ROLE_ADMIN')"/>
+        <intercept-url pattern="/unblock_client" access="hasRole('ROLE_ADMIN')"/>
+        <intercept-url pattern="/block_client" access="hasRole('ROLE_ADMIN')"/>
+        <intercept-url pattern="/show_client" access="hasRole('ROLE_ADMIN')"/>
+        <intercept-url pattern="/block_contract" access="hasRole('ROLE_ADMIN')"/>
+        <intercept-url pattern="/changetariff" access="hasRole('ROLE_ADMIN')"/>
+        <intercept-url pattern="/changeContract" access="hasRole('ROLE_ADMIN')"/>
 
         <form-login login-page="/login"  authentication-failure-url="/login?error"  authentication-success-handler-ref="myAuthenticationSuccessHandler"
                     username-parameter="emailOfEmail" password-parameter="password"/>
@@ -26,9 +48,11 @@
         </authentication-provider>
     </authentication-manager>
 
+    <beans:bean id="springSecurityFilterChain" class="org.springframework.web.filter.DelegatingFilterProxy"/>
+
 
     <beans:bean id="ClientDetailServiceImpl"
-                class="project.service.ClientDetailServiceImpl"></beans:bean>
+                class="project.service.impl.ClientDetailServiceImpl"></beans:bean>
 
     <beans:bean id="encoder"
                 class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder">

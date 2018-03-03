@@ -11,15 +11,16 @@ import javax.servlet.http.HttpServletResponse;
 
 public class AuthenticationSuccess extends SavedRequestAwareAuthenticationSuccessHandler {
     private static final Logger logger = LoggerFactory.getLogger(AuthenticationSuccess.class);
+
     @Override
     protected String determineTargetUrl(HttpServletRequest request, HttpServletResponse response) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String role = auth.getAuthorities().toString();
         logger.debug("ROLE = {}", role);
         String targetUrl = "";
-        if(role.contains("ROLE_USER")) {
+        if (role.contains("ROLE_USER")) {
             targetUrl = "welcome";
-        } else if(role.contains("ROLE_ADMIN")) {
+        } else if (role.contains("ROLE_ADMIN")) {
             targetUrl = "admin";
         }
         return targetUrl;

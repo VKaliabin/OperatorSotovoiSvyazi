@@ -16,4 +16,5 @@ public interface OptionDao {
     public void deleteOption(int idOptoin);
 
     public OptionEntity getOption(int idOption);
+
 }

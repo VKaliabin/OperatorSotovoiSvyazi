@@ -38,6 +38,12 @@
 <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0">
     <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">OperatorSotovoiSvyazi</a>
 
+    <form:form method="post" class="form-inline my-1 my-md-6" action="search" modelAttribute="searchContract">
+        <input class="form-control" name="search" id="search" type="number" placeholder="Search contract">
+        <button type="submit" class="btn  btn-dark" style="width: 100px;">Search</button>
+    </form:form>
+
+
     <ul class="navbar-nav px-3">
         <li class="nav-item text-nowrap">
             <a class="nav-link" href="/logout">Log out(${user})</a>
@@ -67,7 +73,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href = "/options_admin">
+                        <a class="nav-link" href="/options_admin">
                             <p style="font-size: 24px">Options</p>
                         </a>
                     </li>
@@ -96,11 +102,20 @@
                         <th>Passport data</th>
                         <th>Address</th>
                         <th>Email</th>
+                        <th>Blocking</th>
                     </tr>
                     </thead>
                     <tbody>
                     <c:forEach items="${clients}" var="client">
-                        <tr>
+                        <c:choose>
+                            <c:when test="${client.getExistingClient() == 'Blocked'}">
+                                <tr style="background-color: #efc5c5;">
+                            </c:when>
+                            <c:otherwise>
+                                <tr>
+                            </c:otherwise>
+                        </c:choose>
+
                         <td>${client.getName()}</td>
                         <td>${client.getSurname()}</td>
                         <td>${client.getDateOfBirth()}</td>
@@ -112,6 +127,23 @@
                         <td>${client.getPassportData()}</td>
                         <td>${client.getAdress()}</td>
                         <td>${client.getEmailOfEmail()}</td>
+                        <td>
+                            <c:if test="${client.getRoles().contains(role)}">
+                                <c:choose>
+                                    <c:when test="${client.getExistingClient() == 'Unblocked'}">
+                                        <a class="btn btn-lg btn-danger"
+                                           href="/block_client?id=${client.getIdClient()}"><i
+                                                class="fa fa-minus-square"></i></a>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <a class="btn btn-lg btn-primary"
+                                           href="/unblock_client?id=${client.getIdClient()}"><i
+                                                class="fa fa-plus-square"></i></a>
+                                    </c:otherwise>
+                                </c:choose>
+                            </c:if>
+
+                        </td>
                         </tr>
                     </c:forEach>
 
@@ -138,36 +170,5 @@
     feather.replace()
 </script>
 
-<!-- Graphs -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
-<script>
-    var ctx = document.getElementById("myChart");
-    var myChart = new Chart(ctx, {
-        type: 'line',
-        data: {
-            labels: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
-            datasets: [{
-                data: [15339, 21345, 18483, 24003, 23489, 24092, 12034],
-                lineTension: 0,
-                backgroundColor: 'transparent',
-                borderColor: '#007bff',
-                borderWidth: 4,
-                pointBackgroundColor: '#007bff'
-            }]
-        },
-        options: {
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        beginAtZero: false
-                    }
-                }]
-            },
-            legend: {
-                display: false,
-            }
-        }
-    });
-</script>
 </body>
 </html>
