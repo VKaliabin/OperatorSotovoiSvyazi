@@ -22,7 +22,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Dashboard Template for Bootstrap</title>
+    <title>Search results</title>
 
     <!-- Bootstrap core CSS -->
 
@@ -105,9 +105,9 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <%--<c:forEach items="${clients}" var="client">--%>
+                    <c:forEach items="${contract}" var="cont">
                         <c:choose>
-                            <c:when test="${contract.getClientEntity().getExistingClient() == 'Blocked'}">
+                            <c:when test="${cont.getClientEntity().getExistingClient() == 'Blocked'}">
                                 <tr style="background-color: #efc5c5;">
                             </c:when>
                             <c:otherwise>
@@ -115,32 +115,32 @@
                             </c:otherwise>
                         </c:choose>
 
-                        <td>${contract.getClientEntity().getName()}</td>
-                        <td>${contract.getClientEntity().getSurname()}</td>
-                        <td>${contract.getClientEntity().getDateOfBirth()}</td>
+                        <td>${cont.getClientEntity().getName()}</td>
+                        <td>${cont.getClientEntity().getSurname()}</td>
+                        <td>${cont.getClientEntity().getDateOfBirth()}</td>
                         <td>
-                            <c:forEach items="${contract.getClientEntity().getContracts()}" var="contract">
+                            <c:forEach items="${cont.getClientEntity().getContracts()}" var="contract">
                                 ${contract.getContractNumber()}<br>
                             </c:forEach>
                         </td>
-                        <td>${contract.getClientEntity().getPassportData()}</td>
-                        <td>${contract.getClientEntity().getAdress()}</td>
-                        <td>${contract.getClientEntity().getEmailOfEmail()}</td>
+                        <td>${cont.getClientEntity().getPassportData()}</td>
+                        <td>${cont.getClientEntity().getAdress()}</td>
+                        <td>${cont.getClientEntity().getEmailOfEmail()}</td>
                         <td>
-                            <c:if test="${contract.getClientEntity().getRoles().contains(role)}">
+                            <c:if test="${cont.getClientEntity().getRoles().contains(role)}">
                                 <c:choose>
-                                    <c:when test="${contract.getClientEntity().getExistingClient() == 'Unblocked'}">
-                                        <a class="btn btn-lg btn-danger" href="/block_client?id=${contract.getClientEntity().getIdClient()}"><i class="fa fa-minus-square" ></i></a>
+                                    <c:when test="${cont.getClientEntity().getExistingClient() == 'Unblocked'}">
+                                        <a class="btn btn-lg btn-danger" href="/block_client?id=${cont.getClientEntity().getIdClient()}"><i class="fa fa-minus-square" ></i></a>
                                     </c:when>
                                     <c:otherwise>
-                                        <a class="btn btn-lg btn-primary" href="/unblock_client?id=${contract.getClientEntity().getIdClient()}"><i class="fa fa-plus-square" ></i></a>
+                                        <a class="btn btn-lg btn-primary" href="/unblock_client?id=${cont.getClientEntity().getIdClient()}"><i class="fa fa-plus-square" ></i></a>
                                     </c:otherwise>
                                 </c:choose>
                             </c:if>
 
                         </td>
                         </tr>
-                    <%--</c:forEach>--%>
+                    </c:forEach>
 
                     </tbody>
                 </table>

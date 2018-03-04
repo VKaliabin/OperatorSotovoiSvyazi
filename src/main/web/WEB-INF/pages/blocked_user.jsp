@@ -23,7 +23,7 @@
     <meta name="author" content="">
     <%--<link rel="icon" href="../../../../favicon.ico">--%>
 
-    <title>Dashboard Template for Bootstrap</title>
+    <title>Home Page</title>
 
     <!-- Bootstrap core CSS -->
 
@@ -84,7 +84,6 @@
                     <c:forEach items="${contracts}" var="contract">
                         <c:choose>
                             <c:when test="${contract.getBlockedContract() == 'Unblocked'}">
-                                <%--<tr style="font-size: 18px; background-color: #dbe7ef;">--%>
                             </c:when>
                             <c:otherwise>
                                 <tr style="font-size: 18px; background-color: #efc5c5;">
@@ -101,7 +100,6 @@
                         <td>
                             ---
                         </td>
-                        <%--<td>sit</td>--%>
 
                         </tr>
                     </c:forEach>

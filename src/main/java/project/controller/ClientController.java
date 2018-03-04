@@ -18,7 +18,7 @@ import project.service.api.ContractService;
 import project.service.api.OptionService;
 import project.service.api.TariffService;
 import project.utils.ContractModel;
-import java.util.ArrayList;
+
 import java.util.List;
 
 @Controller
@@ -35,7 +35,7 @@ public class ClientController {
     private OptionService optionService;
 
 
-    @RequestMapping(value = {"/", "/welcome"}, method = RequestMethod.GET)
+    @RequestMapping(value = {"/welcome"}, method = RequestMethod.GET)
     public String welcome(Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
@@ -114,44 +114,10 @@ public class ClientController {
         List<OptionEntity> currentOptions = contractService.getContract(idContract).getOptions();
         model.addAttribute("connectedOptions", currentOptions);
         ContractEntity contractEntity = contractService.getContract(idContract);
-//        logger.debug("Send contract entyty = {}", contractEntity);
         model.addAttribute("contractEntity", contractEntity);
         model.addAttribute("contract", new ContractModel());
         return "options_user";
     }
 
-    @RequestMapping(value = "/changeOptions", method = RequestMethod.POST)
-    public String changeOptions(Model model, @RequestParam(value = "checkbox", required = false) int[] checkboxValue,
-                                @RequestParam(value = "switch", required = false) Integer idTariff,
-                                @RequestParam("idContract") int idContract) {
-        contractService.deleteConnectOptions(idContract);
-        ContractEntity contractEntity = contractService.getContract(idContract);
-        List<OptionEntity> listConOptions = new ArrayList<>();
-
-        if (idTariff != contractEntity.getTariff().getIdTariff()) {
-            contractEntity.setTariff(tariffService.getTariff(idTariff));
-        }
-
-        if (checkboxValue != null) {
-            for (int aCheckboxValue : checkboxValue) {
-                listConOptions.add(optionService.getOption(aCheckboxValue));
-            }
-        }
-
-        contractEntity.setOptions(listConOptions);
-        contractService.update(contractEntity);
-
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        User user = (User) authentication.getPrincipal();
-        model.addAttribute("user", user.getUsername());
-
-        ClientEntity clientEntity = clientService.findByEMail(user.getUsername());
-        model.addAttribute("contracts", clientEntity.getContracts());
-
-        List<TariffEntity> tarifs = tariffService.listTariffs();
-        model.addAttribute("tariffs", tarifs);
-
-        return "tariffs_user";
-    }
 
 }

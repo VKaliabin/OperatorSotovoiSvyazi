@@ -22,7 +22,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Dashboard Template for Bootstrap</title>
+    <title>Available options for tariffs</title>
 
     <!-- Bootstrap core CSS -->
 
@@ -59,6 +59,11 @@
                             <span class="sr-only">(current)</span>
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/cart">
+                            <p style="font-size: 24px">Cart</p>
+                        </a>
+                    </li>
 
                 </ul>
 
@@ -66,10 +71,6 @@
         </nav>
 
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
-            <%--<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">--%>
-            <%--&lt;%&ndash;<h1 class="h2">Contract</h1>&ndash;%&gt;--%>
-
-            <%--</div>--%>
 
             <c:choose>
                 <c:when test="${tariff.getIdTariff()== currentTariff}">
@@ -80,57 +81,6 @@
                 </c:otherwise>
             </c:choose>
 
-            <%--<div class="table-responsive">--%>
-            <%--<form method="post"  action="changeOptions">--%>
-            <%--<input type="hidden" name="idContract" value="${idContract}">--%>
-            <%--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>--%>
-            <%--<input type="hidden" name="switch" value="${tariff.getIdTariff()}">--%>
-            <%--<table class="table table-striped table-sm">--%>
-            <%--<thead>--%>
-            <%--<h5>Available options for the tariff</h5>--%>
-            <%--<tr>--%>
-            <%--<th>...</th>--%>
-            <%--<th style="width: 600px">Name of the Option</th>--%>
-            <%--<th style="width: 600px">Price</th>--%>
-            <%--<th style="width: 600px">Cost of the connection</th>--%>
-            <%--</tr>--%>
-            <%--</thead>--%>
-            <%--<tbody>--%>
-            <%--<c:forEach items="${options}" var="option">--%>
-            <%--<tr>--%>
-            <%--<td>--%>
-            <%--<c:set var="contains" value="false" />--%>
-            <%--<c:forEach items="${connectedOptions}" var="connected">--%>
-            <%--<c:if test="${connected.getIdOption() == option.getIdOption()}">--%>
-            <%--<input name="checkbox" type="checkbox" checked value="${option.getIdOption()}"/>--%>
-            <%--<c:set var="contains" value="true" />--%>
-            <%--</c:if>--%>
-            <%--</c:forEach>--%>
-            <%--<c:if test="${contains == false}">--%>
-            <%--<input name="checkbox" type="checkbox" value="${option.getIdOption()}"/>--%>
-            <%--</c:if>--%>
-            <%--</td>--%>
-            <%--<td>${option.getNameOption()}</td>--%>
-            <%--<td>${option.getPriceOption()}</td>--%>
-            <%--<td>${option.getConnectionCostOption()}</td>--%>
-            <%--</tr>--%>
-            <%--</c:forEach>--%>
-            <%--</tbody>--%>
-            <%--</table>--%>
-            <%--<c:choose>--%>
-
-            <%--<c:when test="${tariff.getIdTariff()== currentTariff}">--%>
-            <%--<button class="btn  btn-warning" style="width: 200px;">Submit</button>--%>
-            <%--</c:when>--%>
-            <%--<c:otherwise>--%>
-
-            <%--<button class="btn  btn-success" style="width: 200px;">Switch to this tariff</button>--%>
-            <%--</c:otherwise>--%>
-            <%--</c:choose>--%>
-            <%--</form>--%>
-            <%--<a class="btn  btn-primary" style="width: 200px;background-color: #343a40; border-color: #343a40 ; font-weight: bold;" href="tariffs_user">Back</a>--%>
-
-            <%--</div>--%>
             <div class="table-responsive">
                 <form:form method="post" action="cart" modelAttribute="contract">
 
@@ -180,16 +130,8 @@
                         </c:forEach>
                         </tbody>
                     </table>
-                    <c:choose>
+                    <button type="submit" class="btn  btn-warning" style="width: 200px;">Add to the cart</button>
 
-                        <c:when test="${tariff.getIdTariff()== currentTariff}">
-                            <button type="submit" class="btn  btn-warning" style="width: 200px;">Submit</button>
-                        </c:when>
-                        <c:otherwise>
-
-                            <button type="submit"  class="btn  btn-success" style="width: 200px;">Switch to this tariff</button>
-                        </c:otherwise>
-                    </c:choose>
                 </form:form>
                 <a class="btn  btn-primary"
                    style="width: 200px;background-color: #343a40; border-color: #343a40 ; font-weight: bold;"

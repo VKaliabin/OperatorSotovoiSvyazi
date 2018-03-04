@@ -23,7 +23,7 @@
     <meta name="author" content="">
     <%--<link rel="icon" href="../../../../favicon.ico">--%>
 
-    <title>Home page</title>
+    <title>Dashboard Template for Bootstrap</title>
 
     <!-- Bootstrap core CSS -->
 
@@ -38,15 +38,6 @@
 <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0">
     <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">OperatorSotovoiSvyazi</a>
 
-    <form method="post" class="form-inline my-1 my-md-6" action="search">
-        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-            <input  class="form-control" name="sea" id="search" type="number"
-                        placeholder="Search contract"/>
-            <button type="submit" class="btn  btn-dark" style="width: 100px;">Search</button>
-
-    </form>
-
-
     <ul class="navbar-nav px-3">
         <li class="nav-item text-nowrap">
             <a class="nav-link" href="/logout">Log out(${user})</a>
@@ -60,9 +51,9 @@
             <div class="sidebar-sticky">
                 <ul class="nav flex-column">
                     <li class="nav-item">
-                        <a class="nav-link active" href="/admin">
+                        <a class="nav-link" href="/admin">
                             <p style="font-size: 24px">Clients</p>
-                            <span class="sr-only">(current)</span>
+
                         </a>
                     </li>
                     <li class="nav-item">
@@ -71,8 +62,9 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/tariffs_admin">
+                        <a class="nav-link active" href="/tariffs_admin">
                             <p style="font-size: 24px">Tariffs</p>
+                            <span class="sr-only">(current)</span>
                         </a>
                     </li>
                     <li class="nav-item">
@@ -88,71 +80,36 @@
 
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
             <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
-                <h1 class="h2">Clients</h1>
-
+                <h1 class="h2">New Tariff</h1>
             </div>
 
 
             <%--<h2>Section title</h2>--%>
-            <div class="table-responsive">
-                <table class="table table-striped table-sm">
-                    <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Surname</th>
-                        <th>Date of birth</th>
-                        <th>Contract</th>
-                        <th>Passport data</th>
-                        <th>Address</th>
-                        <th>Email</th>
-                        <th>Blocking</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <c:forEach items="${clients}" var="client">
-                        <c:choose>
-                            <c:when test="${client.getExistingClient() == 'Blocked'}">
-                                <tr style="background-color: #efc5c5;">
-                            </c:when>
-                            <c:otherwise>
-                                <tr>
-                            </c:otherwise>
-                        </c:choose>
 
-                        <td>${client.getName()}</td>
-                        <td>${client.getSurname()}</td>
-                        <td>${client.getDateOfBirth()}</td>
-                        <td>
-                            <c:forEach items="${client.getContracts()}" var="contract">
-                                ${contract.getContractNumber()}<br>
-                            </c:forEach>
-                        </td>
-                        <td>${client.getPassportData()}</td>
-                        <td>${client.getAdress()}</td>
-                        <td>${client.getEmailOfEmail()}</td>
-                        <td>
-                            <c:if test="${client.getRoles().contains(role)}">
-                                <c:choose>
-                                    <c:when test="${client.getExistingClient() == 'Unblocked'}">
-                                        <a class="btn btn-lg btn-danger"
-                                           href="/block_client?id=${client.getIdClient()}"><i
-                                                class="fa fa-minus-square"></i></a>
-                                    </c:when>
-                                    <c:otherwise>
-                                        <a class="btn btn-lg btn-primary"
-                                           href="/unblock_client?id=${client.getIdClient()}"><i
-                                                class="fa fa-plus-square"></i></a>
-                                    </c:otherwise>
-                                </c:choose>
-                            </c:if>
+            <%--<form:form method="POST" action="/new_tariff" modelAttribute="tariffEdit" class="form-signin">--%>
+                <div class="row">
+                    <%--<spring:bind path="nameTariff">--%>
+                        <div class="col-md-3 mb-3">
+                            <label for="tariffName">Name of a tariff</label>
+                            <input type="text" class="form-control" id="tariffName"
+                                        placeholder = "${tariff.getNameTariff()}"
+                                         autofocus="true"/>
+                        </div>
+                    <%--</spring:bind>--%>
 
-                        </td>
-                        </tr>
-                    </c:forEach>
+                    <%--<spring:bind path="priceTariff">--%>
+                        <div class="col-md-3 mb-3">
+                            <label for="tariffPrice">Price</label>
+                            <input type="number" class="form-control" id="tariffPrice"
+                                   placeholder = "${tariff.getPriceTariff()}" autofocus="true"/>
+                        </div>
+                    <%--</spring:bind>--%>
 
-                    </tbody>
-                </table>
-            </div>
+
+                </div>
+                <button class="btn btn-primary btn-block" style="width: 150px" type="submit">Edit tariff</button>
+            <%--</form:form>--%>
+
         </main>
     </div>
 </div>

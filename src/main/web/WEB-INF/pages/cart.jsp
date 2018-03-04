@@ -23,7 +23,7 @@
     <meta name="author" content="">
     <%--<link rel="icon" href="../../../../favicon.ico">--%>
 
-    <title>Dashboard Template for Bootstrap</title>
+    <title>Cart</title>
 
     <!-- Bootstrap core CSS -->
 
@@ -51,14 +51,19 @@
             <div class="sidebar-sticky">
                 <ul class="nav flex-column">
                     <li class="nav-item">
-                        <a class="nav-link active" href="/welcome">
+                        <a class="nav-link " href="/welcome">
                             <p style="font-size: 24px">Contract</p>
-                            <span class="sr-only">(current)</span>
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/tariffs_user">
                             <p style="font-size: 24px">Tariffs</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/cart">
+                            <p style="font-size: 24px">Cart</p>
+                            <span class="sr-only">(current)</span>
                         </a>
                     </li>
 
@@ -74,7 +79,6 @@
             </div>
 
 
-            <%--<h2>Section title</h2>--%>
             <div class="table-responsive">
                 <table class="table table-striped table-sm">
                     <thead>
@@ -82,42 +86,48 @@
                         <th>Your Number</th>
                         <th>Tariff</th>
                         <th>Options</th>
-                        <th>Action</th>
-                        <%--<th>Header</th>--%>
+                        <th></th>
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <c:forEach items="${contract}" var="cont">
+                        <c:choose>
+                            <c:when test="${contract == null}">
+                                <td>---</td>
+                                <td>---</td>
+                                <td>---</td>
+                                <td>---</td>
+                            </c:when>
+                            <c:otherwise>
+                                <c:forEach items="${contract}" var="cont">
+                                <tr>
+                                <td style="font-size: 20px">${cont.getContractNumber()}</td>
+                                <td style="font-size: 20px"><a>${cont.getTariffEntity().getNameTariff()}</a></td>
+                                <td style="font-size: 20px">
+                                    <c:forEach items="${cont.getOptionEntityList()}" var="options">
+                                        ${options.getNameOption()}<br>
+                                    </c:forEach>
+                                </td>
+                                <td>
+                                    <c:choose>
+                                        <c:when test="${cont.getContractNumber()==null}">
+                                            ---
+                                        </c:when>
+                                        <c:otherwise>
+                                            <a href="/deleteModel?number=${cont.getContractNumber()}" class="btn  btn-primary" style="width: 200px;">Cancel changes</a>
+                                        </c:otherwise>
+                                    </c:choose>
 
-                        <td style="font-size: 20px">${cont.getContractNumber()}</td>
-                        <td style="font-size: 20px"><a>${cont.getTariffId()}</a></td>
-                        <td style="font-size: 20px">
-                            <c:forEach items="${cont.getOptions()}" var="options">
-                                ${options}<br>
-                            </c:forEach>
-                        </td>
-                        <td>
-                                <%--<c:choose>--%>
-                                <%--<c:when test="${contract.getAdminBlock() == 'Y'}">--%>
-                                <%--<a style="font-size: 20px; color: #ac2925">Your number is blocked</a>--%>
-                                <%--</c:when>--%>
-                                <%--<c:otherwise>--%>
-                                <%--<c:choose>--%>
-                                <%--<c:when test="${contract.getBlockedContract() == 'Unblocked'}">--%>
-                            <a class="btn btn-lg btn-danger" href=""><i class="fa fa-minus-square"></i></a>
-                                <%--</c:when>--%>
-                                <%--<c:otherwise>--%>
-                                <%--<a class="btn btn-lg btn-primary" href="/unblock?id=${contract.getIdContract()}"><i class="fa fa-plus-square"></i></a>--%>
-                                <%--</c:otherwise>--%>
-                                <%--</c:choose>--%>
-                                <%--</c:otherwise>--%>
-                                <%--</c:choose>--%>
-                        </td>
+                                </td>
                     </tr>
-                    </c:forEach>
+                                </c:forEach>
+                            </c:otherwise>
+                        </c:choose>
+
                     </tbody>
                 </table>
+
+
+                <a class="btn  btn-success"  href="/acceptCart">Submit</a>
             </div>
         </main>
     </div>

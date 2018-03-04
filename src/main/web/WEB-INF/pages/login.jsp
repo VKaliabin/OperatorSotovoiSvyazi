@@ -19,7 +19,7 @@
     <meta name="author" content="">
     <link rel="icon" href="../../../../favicon.ico">
 
-    <title>Signin Template for Bootstrap</title>
+    <title>Login</title>
 
     <!-- Bootstrap core CSS -->
     <link href="/resources/css/bootstrap.min.css" rel="stylesheet">
@@ -32,7 +32,7 @@
 
 <form method="POST" action="${contextPath}/login" class="form-signin">
 
-    <img class="mb-4" src="https://getbootstrap.com/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72">
+    <img class="mb-4" src="http://www.pvhc.net/img142/asevnxrcumhfyvtwbbnd.png" alt="" width="100" height="100">
     <div class="form-group ${error != null ? 'has-error' : ''}">
 
         <h1 class="h3 mb-3 font-weight-normal">Please log in</h1>

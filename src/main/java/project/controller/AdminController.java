@@ -135,7 +135,7 @@ public class AdminController {
             return "login";
         }
 
-        model.addAttribute("idTariff", idTariff);
+        model.addAttribute("tariff", tariffService.getTariff(idTariff));
         return "edit_tariff";
     }
 
@@ -339,18 +339,21 @@ public class AdminController {
     }
 
     @RequestMapping(value = "/search", method = RequestMethod.POST)
-    public String searchContract(Model model, @ModelAttribute("searchContract") String contractNumber) {
+    public String searchContract(Model model, @RequestParam("sea") String contractNumber) {
+        logger.debug("contractNumber={}", contractNumber);
         List<ContractEntity> contractEntities = contractService.list();
         int idContact = 0;
+        List<ContractEntity> searchcontract = new ArrayList<>();
         for (ContractEntity contractEntity : contractEntities) {
-            if (contractEntity.getContractNumber().equals(contractNumber)) {
+            if (contractEntity.getContractNumber().contains(contractNumber)) {
                 idContact = contractEntity.getIdContract();
+                searchcontract.add(contractService.getContract(idContact));
                 logger.debug("id contract={}", idContact);
-
             }
+            logger.info("nothing");
         }
-        logger.debug("contract={}", contractService.getContract(idContact));
-        model.addAttribute("contract", contractService.getContract(idContact));
+        logger.debug("contract={}", searchcontract);
+        model.addAttribute("contract", searchcontract);
         return "search_result";
     }
 

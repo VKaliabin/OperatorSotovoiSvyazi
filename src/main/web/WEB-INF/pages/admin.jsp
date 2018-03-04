@@ -23,7 +23,7 @@
     <meta name="author" content="">
     <%--<link rel="icon" href="../../../../favicon.ico">--%>
 
-    <title>Dashboard Template for Bootstrap</title>
+    <title>Home page</title>
 
     <!-- Bootstrap core CSS -->
 
@@ -38,10 +38,13 @@
 <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0">
     <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">OperatorSotovoiSvyazi</a>
 
-    <form:form method="post" class="form-inline my-1 my-md-6" action="search" modelAttribute="searchContract">
-        <input class="form-control" name="search" id="search" type="number" placeholder="Search contract">
-        <button type="submit" class="btn  btn-dark" style="width: 100px;">Search</button>
-    </form:form>
+    <form method="post" class="form-inline my-1 my-md-6" action="search">
+        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+            <input  class="form-control" name="sea" id="search" type="number"
+                        placeholder="Search contract"/>
+            <button type="submit" class="btn  btn-dark" style="width: 100px;">Search</button>
+
+    </form>
 
 
     <ul class="navbar-nav px-3">

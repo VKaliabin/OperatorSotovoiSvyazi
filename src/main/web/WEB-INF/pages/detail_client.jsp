@@ -23,7 +23,7 @@
     <meta name="author" content="">
     <%--<link rel="icon" href="../../../../favicon.ico">--%>
 
-    <title>Dashboard Template for Bootstrap</title>
+    <title>Details of a client</title>
 
     <!-- Bootstrap core CSS -->
 

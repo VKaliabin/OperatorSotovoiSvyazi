@@ -22,7 +22,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Dashboard Template for Bootstrap</title>
+    <title>Available Tariffs for your Contracts</title>
 
     <!-- Bootstrap core CSS -->
 
@@ -58,6 +58,11 @@
                         <a class="nav-link active" href="#">
                             <p style="font-size: 24px">Tariffs</p>
                             <span class="sr-only">(current)</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/cart">
+                            <p style="font-size: 24px">Cart</p>
                         </a>
                     </li>
 

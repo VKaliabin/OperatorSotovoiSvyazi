@@ -22,7 +22,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Dashboard Template for Bootstrap</title>
+    <title>Home Page</title>
 
     <!-- Bootstrap core CSS -->
 
@@ -60,6 +60,11 @@
                             <p style="font-size: 24px">Tariffs</p>
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/cart">
+                            <p style="font-size: 24px">Cart</p>
+                        </a>
+                    </li>
 
                 </ul>
 
@@ -74,6 +79,7 @@
 
 
             <div class="table-responsive">
+                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                 <table class="table table-striped table-sm">
                     <thead>
                     <tr style="font-size: 20px">

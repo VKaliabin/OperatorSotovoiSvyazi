@@ -16,7 +16,7 @@
         <intercept-url pattern="/unblock" access="hasRole('ROLE_USER')"/>
         <intercept-url pattern="/tariffs_user" access="hasRole('ROLE_USER')"/>
         <intercept-url pattern="/show_tariff" access="hasRole('ROLE_USER')"/>
-        <intercept-url pattern="/changeOptions" access="hasRole('ROLE_USER')"/>
+        <!--<intercept-url pattern="/changeOptions" access="hasRole('ROLE_USER')"/>-->
         <intercept-url pattern="/admin" access="hasRole('ROLE_ADMIN')"/>
         <intercept-url pattern="/tariffs_admin" access="hasRole('ROLE_ADMIN')"/>
         <intercept-url pattern="/options_admin" access="hasRole('ROLE_ADMIN')"/>
@@ -35,8 +35,9 @@
         <intercept-url pattern="/block_contract" access="hasRole('ROLE_ADMIN')"/>
         <intercept-url pattern="/changetariff" access="hasRole('ROLE_ADMIN')"/>
         <intercept-url pattern="/changeContract" access="hasRole('ROLE_ADMIN')"/>
+        <intercept-url pattern="/search" access="hasAnyRole('ROLE_USER', 'ROLE_ADMIN')"/>
 
-        <form-login login-page="/login"  authentication-failure-url="/login?error"  authentication-success-handler-ref="myAuthenticationSuccessHandler"
+        <form-login login-page="/login" default-target-url="/welcome" authentication-failure-url="/login?error"  authentication-success-handler-ref="myAuthenticationSuccessHandler"
                     username-parameter="emailOfEmail" password-parameter="password"/>
 
         <logout logout-success-url="/login?logout"/>

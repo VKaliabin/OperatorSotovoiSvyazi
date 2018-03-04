@@ -23,7 +23,7 @@
     <meta name="author" content="">
 
 
-    <title>Dashboard Template for Bootstrap</title>
+    <title>New option</title>
 
     <!-- Bootstrap core CSS -->
 

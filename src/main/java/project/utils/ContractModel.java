@@ -2,14 +2,19 @@ package project.utils;
 
 
 import org.springframework.stereotype.Component;
+import project.model.OptionEntity;
+import project.model.TariffEntity;
+
 import java.util.List;
 
 @Component
 public class ContractModel {
     private int idContract;
     private String contractNumber;
-    private List<String> options;
+    private List<Integer> options;
     private int tariffId;
+    private TariffEntity tariffEntity;
+    private  List<OptionEntity> optionEntityList;
 
     public int getIdContract() {
         return idContract;
@@ -27,11 +32,11 @@ public class ContractModel {
         this.contractNumber = contractNumber;
     }
 
-    public List<String> getOptions() {
+    public List<Integer> getOptions() {
         return options;
     }
 
-    public void setOptions(List<String> options) {
+    public void setOptions(List<Integer> options) {
         this.options = options;
     }
 
@@ -43,6 +48,22 @@ public class ContractModel {
         this.tariffId = tariffId;
     }
 
+    public TariffEntity getTariffEntity() {
+        return tariffEntity;
+    }
+
+    public void setTariffEntity(TariffEntity tariffEntity) {
+        this.tariffEntity = tariffEntity;
+    }
+
+    public List<OptionEntity> getOptionEntityList() {
+        return optionEntityList;
+    }
+
+    public void setOptionEntityList(List<OptionEntity> optionEntityList) {
+        this.optionEntityList = optionEntityList;
+    }
+
     @Override
     public String toString() {
         return "ContractModel{" +
@@ -50,6 +71,8 @@ public class ContractModel {
                 ", contractNumber='" + contractNumber + '\'' +
                 ", options=" + options +
                 ", tariffId=" + tariffId +
+                ", tariffEntity=" + tariffEntity +
+                ", optionEntityList=" + optionEntityList +
                 '}';
     }
 }
