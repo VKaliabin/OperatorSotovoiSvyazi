@@ -23,7 +23,7 @@
     <meta name="author" content="">
 
 
-    <title>Dashboard Template for Bootstrap</title>
+    <title>New option</title>
 
     <!-- Bootstrap core CSS -->
 
@@ -99,7 +99,7 @@
                     <spring:bind path="priceOption">
                         <div class="col-md-3 mb-3">
                             <label for="optionPrice">Price</label>
-                            <form:input type="text" class="form-control" id="optionPrice"
+                            <form:input type="number" class="form-control" id="optionPrice"
                                         path="priceOption" autofocus="true"/>
                         </div>
                     </spring:bind>

@@ -44,16 +44,16 @@
     </http>
 
     <authentication-manager alias="authenticationManager">
-        <authentication-provider user-service-ref="ClientDetailServiceImpl">
-            <password-encoder ref="encoder"></password-encoder>
+        <authentication-provider user-service-ref="clientDetailServiceImpl">
+            <password-encoder ref="encoder"/>
         </authentication-provider>
     </authentication-manager>
 
     <beans:bean id="springSecurityFilterChain" class="org.springframework.web.filter.DelegatingFilterProxy"/>
 
 
-    <beans:bean id="ClientDetailServiceImpl"
-                class="project.service.impl.ClientDetailServiceImpl"></beans:bean>
+    <beans:bean id="clientDetailServiceImpl"
+                class="project.service.impl.ClientDetailServiceImpl"/>
 
     <beans:bean id="encoder"
                 class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder">

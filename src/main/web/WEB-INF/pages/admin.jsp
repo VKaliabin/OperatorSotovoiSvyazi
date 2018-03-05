@@ -129,7 +129,10 @@
                         </td>
                         <td>${client.getPassportData()}</td>
                         <td>${client.getAdress()}</td>
-                        <td>${client.getEmailOfEmail()}</td>
+                        <td>
+                            <a href="/show_client?id=${client.getIdClient()}"> ${client.getEmailOfEmail()}</a>
+
+                        </td>
                         <td>
                             <c:if test="${client.getRoles().contains(role)}">
                                 <c:choose>

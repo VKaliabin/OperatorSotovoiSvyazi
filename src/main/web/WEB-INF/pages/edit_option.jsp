@@ -21,9 +21,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <%--<link rel="icon" href="../../../../favicon.ico">--%>
 
-    <title>New tariff</title>
+
+    <title>Edit option</title>
 
     <!-- Bootstrap core CSS -->
 
@@ -62,14 +62,15 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" href="/tariffs_admin">
+                        <a class="nav-link" href="/tariffs_admin">
                             <p style="font-size: 24px">Tariffs</p>
-                            <span class="sr-only">(current)</span>
+
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/options_admin">
+                        <a class="nav-link active" href="/options_admin">
                             <p style="font-size: 24px">Options</p>
+                            <span class="sr-only">(current)</span>
                         </a>
                     </li>
 
@@ -80,34 +81,58 @@
 
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
             <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
-                <h1 class="h2">New Tariff</h1>
+                <h1 class="h2">New option</h1>
             </div>
 
 
-            <%--<h2>Section title</h2>--%>
-
-            <form:form method="POST" action="/new_tariff" modelAttribute="tariff" class="form-signin">
+            <form method="POST" action="/edit_nameAndprice_option"  class="form-signin">
+                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                <input type="hidden" name="idOption" value="${option.getIdOption()}"/>
                 <div class="row">
-                    <spring:bind path="nameTariff">
+                    <%--<spring:bind path="nameOption">--%>
                         <div class="col-md-3 mb-3">
-                            <label for="tariffName">Name of a tariff</label>
-                            <form:input type="text" class="form-control" id="tariffName"
-                                        path="nameTariff" autofocus="true"/>
+                            <label for="optionName">Name of an option</label>
+                            <input type="text" class="form-control" id="optionName" name="optionName"
+                                       placeholder="${option.getNameOption()}" autofocus="true"/>
+                            <form:errors path="nameOption"/>
                         </div>
-                    </spring:bind>
+                    <%--</spring:bind>--%>
 
-                    <spring:bind path="priceTariff">
+                    <%--<spring:bind path="priceOption">--%>
                         <div class="col-md-3 mb-3">
-                            <label for="tariffPrice">Price</label>
-                            <form:input type="number" class="form-control" id="tariffPrice"
-                                        path="priceTariff" autofocus="true"/>
+                            <label for="optionPrice">Price</label>
+                            <input type="number" class="form-control" id="optionPrice" name="optionPrice"
+                                        placeholder="${option.getPriceOption()}" autofocus="true"/>
                         </div>
-                    </spring:bind>
+                    <%--</spring:bind>--%>
+
+                    <%--<spring:bind path="connectionCostOption">--%>
+                        <div class="col-md-3 mb-3">
+                            <label for="optionConCost">Connection cost</label>
+                            <input type="number" class="form-control" id="optionConCost" name="optionCost"
+                                        placeholder="${option.getConnectionCostOption()}" autofocus="true"/>
+                        </div>
+                    <%--</spring:bind>--%>
+
+
+                    <div class="col-md-3 mb-3">
+                        <label for="tariff">Tariff</label>
+                        <select name="id" id="id" class="custom-select d-block w-100" id="tariff" required>
+                            <option value="">Choose...</option>
+                            <c:forEach items="${tariffs}" var="tariff">
+                                <option value="${tariff.getIdTariff()}">${tariff.getNameTariff()}</option>
+                            </c:forEach>
+
+                        </select>
+                        <div class="invalid-feedback">
+                            Please select a tariff for an option.
+                        </div>
+                    </div>
 
 
                 </div>
-                <button class="btn btn-primary btn-block" style="width: 150px" type="submit">Add new tariff</button>
-            </form:form>
+                <button class="btn btn-primary btn-block" style="width: 150px" type="submit">Edit option</button>
+            </form>
 
         </main>
     </div>

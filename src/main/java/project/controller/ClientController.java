@@ -35,7 +35,7 @@ public class ClientController {
     private OptionService optionService;
 
 
-    @RequestMapping(value = {"/welcome"}, method = RequestMethod.GET)
+    @RequestMapping(value = {"/","/welcome"}, method = RequestMethod.GET)
     public String welcome(Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 

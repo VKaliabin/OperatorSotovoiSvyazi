@@ -34,7 +34,7 @@
 
 <div class="container">
     <div class="py-5 text-center">
-        <img class="d-block mx-auto mb-4" src="https://getbootstrap.com/assets/brand/bootstrap-solid.svg" alt=""
+        <img class="d-block mx-auto mb-4" src="http://www.pvhc.net/img142/asevnxrcumhfyvtwbbnd.png" alt=""
              width="72" height="72">
         <h2>Registration form</h2>
     </div>

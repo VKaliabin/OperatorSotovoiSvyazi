@@ -37,11 +37,12 @@
 <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0">
     <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">OperatorSotovoiSvyazi</a>
 
-    <form:form method="post" class="form-inline my-1 my-md-6" action="search" modelAttribute="searchContract">
-        <input class="form-control" name="search" id="search" type="number" placeholder="Search contract">
+    <form method="post" class="form-inline my-1 my-md-6" action="search">
+        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+        <input  class="form-control" name="sea" id="search" type="number"
+                placeholder="Search contract"/>
         <button type="submit" class="btn  btn-dark" style="width: 100px;">Search</button>
-    </form:form>
-
+    </form>
 
     <ul class="navbar-nav px-3">
         <li class="nav-item text-nowrap">
@@ -125,7 +126,8 @@
                         </td>
                         <td>${cont.getClientEntity().getPassportData()}</td>
                         <td>${cont.getClientEntity().getAdress()}</td>
-                        <td>${cont.getClientEntity().getEmailOfEmail()}</td>
+                        <td> <a href="/show_client?id=${cont.getClientEntity().getIdClient()}">
+                                ${cont.getClientEntity().getEmailOfEmail()}</a></td>
                         <td>
                             <c:if test="${cont.getClientEntity().getRoles().contains(role)}">
                                 <c:choose>

@@ -105,7 +105,8 @@
                             <td style="font-size: 18px">${option.getConnectionCostOption()}</td>
                             <td style="font-size: 18px">${option.getTariff().getNameTariff()}</td>
                             <td>
-                                <a class="btn btn-sm btn-outline-primary" style="width: 100px;" href="">Edit</a>
+                                <a class="btn btn-sm btn-outline-primary" style="width: 100px;"
+                                   href="/edit_option?id=${option.getIdOption()}">Edit</a>
                             </td>
                             <td>
                                 <a class="btn btn-sm btn-warning" style="width: 100px;"
