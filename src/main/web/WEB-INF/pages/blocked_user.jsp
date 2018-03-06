@@ -72,7 +72,7 @@
             <div class="table-responsive">
                 <table class="table table-striped table-sm">
                     <thead>
-                    <tr>
+                    <tr style="font-size: 20px">
                         <th>Your Number</th>
                         <th>Tariff</th>
                         <th>Options</th>
@@ -90,9 +90,9 @@
                             </c:otherwise>
                         </c:choose>
 
-                        <td>${contract.getContractNumber()}</td>
-                        <td><a>${contract.getTariff().getNameTariff()}</a></td>
-                        <td>
+                        <td style="font-size: 20px">${contract.getContractNumber()}</td>
+                        <td style="font-size: 20px"><a>${contract.getTariff().getNameTariff()}</a></td>
+                        <td style="font-size: 20px">
                             <c:forEach items="${contract.getOptions()}" var="options">
                                 ${options.getNameOption()}<br>
                             </c:forEach>

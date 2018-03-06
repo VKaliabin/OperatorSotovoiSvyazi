@@ -3,7 +3,7 @@ package project.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import project.dao.OptionDao;
+import project.dao.api.OptionDao;
 import project.model.OptionEntity;
 import project.service.api.OptionService;
 import java.util.List;

@@ -1,4 +1,4 @@
-package project.dao;
+package project.dao.api;
 
 import project.model.TariffEntity;
 import java.util.List;

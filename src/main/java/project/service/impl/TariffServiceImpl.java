@@ -3,7 +3,7 @@ package project.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import project.dao.TariffDao;
+import project.dao.api.TariffDao;
 import project.model.TariffEntity;
 import project.service.api.TariffService;
 import java.util.List;

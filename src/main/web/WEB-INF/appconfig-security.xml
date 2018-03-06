@@ -7,7 +7,7 @@
 		http://www.springframework.org/schema/security
 		http://www.springframework.org/schema/security/spring-security.xsd">
 
-    <beans:bean id="clientValidator" class="project.validator.ClientValidator" />
+    <beans:bean id="clientValidator" class="project.validator.impl.ClientValidatorImpl" />
 
     <http auto-config="true">
         <intercept-url pattern="/" access="hasAnyRole('ROLE_USER', 'ROLE_ADMIN')"/>
@@ -16,7 +16,6 @@
         <intercept-url pattern="/unblock" access="hasRole('ROLE_USER')"/>
         <intercept-url pattern="/tariffs_user" access="hasRole('ROLE_USER')"/>
         <intercept-url pattern="/show_tariff" access="hasRole('ROLE_USER')"/>
-        <!--<intercept-url pattern="/changeOptions" access="hasRole('ROLE_USER')"/>-->
         <intercept-url pattern="/admin" access="hasRole('ROLE_ADMIN')"/>
         <intercept-url pattern="/tariffs_admin" access="hasRole('ROLE_ADMIN')"/>
         <intercept-url pattern="/options_admin" access="hasRole('ROLE_ADMIN')"/>

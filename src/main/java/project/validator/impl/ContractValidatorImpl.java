@@ -1,29 +1,20 @@
-package project.validator;
+package project.validator.impl;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
-import org.springframework.validation.Validator;
 import project.model.ContractEntity;
-import project.service.api.ContractService;
+import project.validator.api.ContractValidator;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class ContractValidator implements Validator {
+public class ContractValidatorImpl implements ContractValidator {
 
-    @Autowired
-    ContractService contractService;
 
     @Override
-    public boolean supports(Class<?> aClass) {
-        return ContractEntity.class.equals(aClass);
-    }
-
-    @Override
-    public void validate(Object o, Errors errors) {
+    public void validate(Object o, Errors errors, List<ContractEntity> listContracts) {
         ContractEntity contractEntity = (ContractEntity) o;
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "contractNumber", "Required");
 
@@ -31,7 +22,7 @@ public class ContractValidator implements Validator {
             errors.rejectValue("contractNumber", "Size.contract.contractNumber");
         }
         List<String> list = new ArrayList<>();
-        for (ContractEntity s : contractService.list()) {
+        for (ContractEntity s : listContracts) {
             list.add(s.getContractNumber());
         }
         if (list.contains(contractEntity.getContractNumber())) {

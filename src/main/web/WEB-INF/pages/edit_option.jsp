@@ -89,30 +89,26 @@
                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                 <input type="hidden" name="idOption" value="${option.getIdOption()}"/>
                 <div class="row">
-                    <%--<spring:bind path="nameOption">--%>
+
                         <div class="col-md-3 mb-3">
                             <label for="optionName">Name of an option</label>
                             <input type="text" class="form-control" id="optionName" name="optionName"
-                                       placeholder="${option.getNameOption()}" autofocus="true"/>
-                            <form:errors path="nameOption"/>
-                        </div>
-                    <%--</spring:bind>--%>
+                                       value ="${option.getNameOption()}" autofocus="true"/>
 
-                    <%--<spring:bind path="priceOption">--%>
+                        </div>
+
                         <div class="col-md-3 mb-3">
                             <label for="optionPrice">Price</label>
                             <input type="number" class="form-control" id="optionPrice" name="optionPrice"
-                                        placeholder="${option.getPriceOption()}" autofocus="true"/>
+                                        value ="${option.getPriceOption()}" autofocus="true"/>
                         </div>
-                    <%--</spring:bind>--%>
 
-                    <%--<spring:bind path="connectionCostOption">--%>
                         <div class="col-md-3 mb-3">
                             <label for="optionConCost">Connection cost</label>
                             <input type="number" class="form-control" id="optionConCost" name="optionCost"
-                                        placeholder="${option.getConnectionCostOption()}" autofocus="true"/>
+                                        value ="${option.getConnectionCostOption()}" autofocus="true"/>
                         </div>
-                    <%--</spring:bind>--%>
+
 
 
                     <div class="col-md-3 mb-3">

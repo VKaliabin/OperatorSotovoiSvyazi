@@ -83,27 +83,24 @@
                 <h1 class="h2">New Tariff</h1>
             </div>
 
-
-            <%--<h2>Section title</h2>--%>
-
-            <form method="POST" action="edit_nameAndprice_tariff"  class="form-signin">
+            <form method="POST" action="edit_nameAndprice_tariff" class="form-signin">
                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                 <input type="hidden" name="idTariff" value="${tariff.getIdTariff()}"/>
                 <div class="row">
-                    <%--<spring:bind path="nameTariff">--%>
-                        <div class="col-md-3 mb-3">
-                            <label for="tariffName">Name of a tariff</label>
-                            <input type="text" class="form-control" id="tariffName" name="nameTariff"
-                                        placeholder = "${tariff.getNameTariff()}" autofocus="true"/>
-                        </div>
-                    <%--</spring:bind>--%>
-                    <%--<spring:bind path="priceTariff">--%>
-                        <div class="col-md-3 mb-3">
-                            <label for="tariffPrice">Price</label>
-                            <input type="number" class="form-control" id="tariffPrice" name="priceTariff"
-                                   placeholder = "${tariff.getPriceTariff()}" autofocus="true"/>
-                        </div>
-                    <%--</spring:bind>--%>
+
+                    <div class="col-md-3 mb-3">
+                        <label for="tariffName">Name of a tariff</label>
+                        <input type="text" class="form-control" id="tariffName" name="nameTariff"
+                               value="${tariff.getNameTariff()}" autofocus="true"/>
+
+                    </div>
+
+                    <div class="col-md-3 mb-3">
+                        <label for="tariffPrice">Price</label>
+                        <input type="number" class="form-control" id="tariffPrice" name="priceTariff"
+                               value="${tariff.getPriceTariff()}" autofocus="true"/>
+                    </div>
+
                 </div>
                 <button class="btn btn-primary btn-block" style="width: 150px" type="submit">Edit tariff</button>
             </form>

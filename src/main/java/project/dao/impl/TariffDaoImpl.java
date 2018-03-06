@@ -1,7 +1,8 @@
-package project.dao;
+package project.dao.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import project.dao.api.TariffDao;
 import project.hibernate.HibernateUtil;
 import project.model.TariffEntity;
 import java.util.List;

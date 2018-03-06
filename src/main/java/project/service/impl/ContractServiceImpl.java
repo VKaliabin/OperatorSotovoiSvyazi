@@ -3,7 +3,7 @@ package project.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import project.dao.ContractDao;
+import project.dao.api.ContractDao;
 import project.model.ContractEntity;
 import project.service.api.ContractService;
 import java.util.List;

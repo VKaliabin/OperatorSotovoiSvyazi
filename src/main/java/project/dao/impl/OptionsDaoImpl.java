@@ -1,9 +1,11 @@
-package project.dao;
+package project.dao.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import project.dao.api.OptionDao;
 import project.hibernate.HibernateUtil;
 import project.model.OptionEntity;
+
 import java.util.List;
 
 @Repository
@@ -14,7 +16,7 @@ public class OptionsDaoImpl implements OptionDao {
     @Override
     public List<OptionEntity> listOptions(int id) {
         String query = "select * from options where idTARIFF=:id";
-        return hibernateUtil.fetchAllById(query, OptionEntity.class ,id);
+        return hibernateUtil.fetchAllById(query, OptionEntity.class, id);
     }
 
     @Override

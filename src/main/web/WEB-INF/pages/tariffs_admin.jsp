@@ -90,10 +90,10 @@
                     <thead>
                     <tr>
                         <th style="width: 600px">Name of the tariff</th>
-                        <th style="width: 600px">Price</th>
-                        <th style="width: 600px">Available options</th>
+                        <th style="width: 300px">Price</th>
+                        <th style="width: 300px">Available options</th>
                         <th style="width: 100px"></th>
-                        <th style="width: 100px"></th>
+                        <th style="width: 400px"></th>
                     </tr>
                     </thead>
                     <tbody>
@@ -111,8 +111,16 @@
                                    href="/edit_tariff?id=${tariff.getIdTariff()}">Edit</a>
                             </td>
                             <td>
-                                <a class="btn btn-sm btn-warning" style="width: 100px;"
-                                   href="/delete_tariff?id=${tariff.getIdTariff()}">Delete</a>
+                                <c:choose>
+                                    <c:when test="${tariff.getContracts().size()>0}">
+                                        <a style="color: #ac2925; font-size: 20px">Impossible delete because of connected contracts</a>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <a class="btn btn-sm btn-warning" style="width: 100px;"
+                                           href="/delete_tariff?id=${tariff.getIdTariff()}">Delete</a>
+                                    </c:otherwise>
+                                </c:choose>
+
                             </td>
                         </tr>
                     </c:forEach>

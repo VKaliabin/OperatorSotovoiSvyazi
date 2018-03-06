@@ -3,7 +3,7 @@ package project.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import project.dao.RoleDao;
+import project.dao.api.RoleDao;
 import project.model.RoleEntity;
 import project.service.api.RoleService;
 

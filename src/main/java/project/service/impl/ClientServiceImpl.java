@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import project.dao.ClientDao;
+import project.dao.api.ClientDao;
 import project.model.ClientEntity;
 import project.model.RoleEntity;
 import project.service.api.ClientService;

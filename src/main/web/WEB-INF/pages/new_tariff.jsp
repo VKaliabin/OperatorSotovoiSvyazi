@@ -93,6 +93,7 @@
                             <label for="tariffName">Name of a tariff</label>
                             <form:input type="text" class="form-control" id="tariffName"
                                         path="nameTariff" autofocus="true"/>
+                            <form:errors path="nameTariff"/>
                         </div>
                     </spring:bind>
 

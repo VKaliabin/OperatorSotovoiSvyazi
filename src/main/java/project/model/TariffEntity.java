@@ -17,33 +17,12 @@ public class TariffEntity {
     @Column(name = "PRICE_TARIFF")
     private int priceTariff;
 
-//    @OneToOne(optional = false, mappedBy = "tariff")
-//    private IncompatibleOptionEntity incOption;
-//
-//    @OneToOne(optional = false, mappedBy = "tariff")
-//    private CompatibleOptionEntity comOption;
 
     @OneToMany(mappedBy = "tariff", fetch = FetchType.EAGER)
     private List<OptionEntity> options;
 
     @OneToMany(mappedBy = "tariff", fetch = FetchType.EAGER)
     private List<ContractEntity> contracts;
-
-//    public CompatibleOptionEntity getComOption() {
-//        return comOption;
-//    }
-//
-//    public void setComOption(CompatibleOptionEntity comOption) {
-//        this.comOption = comOption;
-//    }
-//
-//    public IncompatibleOptionEntity getIncOption() {
-//        return incOption;
-//    }
-//
-//    public void setIncOption(IncompatibleOptionEntity incOption) {
-//        this.incOption = incOption;
-//    }
 
     public TariffEntity() {
     }

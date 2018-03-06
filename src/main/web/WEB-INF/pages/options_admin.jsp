@@ -90,9 +90,9 @@
                     <thead>
                     <tr>
                         <th style="width: 600px">Name of an option</th>
-                        <th style="width: 600px">Price</th>
-                        <th style="width: 600px">Connection cost</th>
-                        <th style="width: 100px">Available to the tariff</th>
+                        <th style="width: 300px">Price</th>
+                        <th style="width: 300px">Connection cost</th>
+                        <th style="width: 600px">Available to the tariff</th>
                         <th style="width: 100px"></th>
                         <th style="width: 100px"></th>
                     </tr>

@@ -1,7 +1,8 @@
-package project.dao;
+package project.dao.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import project.dao.api.ContractDao;
 import project.hibernate.HibernateUtil;
 import project.model.ContractEntity;
 
@@ -14,7 +15,7 @@ public class ContractDaoImpl implements ContractDao {
 
     @Override
     public ContractEntity getContract(int idContcract) {
-       return (ContractEntity) hibernateUtil.fetchById(idContcract, ContractEntity.class );
+        return (ContractEntity) hibernateUtil.fetchById(idContcract, ContractEntity.class);
     }
 
     @Override
@@ -41,6 +42,6 @@ public class ContractDaoImpl implements ContractDao {
     @Override
     public List<ContractEntity> listById(int idClient) {
         String query = "select * from contract where idCLIENT=:id";
-        return hibernateUtil.fetchAllById(query, ContractEntity.class ,idClient);
+        return hibernateUtil.fetchAllById(query, ContractEntity.class, idClient);
     }
 }

@@ -13,7 +13,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import project.model.ClientEntity;
 import project.service.api.ClientService;
 import project.service.api.SecurityService;
-import project.validator.ClientValidator;
+import project.validator.impl.ClientValidatorImpl;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -24,7 +25,7 @@ public class LoginController {
     @Autowired
     private SecurityService securityService;
     @Autowired
-    private ClientValidator clientValidator;
+    private ClientValidatorImpl clientValidatorImpl;
 
     @RequestMapping(value = "/registration", method = RequestMethod.GET)
     public String registration(Model model) {
@@ -34,7 +35,8 @@ public class LoginController {
 
     @RequestMapping(value = "/registration", method = RequestMethod.POST)
     public String registration(@ModelAttribute("userForm") ClientEntity userForm, BindingResult bindingResult, Model model) {
-        clientValidator.validate(userForm, bindingResult);
+
+        clientValidatorImpl.validate(userForm, bindingResult, clientService);
         if (bindingResult.hasErrors()) {
             return "registration";
         }

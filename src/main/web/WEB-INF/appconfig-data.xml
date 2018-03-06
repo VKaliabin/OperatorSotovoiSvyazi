@@ -28,9 +28,6 @@
                     <value>project.model.OptionEntity</value>
                     <value>project.model.TariffEntity</value>
                     <value>project.model.ContractEntity</value>
-                    <value>project.model.CompatibleOptionEntity</value>
-                    <value>project.model.IncompatibleOptionEntity</value>
-                    <value>project.model.PairOptionEntity</value>
              </list>
             </property>
             <property name="hibernateProperties">
@@ -47,7 +44,7 @@
     <bean id="hibernateUtil" class="project.hibernate.HibernateUtil">
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
-    <bean id="clientDao" class="project.dao.ClientDaoImpl">
+    <bean id="clientDao" class="project.dao.impl.ClientDaoImpl">
         <property name="hibernateUtil" ref="hibernateUtil"/>
     </bean>
 

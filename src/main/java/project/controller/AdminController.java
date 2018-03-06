@@ -21,8 +21,9 @@ import project.model.TariffEntity;
 import project.service.api.*;
 import project.utils.AllOptionsModel;
 import project.utils.OptionModel;
-import project.validator.ContractValidator;
-import project.validator.OptionValidator;
+import project.validator.impl.ContractValidatorImpl;
+import project.validator.impl.OptionValidatorImpl;
+import project.validator.impl.TariffValidatorImpl;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -39,13 +40,15 @@ public class AdminController {
     @Autowired
     private OptionService optionService;
     @Autowired
-    private OptionValidator optionValidator;
+    private OptionValidatorImpl optionValidatorImpl;
     @Autowired
-    private ContractValidator contractValidator;
+    private ContractValidatorImpl contractValidatorImpl;
     @Autowired
     private ContractService contractService;
     @Autowired
     private RoleService roleService;
+    @Autowired
+    private TariffValidatorImpl tariffValidatorImpl;
 
 
     @RequestMapping(value = {"/admin"}, method = RequestMethod.GET)
@@ -97,7 +100,7 @@ public class AdminController {
     }
 
     @RequestMapping(value = "/new_tariff", method = RequestMethod.POST)
-    public String addTariff(@ModelAttribute("tariff") TariffEntity tariff, Model model) {
+    public String addTariff(@ModelAttribute("tariff") TariffEntity tariff, Model model, BindingResult bindingResult) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         User user = (User) authentication.getPrincipal();
         if (user != null) {
@@ -105,7 +108,11 @@ public class AdminController {
         } else {
             return "login";
         }
-
+        tariffValidatorImpl.validate(tariff, bindingResult, tariffService.listTariffs());
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("tariff", new TariffEntity());
+            return "new_tariff";
+        }
         tariffService.add(tariff);
 
         return "redirect:/tariffs_admin";
@@ -153,6 +160,9 @@ public class AdminController {
         }
         TariffEntity tariffEntity = tariffService.getTariff(idTariff);
         tariffEntity.setNameTariff(nameTariff);
+        if (nameTariff == null) {
+            tariffEntity.setNameTariff(tariffService.getTariff(idTariff).getNameTariff());
+        }
         tariffEntity.setPriceTariff(priceTariff);
         tariffService.update(tariffEntity);
         return "redirect:/tariffs_admin";
@@ -198,8 +208,8 @@ public class AdminController {
         } else {
             return "login";
         }
-
-        optionValidator.validate(option, bindingResult);
+        List<OptionEntity> list = optionService.listAllOptions();
+        optionValidatorImpl.validate(option, bindingResult, list);
         if (bindingResult.hasErrors()) {
             model.addAttribute("tariffs", tariffService.listTariffs());
             return "new_option";
@@ -243,10 +253,12 @@ public class AdminController {
         }
         OptionEntity optionEntity = optionService.getOption(idOption);
         optionEntity.setTariff(tariffService.getTariff(idTariff));
-        if (optionCost != null){ optionEntity.setConnectionCostOption(optionCost);}
-        if (optionName != null){ optionEntity.setNameOption(optionName);}
-        if(optionPrice != null){optionEntity.setPriceOption(optionPrice);}
-
+        optionEntity.setConnectionCostOption(optionCost);
+        optionEntity.setNameOption(optionName);
+        if (optionName == null) {
+            optionEntity.setNameOption(optionService.getOption(idOption).getNameOption());
+        }
+        optionEntity.setPriceOption(optionPrice);
         optionService.update(optionEntity);
         return "redirect:/options_admin";
     }
@@ -308,7 +320,8 @@ public class AdminController {
         }
 
         model.addAttribute("tariffs", tariffService.listTariffs());
-        contractValidator.validate(contract, bindingResult);
+        List<ContractEntity> list = contractService.list();
+        contractValidatorImpl.validate(contract, bindingResult, list);
         if (bindingResult.hasErrors()) {
 
             return "new_contract";
@@ -424,30 +437,6 @@ public class AdminController {
         model.addAttribute("role", roleService.getRole(2));
         return "search_result";
     }
-
-
-//    @RequestMapping(value = "/admin2", method = RequestMethod.GET)
-//    public String blockClient(Model model){
-//        return "admin2";
-//    }
-//
-//    @RequestMapping(value = "/search", method = RequestMethod.GET,  produces = { MediaType.APPLICATION_JSON_VALUE })
-//
-//    public @ResponseBody String search(@RequestParam("search") String field){
-//        Authentication authentication  = SecurityContextHolder.getContext().getAuthentication();
-//        User user = (User) authentication.getPrincipal();
-//        logger.debug("here");
-//        SearchModel searchModel = new SearchModel(user.getUsername(), clientService.listClients(), roleService.getRole(2));
-//        logger.debug("searchModel = {}", searchModel.toString());
-//        ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
-//        String json = null;
-//        try {
-//            json = ow.writeValueAsString(searchModel);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//        return json;
-//    }
 
     @RequestMapping(value = "/changetariff", method = RequestMethod.GET, produces = {MediaType.APPLICATION_JSON_VALUE})
     public @ResponseBody

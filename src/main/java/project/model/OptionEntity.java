@@ -26,12 +26,7 @@ public class OptionEntity {
     @ManyToOne(optional = false)
     @JoinColumn(name = "idTARIFF")
     private TariffEntity tariff;
-//
-//    @OneToOne (optional=false, mappedBy="option")
-//    private IncompatibleOptionEntity incOption;
 
-    //    @OneToMany (mappedBy="optionEntity", fetch=FetchType.EAGER)
-//    private Set<CompatibleOptionEntity> comOption;
     public OptionEntity() {
     }
 
@@ -54,21 +49,6 @@ public class OptionEntity {
         this.tariff = tariff;
     }
 
-//    public IncompatibleOptionEntity getIncOption() {
-//        return incOption;
-//    }
-//
-//    public void setIncOption(IncompatibleOptionEntity incOption) {
-//        this.incOption = incOption;
-//    }
-
-//    public Set<CompatibleOptionEntity> getComOption() {
-//        return comOption;
-//    }
-//
-//    public void setComOption(Set<CompatibleOptionEntity> comOption) {
-//        this.comOption = comOption;
-//    }
 
     public int getIdOption() {
         return idOption;
