@@ -21,6 +21,9 @@ public class ClientServiceImpl implements ClientService {
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
+//    @Autowired
+//    public ClientServiceImpl(){}
+
     public void setClientDao(ClientDao clientDao) {
         this.clientDao = clientDao;
     }

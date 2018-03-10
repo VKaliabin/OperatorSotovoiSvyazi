@@ -11,6 +11,7 @@
 
     <http auto-config="true">
         <intercept-url pattern="/" access="hasAnyRole('ROLE_USER', 'ROLE_ADMIN')"/>
+        <!--<intercept-url pattern="/login" access="hasAnyRole('ROLE_USER', 'ROLE_ADMIN')"/>-->
         <intercept-url pattern="/welcome" access="hasRole('ROLE_USER')"/>
         <intercept-url pattern="/block" access="hasRole('ROLE_USER')"/>
         <intercept-url pattern="/unblock" access="hasRole('ROLE_USER')"/>
@@ -36,8 +37,12 @@
         <intercept-url pattern="/changeContract" access="hasRole('ROLE_ADMIN')"/>
         <intercept-url pattern="/search" access="hasAnyRole('ROLE_USER', 'ROLE_ADMIN')"/>
 
-        <form-login login-page="/login" default-target-url="/welcome" authentication-failure-url="/login?error"  authentication-success-handler-ref="myAuthenticationSuccessHandler"
-                    username-parameter="emailOfEmail" password-parameter="password"/>
+        <form-login login-page="/login"
+                    default-target-url="/welcome"
+                    authentication-failure-url="/login?error"
+                    authentication-success-handler-ref="myAuthenticationSuccessHandler"
+                    username-parameter="emailOfEmail"
+                    password-parameter="password"/>
 
         <logout logout-success-url="/login?logout"/>
     </http>

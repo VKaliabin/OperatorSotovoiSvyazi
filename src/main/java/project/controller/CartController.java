@@ -47,6 +47,12 @@ public class CartController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         User user = (User) authentication.getPrincipal();
         ModelAndView modelAndView = new ModelAndView();
+        if (user != null) {
+            modelAndView.addObject("user", user.getUsername());
+        } else {
+            modelAndView.setViewName("login");
+            return modelAndView;
+        }
         modelAndView.addObject("user", user.getUsername());
         if (contract.getIdContract() != 0 || contract.getTariffEntity() != null) {
             Object object = session.getAttribute("contract");
@@ -84,8 +90,13 @@ public class CartController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         User user = (User) authentication.getPrincipal();
         ModelAndView modelAndView = new ModelAndView();
+        if (user != null) {
+            modelAndView.addObject("user", user.getUsername());
+        } else {
+            modelAndView.setViewName("login");
+            return modelAndView;
+        }
         modelAndView.addObject("user", user.getUsername());
-
         modelAndView.setViewName("redirect:/welcome");
         Object object = session.getAttribute("contract");
 

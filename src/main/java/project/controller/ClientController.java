@@ -34,15 +34,31 @@ public class ClientController {
     @Autowired
     private OptionService optionService;
 
-
-    @RequestMapping(value = {"/", "/welcome"}, method = RequestMethod.GET)
-    public String welcome(Model model) {
+    private ClientEntity authentication(Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
         User user = (User) authentication.getPrincipal();
         model.addAttribute("user", user.getUsername());
-
         ClientEntity clientEntity = clientService.findByEMail(user.getUsername());
+        return clientEntity;
+    }
+
+    @RequestMapping(value = "/", method = RequestMethod.GET)
+    public String home(Model model) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String role = auth.getAuthorities().toString();
+        logger.debug("ROLE = {}", role);
+        if (role.contains("ROLE_USER")) {
+            return "redirect:/welcome";
+        } else if (role.contains("ROLE_ADMIN")) {
+            return "redirect:/admin";
+        }
+        return "redirect:/admin";
+    }
+
+    @RequestMapping(value = {"/welcome"}, method = RequestMethod.GET)
+    public String welcome(Model model) {
+        ClientEntity clientEntity = authentication(model);
+
         model.addAttribute("contracts", clientEntity.getContracts());
         if (clientEntity.getExistingClient().equals("Blocked")) {
             return "blocked_user";
@@ -51,18 +67,13 @@ public class ClientController {
         }
     }
 
-
     @RequestMapping(value = "/block", method = RequestMethod.GET)
     public String block(Model model, @RequestParam(value = "id") int id) {
         ContractEntity contractEntity = contractService.getContract(id);
         contractEntity.setBlockedContract("Blocked");
         contractService.update(contractEntity);
+        ClientEntity clientEntity = authentication(model);
 
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        User user = (User) authentication.getPrincipal();
-        model.addAttribute("user", user.getUsername());
-
-        ClientEntity clientEntity = clientService.findByEMail(user.getUsername());
         model.addAttribute("contracts", clientEntity.getContracts());
         return "welcome";
     }
@@ -73,22 +84,15 @@ public class ClientController {
         ContractEntity contractEntity = contractService.getContract(id);
         contractEntity.setBlockedContract("Unblocked");
         contractService.update(contractEntity);
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        User user = (User) authentication.getPrincipal();
-        model.addAttribute("user", user.getUsername());
+        ClientEntity clientEntity = authentication(model);
 
-        ClientEntity clientEntity = clientService.findByEMail(user.getUsername());
         model.addAttribute("contracts", clientEntity.getContracts());
         return "welcome";
     }
 
     @RequestMapping(value = "/tariffs_user", method = RequestMethod.GET)
     public String tariffs(Model model) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        User user = (User) authentication.getPrincipal();
-        model.addAttribute("user", user.getUsername());
-
-        ClientEntity clientEntity = clientService.findByEMail(user.getUsername());
+        ClientEntity clientEntity = authentication(model);
         model.addAttribute("contracts", clientEntity.getContracts());
 
         List<TariffEntity> tarifs = tariffService.listTariffs();
@@ -100,9 +104,7 @@ public class ClientController {
     public String showTariff(Model model, @RequestParam(value = "id") int id,
                              @RequestParam(value = "currentTar") int currentTar,
                              @RequestParam(value = "idContract") int idContract) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        User user = (User) authentication.getPrincipal();
-        model.addAttribute("user", user.getUsername());
+        ClientEntity clientEntity = authentication(model);
 
         TariffEntity tariffEntity = tariffService.getTariff(id);
         model.addAttribute("tariff", tariffEntity);
@@ -118,6 +120,4 @@ public class ClientController {
         model.addAttribute("contract", new ContractModel());
         return "options_user";
     }
-
-
 }

@@ -30,7 +30,6 @@ public class OptionEntity {
     public OptionEntity() {
     }
 
-    ;
 
     public List<ContractEntity> getContracts() {
         return contracts;

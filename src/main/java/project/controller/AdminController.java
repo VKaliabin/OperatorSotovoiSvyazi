@@ -51,17 +51,21 @@ public class AdminController {
     private TariffValidatorImpl tariffValidatorImpl;
 
 
+    private String authentication(Model model) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User user = (User) authentication.getPrincipal();
+        if (user != null) {
+            model.addAttribute("user", user.getUsername());
+        } else {
+            return "login";
+        }
+        return "";
+    }
+
     @RequestMapping(value = {"/admin"}, method = RequestMethod.GET)
     public String admin(Model model) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if ((!(authentication instanceof AnonymousAuthenticationToken)) && authentication != null) {
-            User user = (User) authentication.getPrincipal();
-            if (user != null) {
-                model.addAttribute("user", user.getUsername());
-            } else {
-                return "login";
-            }
-        }
+        authentication(model);
+
         model.addAttribute("clients", clientService.listClients());
         model.addAttribute("role", roleService.getRole(2));
         return "admin";
@@ -69,48 +73,26 @@ public class AdminController {
 
     @RequestMapping(value = "/tariffs_admin", method = RequestMethod.GET)
     public String listTariffs(Model model) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        authentication(model);
 
-        User user = (User) authentication.getPrincipal();
-        if (user != null) {
-            model.addAttribute("user", user.getUsername());
-        } else {
-            return "login";
-
-        }
         List<TariffEntity> tariffEntities = tariffService.listTariffs();
         model.addAttribute("tariffs", tariffEntities);
         return "tariffs_admin";
     }
 
-
     @RequestMapping(value = "/addnewtariff", method = RequestMethod.GET)
     public String newTariff(Model model) {
-
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        User user = (User) authentication.getPrincipal();
-        if (user != null) {
-            model.addAttribute("user", user.getUsername());
-        } else {
-            return "login";
-        }
+        authentication(model);
 
         model.addAttribute("tariff", new TariffEntity());
         return "new_tariff";
     }
 
     @RequestMapping(value = "/new_tariff", method = RequestMethod.POST)
-    public String addTariff(@ModelAttribute("tariff") TariffEntity tariff, Model model, BindingResult bindingResult) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        User user = (User) authentication.getPrincipal();
-        if (user != null) {
-            model.addAttribute("user", user.getUsername());
-        } else {
-            return "login";
-        }
+    public String addTariff(@ModelAttribute("tariff") TariffEntity tariff, Model model, BindingResult bindingResult){
+        authentication(model);
         tariffValidatorImpl.validate(tariff, bindingResult, tariffService.listTariffs());
         if (bindingResult.hasErrors()) {
-            model.addAttribute("tariff", new TariffEntity());
             return "new_tariff";
         }
         tariffService.add(tariff);
@@ -120,14 +102,7 @@ public class AdminController {
 
     @RequestMapping(value = "/delete_tariff", method = RequestMethod.GET)
     public String deleteTariff(Model model, @RequestParam(value = "id") int idTariff) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        User user = (User) authentication.getPrincipal();
-        if (user != null) {
-            model.addAttribute("user", user.getUsername());
-        } else {
-            return "login";
-        }
-
+        authentication(model);
         tariffService.remove(idTariff);
         return "redirect:/tariffs_admin";
     }
@@ -135,14 +110,7 @@ public class AdminController {
 
     @RequestMapping(value = "/edit_tariff", method = RequestMethod.GET)
     public String editTariff(Model model, @RequestParam(value = "id") int idTariff) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        User user = (User) authentication.getPrincipal();
-        if (user != null) {
-            model.addAttribute("user", user.getUsername());
-        } else {
-            return "login";
-        }
-
+        authentication(model);
         model.addAttribute("tariff", tariffService.getTariff(idTariff));
         return "edit_tariff";
     }
@@ -151,17 +119,12 @@ public class AdminController {
     public String editNameandPriceTariff(Model model, @RequestParam("nameTariff") String nameTariff,
                                          @RequestParam("priceTariff") int priceTariff,
                                          @RequestParam("idTariff") int idTariff) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        User user = (User) authentication.getPrincipal();
-        if (user != null) {
-            model.addAttribute("user", user.getUsername());
-        } else {
-            return "login";
-        }
+        authentication(model);
         TariffEntity tariffEntity = tariffService.getTariff(idTariff);
-        tariffEntity.setNameTariff(nameTariff);
-        if (nameTariff == null) {
+        if (nameTariff.length() == 0) {
             tariffEntity.setNameTariff(tariffService.getTariff(idTariff).getNameTariff());
+        } else {
+            tariffEntity.setNameTariff(nameTariff);
         }
         tariffEntity.setPriceTariff(priceTariff);
         tariffService.update(tariffEntity);
@@ -170,13 +133,7 @@ public class AdminController {
 
     @RequestMapping(value = "/options_admin", method = RequestMethod.GET)
     public String listOptions(Model model) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        User user = (User) authentication.getPrincipal();
-        if (user != null) {
-            model.addAttribute("user", user.getUsername());
-        } else {
-            return "login";
-        }
+        authentication(model);
 
         List<OptionEntity> optionEntities = optionService.listAllOptions();
         model.addAttribute("options", optionEntities);
@@ -185,13 +142,7 @@ public class AdminController {
 
     @RequestMapping(value = "/addnewoption", method = RequestMethod.GET)
     String newOptions(Model model) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        User user = (User) authentication.getPrincipal();
-        if (user != null) {
-            model.addAttribute("user", user.getUsername());
-        } else {
-            return "login";
-        }
+        authentication(model);
 
         model.addAttribute("tariffs", tariffService.listTariffs());
         model.addAttribute("option", new OptionEntity());
@@ -201,38 +152,26 @@ public class AdminController {
     @RequestMapping(value = "/new_option", method = RequestMethod.POST)
     public String addOption(@ModelAttribute("option") OptionEntity option, Model model,
                             @RequestParam("id") int idTariff, BindingResult bindingResult) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        User user = (User) authentication.getPrincipal();
-        if (user != null) {
-            model.addAttribute("user", user.getUsername());
-        } else {
-            return "login";
-        }
+        authentication(model);
+
         List<OptionEntity> list = optionService.listAllOptions();
         optionValidatorImpl.validate(option, bindingResult, list);
         if (bindingResult.hasErrors()) {
             model.addAttribute("tariffs", tariffService.listTariffs());
             return "new_option";
         }
-
         if (idTariff != 0) {
             TariffEntity tariffEntity = tariffService.getTariff(idTariff);
             option.setTariff(tariffEntity);
             optionService.addOption(option);
         }
-
         return "redirect:/options_admin";
     }
 
     @RequestMapping(value = "/edit_option", method = RequestMethod.GET)
     public String editOption(Model model, @RequestParam("id") int idOption) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        User user = (User) authentication.getPrincipal();
-        if (user != null) {
-            model.addAttribute("user", user.getUsername());
-        } else {
-            return "login";
-        }
+        authentication(model);
+
         model.addAttribute("option", optionService.getOption(idOption));
         model.addAttribute("tariffs", tariffService.listTariffs());
         return "edit_option";
@@ -244,19 +183,14 @@ public class AdminController {
                                          @RequestParam("optionPrice") Integer optionPrice,
                                          @RequestParam("optionCost") Integer optionCost,
                                          @RequestParam("id") Integer idTariff) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        User user = (User) authentication.getPrincipal();
-        if (user != null) {
-            model.addAttribute("user", user.getUsername());
-        } else {
-            return "login";
-        }
+        authentication(model);
         OptionEntity optionEntity = optionService.getOption(idOption);
         optionEntity.setTariff(tariffService.getTariff(idTariff));
         optionEntity.setConnectionCostOption(optionCost);
-        optionEntity.setNameOption(optionName);
-        if (optionName == null) {
+        if (optionName.length() == 0) {
             optionEntity.setNameOption(optionService.getOption(idOption).getNameOption());
+        } else {
+            optionEntity.setNameOption(optionName);
         }
         optionEntity.setPriceOption(optionPrice);
         optionService.update(optionEntity);
@@ -265,13 +199,7 @@ public class AdminController {
 
     @RequestMapping(value = "/delete_option", method = RequestMethod.GET)
     public String deleteOption(Model model, @RequestParam("id") int idOption) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        User user = (User) authentication.getPrincipal();
-        if (user != null) {
-            model.addAttribute("user", user.getUsername());
-        } else {
-            return "login";
-        }
+        authentication(model);
 
         optionService.deleteOption(idOption);
         return "redirect:/options_admin";
@@ -279,13 +207,7 @@ public class AdminController {
 
     @RequestMapping(value = "/contracts", method = RequestMethod.GET)
     public String contracts(Model model) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        User user = (User) authentication.getPrincipal();
-        if (user != null) {
-            model.addAttribute("user", user.getUsername());
-        } else {
-            return "login";
-        }
+        authentication(model);
 
         model.addAttribute("clients", clientService.listClients());
         return "contracts_admin";
@@ -293,13 +215,7 @@ public class AdminController {
 
     @RequestMapping(value = "/new_contract", method = RequestMethod.GET)
     public String newContract(Model model, @RequestParam("id") int idClient) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        User user = (User) authentication.getPrincipal();
-        if (user != null) {
-            model.addAttribute("user", user.getUsername());
-        } else {
-            return "login";
-        }
+        authentication(model);
 
         model.addAttribute("tariffs", tariffService.listTariffs());
         model.addAttribute("client", clientService.getClientId(idClient));
@@ -311,25 +227,21 @@ public class AdminController {
     public String addContract(Model model, @ModelAttribute("contract") ContractEntity contract, BindingResult bindingResult,
                               @RequestParam("id") int idTariff,
                               @RequestParam("idClient") int idClient) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        User user = (User) authentication.getPrincipal();
-        if (user != null) {
-            model.addAttribute("user", user.getUsername());
-        } else {
-            return "login";
-        }
-
+        authentication(model);
         model.addAttribute("tariffs", tariffService.listTariffs());
         List<ContractEntity> list = contractService.list();
         contractValidatorImpl.validate(contract, bindingResult, list);
         if (bindingResult.hasErrors()) {
-
+            model.addAttribute("tariffs", tariffService.listTariffs());
+            model.addAttribute("client", clientService.getClientId(idClient));
+            model.addAttribute("contract", new ContractEntity());
             return "new_contract";
         }
         if (idTariff != 0) {
             TariffEntity tariffEntity = tariffService.getTariff(idTariff);
             contract.setTariff(tariffEntity);
             contract.setBlockedContract("Unblocked");
+            contract.setAdminBlock("N");
             contract.setClientEntity(clientService.getClientId(idClient));
             logger.debug("contract = {}", contract.toString());
             contractService.addContract(contract);
@@ -339,13 +251,7 @@ public class AdminController {
 
     @RequestMapping(value = "/unblock_client", method = RequestMethod.GET)
     public String unblockClient(Model model, @RequestParam("id") int idClient) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        User user = (User) authentication.getPrincipal();
-        if (user != null) {
-            model.addAttribute("user", user.getUsername());
-        } else {
-            return "login";
-        }
+        authentication(model);
 
         ClientEntity clientEntity = clientService.getClientId(idClient);
         clientEntity.setExistingClient("Unblocked");
@@ -357,13 +263,7 @@ public class AdminController {
 
     @RequestMapping(value = "/block_client", method = RequestMethod.GET)
     public String blockClient(Model model, @RequestParam("id") int idClient) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        User user = (User) authentication.getPrincipal();
-        if (user != null) {
-            model.addAttribute("user", user.getUsername());
-        } else {
-            return "login";
-        }
+        authentication(model);
 
         ClientEntity clientEntity = clientService.getClientId(idClient);
         clientEntity.setExistingClient("Blocked");
@@ -375,13 +275,7 @@ public class AdminController {
 
     @RequestMapping(value = "/show_client", method = RequestMethod.GET)
     public String showDetatils(Model model, @RequestParam("id") int idClient) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        User user = (User) authentication.getPrincipal();
-        if (user != null) {
-            model.addAttribute("user", user.getUsername());
-        } else {
-            return "login";
-        }
+        authentication(model);
 
         model.addAttribute("tariffs", tariffService.listTariffs());
         model.addAttribute("client", clientService.getClientId(idClient));
@@ -393,13 +287,7 @@ public class AdminController {
     @RequestMapping(value = "/block_contract", method = RequestMethod.GET)
     public String blockingContract(Model model, @RequestParam("id") int idContract,
                                    @RequestParam("idClient") int idClient) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        User user = (User) authentication.getPrincipal();
-        if (user != null) {
-            model.addAttribute("user", user.getUsername());
-        } else {
-            return "login";
-        }
+        authentication(model);
         ContractEntity contract = contractService.getContract(idContract);
         if (contract.getAdminBlock().equals("N")) {
             contract.setAdminBlock("Y");
@@ -416,14 +304,7 @@ public class AdminController {
 
     @RequestMapping(value = "/search", method = RequestMethod.POST)
     public String searchContract(Model model, @RequestParam("sea") String contractNumber) {
-
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        User user = (User) authentication.getPrincipal();
-        if (user != null) {
-            model.addAttribute("user", user.getUsername());
-        } else {
-            return "login";
-        }
+        authentication(model);
         List<ContractEntity> contractEntities = contractService.list();
         int idContact = 0;
         List<ContractEntity> searchcontract = new ArrayList<>();
@@ -465,13 +346,11 @@ public class AdminController {
         if (tariffId != contractEntity.getTariff().getIdTariff()) {
             contractEntity.setTariff(tariffService.getTariff(tariffId));
         }
-
         if (checkbox != null) {
             for (Integer aCheckboxValue : checkbox) {
                 listConOptions.add(optionService.getOption(aCheckboxValue));
             }
         }
-
         contractEntity.setOptions(listConOptions);
         contractService.update(contractEntity);
         int idClient = contractService.getContract(idContract).getClientEntity().getIdClient();
@@ -492,6 +371,4 @@ public class AdminController {
         }
         return optionModelList;
     }
-
-
 }
