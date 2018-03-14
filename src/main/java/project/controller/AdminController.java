@@ -6,7 +6,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
@@ -89,7 +88,7 @@ public class AdminController {
     }
 
     @RequestMapping(value = "/new_tariff", method = RequestMethod.POST)
-    public String addTariff(@ModelAttribute("tariff") TariffEntity tariff, Model model, BindingResult bindingResult){
+    public String addTariff(@ModelAttribute("tariff") TariffEntity tariff, Model model, BindingResult bindingResult) {
         authentication(model);
         tariffValidatorImpl.validate(tariff, bindingResult, tariffService.listTariffs());
         if (bindingResult.hasErrors()) {
@@ -151,6 +150,7 @@ public class AdminController {
 
     @RequestMapping(value = "/new_option", method = RequestMethod.POST)
     public String addOption(@ModelAttribute("option") OptionEntity option, Model model,
+                            @RequestParam("typeOption") String typeOption,
                             @RequestParam("id") int idTariff, BindingResult bindingResult) {
         authentication(model);
 
@@ -163,6 +163,7 @@ public class AdminController {
         if (idTariff != 0) {
             TariffEntity tariffEntity = tariffService.getTariff(idTariff);
             option.setTariff(tariffEntity);
+            option.setCompatibility(typeOption);
             optionService.addOption(option);
         }
         return "redirect:/options_admin";
@@ -325,7 +326,9 @@ public class AdminController {
                         @RequestParam("contractId") int contractId) {
         List<OptionEntity> optionEntities = optionService.listOptions(tariffId);
         List<OptionEntity> connectedOptionsList = contractService.getContract(contractId).getOptions();
-        AllOptionsModel allOptionsModel = new AllOptionsModel(getOptionModel(optionEntities), getOptionModel(connectedOptionsList));
+        List<OptionModel> alloptions = optionService.getOptionModel(optionEntities);
+        List<OptionModel> connectedoptions = optionService.getOptionModel(connectedOptionsList);
+        AllOptionsModel allOptionsModel = new AllOptionsModel(alloptions, connectedoptions);
         ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
         String json = null;
         try {
@@ -356,19 +359,5 @@ public class AdminController {
         int idClient = contractService.getContract(idContract).getClientEntity().getIdClient();
         model.addAttribute("id", idClient);
         return "redirect:/show_client";
-    }
-
-
-    private List<OptionModel> getOptionModel(List<OptionEntity> optionEntities) {
-        List<OptionModel> optionModelList = new ArrayList<>();
-        for (OptionEntity optionEntity : optionEntities) {
-            OptionModel optionModel = new OptionModel();
-            optionModel.setIdOption(optionEntity.getIdOption());
-            optionModel.setConnectionCostOption(optionEntity.getConnectionCostOption());
-            optionModel.setNameOption(optionEntity.getNameOption());
-            optionModel.setPriceOption(optionEntity.getPriceOption());
-            optionModelList.add(optionModel);
-        }
-        return optionModelList;
     }
 }

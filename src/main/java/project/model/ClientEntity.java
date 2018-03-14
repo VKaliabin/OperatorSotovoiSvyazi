@@ -37,6 +37,7 @@ public class ClientEntity {
     @Column(name = "EXISTING_CLIENT")
     private String existingClient;
 
+
     @OneToMany(mappedBy = "clientEntity", fetch = FetchType.EAGER)
     private List<ContractEntity> contracts;
 
@@ -52,6 +53,7 @@ public class ClientEntity {
     public void setRoles(Set<RoleEntity> roles) {
         this.roles = roles;
     }
+
 
     @Transient
     private String confirmPassword;

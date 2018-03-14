@@ -1,8 +1,12 @@
 package project.controller;
 
+import org.codehaus.jackson.map.ObjectMapper;
+import org.codehaus.jackson.map.ObjectWriter;
+import org.codehaus.jackson.type.TypeReference;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
@@ -18,7 +22,9 @@ import project.service.api.ContractService;
 import project.service.api.OptionService;
 import project.service.api.TariffService;
 import project.utils.ContractModel;
+import project.utils.SelectedOptionsModel;
 
+import java.io.IOException;
 import java.util.List;
 
 @Controller
@@ -111,13 +117,36 @@ public class ClientController {
         model.addAttribute("currentTariff", currentTar);
 
         List<OptionEntity> optionEntities = optionService.listOptions(id);
-        model.addAttribute("options", optionEntities);
-
         List<OptionEntity> currentOptions = contractService.getContract(idContract).getOptions();
-        model.addAttribute("connectedOptions", currentOptions);
+        List<SelectedOptionsModel> selected = optionService.getOptions(optionEntities, currentOptions);
+        model.addAttribute("options", selected);
+
+
         ContractEntity contractEntity = contractService.getContract(idContract);
         model.addAttribute("contractEntity", contractEntity);
         model.addAttribute("contract", new ContractModel());
         return "options_user";
+    }
+
+    @RequestMapping(value = "/optionsUser", method = RequestMethod.GET, produces = {MediaType.APPLICATION_JSON_VALUE})
+    public @ResponseBody
+    String optionsUser(Model model, @RequestParam(value = "optionList") String optionList,
+                       @RequestParam(value = "tariffId") int tariffId,
+                       @RequestParam(value = "contractId") int contractId) {
+
+        logger.debug("optionList = {}", optionList);
+        logger.debug("contractId = {}", contractId);
+        ObjectMapper mapper = new ObjectMapper();
+        String json = null;
+        try {
+            List<String> checkedList = mapper.readValue(optionList, new TypeReference<List<String>>() {});
+            List<OptionEntity> optionEntities = optionService.listOptions(tariffId);
+            List<SelectedOptionsModel> selectedOptionsModels = optionService.getChangedOptions(optionEntities, checkedList);
+            ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
+            json = ow.writeValueAsString(selectedOptionsModels);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return json;
     }
 }

@@ -127,6 +127,23 @@
                         </div>
                     </div>
 
+                    <div class="col-md-3 mb-3">
+                        <label for="tariff">Type of the option</label>
+                        <select name="typeOption"  class="custom-select d-block w-100" id="typeOption" required>
+                            <option value="">Choose...</option>
+                            <option value="Compatible">Compatible</option>
+                            <option value="Noncompatible">Noncompatible</option>
+                            <option value="Compatible+">Compatible+</option>
+                            <option value="Double">Double</option>
+                            <%--<c:forEach items="${tariffs}" var="tariff">--%>
+                                <%--<option value="${tariff.getIdTariff()}">${tariff.getNameTariff()}</option>--%>
+                            <%--</c:forEach>--%>
+
+                        </select>
+                        <div class="invalid-feedback">
+                            Please select a tariff for an option.
+                        </div>
+                    </div>
 
                 </div>
                 <button class="btn btn-primary btn-block" style="width: 150px" type="submit">Add new option</button>

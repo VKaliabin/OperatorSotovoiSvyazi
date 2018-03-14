@@ -89,10 +89,11 @@
                 <table class="table table-striped table-sm">
                     <thead>
                     <tr>
-                        <th style="width: 600px">Name of an option</th>
-                        <th style="width: 300px">Price</th>
-                        <th style="width: 300px">Connection cost</th>
-                        <th style="width: 600px">Available to the tariff</th>
+                        <th style="width: 300px">Name of an option</th>
+                        <th style="width: 100px">Price</th>
+                        <th style="width: 150px">Connection cost</th>
+                        <th style="width: 300px">Available to the tariff</th>
+                        <th style="width: 300px">Type of the option</th>
                         <th style="width: 100px"></th>
                         <th style="width: 100px"></th>
                     </tr>
@@ -104,6 +105,7 @@
                             <td style="font-size: 18px">${option.getPriceOption()}</td>
                             <td style="font-size: 18px">${option.getConnectionCostOption()}</td>
                             <td style="font-size: 18px">${option.getTariff().getNameTariff()}</td>
+                            <td style="font-size: 18px">${option.getCompatibility()}</td>
                             <td>
                                 <a class="btn btn-sm btn-outline-primary" style="width: 100px;"
                                    href="/edit_option?id=${option.getIdOption()}">Edit</a>

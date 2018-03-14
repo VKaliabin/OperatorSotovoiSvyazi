@@ -19,6 +19,8 @@ public class OptionEntity {
     @Basic
     @Column(name = "CONNECTION_COST_OPTION")
     private int connectionCostOption;
+    @Column(name = "COMPATIBILITY")
+    private String compatibility;
 
     @ManyToMany(mappedBy = "options")
     private List<ContractEntity> contracts;
@@ -48,6 +50,13 @@ public class OptionEntity {
         this.tariff = tariff;
     }
 
+    public String getCompatibility() {
+        return compatibility;
+    }
+
+    public void setCompatibility(String compatibility) {
+        this.compatibility = compatibility;
+    }
 
     public int getIdOption() {
         return idOption;

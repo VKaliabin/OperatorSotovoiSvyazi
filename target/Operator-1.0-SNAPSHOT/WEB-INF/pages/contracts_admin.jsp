@@ -94,6 +94,7 @@
                         <th style="width: 300px">Surname</th>
                         <th style="width: 300px">Date of birth</th>
                         <th style="width: 300px">Email</th>
+                        <th style="width: 300px">Tariffs</th>
                         <th style="width: 300px"></th>
                         <th style="width: 300px"></th>
                     </tr>
@@ -105,6 +106,12 @@
                             <td>${client.getSurname()}</td>
                             <td>${client.getDateOfBirth()}</td>
                             <td>${client.getEmailOfEmail()}</td>
+                            <td>
+                                <c:forEach items="${client.getContracts()}" var="contract">
+                                    ${contract.getTariff().getNameTariff()} <br>
+                                </c:forEach>
+
+                            </td>
                             <td>
                                 <a class="btn btn-sm btn-primary" style="width: 200px;"
                                    href="/show_client?id=${client.getIdClient()}">Show details</a>

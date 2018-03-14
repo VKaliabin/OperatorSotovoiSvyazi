@@ -64,6 +64,7 @@ public class ContractModel {
         this.optionEntityList = optionEntityList;
     }
 
+
     @Override
     public String toString() {
         return "ContractModel{" +

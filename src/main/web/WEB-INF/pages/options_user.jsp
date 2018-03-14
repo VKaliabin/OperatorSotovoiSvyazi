@@ -33,6 +33,9 @@
 </head>
 
 <body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript" src="/resources/js/options_user.js"></script>
+
 <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0">
     <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">OperatorSotovoiSvyazi</a>
 
@@ -85,13 +88,13 @@
                 <form:form method="post" action="cart" modelAttribute="contract">
 
                     <spring:bind path="idContract">
-                        <form:input type="hidden" path="idContract" value="${contractEntity.getIdContract()}"/>
+                        <form:input type="hidden" path="idContract" id="idContract" value="${contractEntity.getIdContract()}"/>
                     </spring:bind>
                     <spring:bind path="contractNumber">
                         <form:input type="hidden" path="contractNumber" value="${contractEntity.getContractNumber()}"/>
                     </spring:bind>
                     <spring:bind path="tariffId">
-                        <form:input type="hidden" path="tariffId" value="${tariff.getIdTariff()}"/>
+                        <form:input type="hidden" path="tariffId" id="idTariff" value="${tariff.getIdTariff()}"/>
                     </spring:bind>
 
                     <table class="table table-striped table-sm">
@@ -109,23 +112,32 @@
                             <tr>
                                 <td>
                                     <spring:bind path="options">
-                                        <c:set var="contains" value="false"/>
-                                        <c:forEach items="${connectedOptions}" var="connected">
-                                            <c:if test="${connected.getIdOption() == option.getIdOption()}">
-                                                <form:checkbox path="options" name="checkbox" checked="checked"
-                                                       value="${option.getIdOption()}"/>
-                                                <c:set var="contains" value="true"/>
-                                            </c:if>
-                                        </c:forEach>
-                                        <c:if test="${contains == false}">
-                                            <form:checkbox path="options" name="checkbox" value="${option.getIdOption()}"/>
+                                        <c:if test="${option.isChacked() == true && option.isDisable() == true}">
+                                            <form:checkbox path="options" name="checkbox" disabled="true" checked="checked"
+                                                           value="${option.getOptionEntity().getIdOption()}"
+                                                           id="box_${option.getOptionEntity().getIdOption()}"/>
+                                        </c:if>
+                                        <c:if test="${option.isChacked() == true && option.isDisable() == false}">
+                                            <form:checkbox path="options" name="checkbox" checked="checked"
+                                                           value="${option.getOptionEntity().getIdOption()}"
+                                                           id="box_${option.getOptionEntity().getIdOption()}"/>
+                                        </c:if>
+                                        <c:if test="${option.isChacked() == false && option.isDisable() == true}">
+                                            <form:checkbox path="options" name="checkbox" disabled="true"
+                                                           value="${option.getOptionEntity().getIdOption()}"
+                                                           id="box_${option.getOptionEntity().getIdOption()}"/>
+                                        </c:if>
+                                        <c:if test="${option.isChacked() == false && option.isDisable() == false}">
+                                            <form:checkbox path="options" name="checkbox"
+                                                           value="${option.getOptionEntity().getIdOption()}"
+                                                           id="box_${option.getOptionEntity().getIdOption()}"/>
                                         </c:if>
                                     </spring:bind>
                                 </td>
 
-                                <td>${option.getNameOption()}</td>
-                                <td>${option.getPriceOption()}</td>
-                                <td>${option.getConnectionCostOption()}</td>
+                                <td>${option.getOptionEntity().getNameOption()}</td>
+                                <td>${option.getOptionEntity().getPriceOption()}</td>
+                                <td>${option.getOptionEntity().getConnectionCostOption()}</td>
                             </tr>
                         </c:forEach>
                         </tbody>
@@ -145,10 +157,10 @@
 <!-- Bootstrap core JavaScript
 ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-        crossorigin="anonymous"></script>
-<script>window.jQuery || document.write('<script src="/resources/js/jquery-slim.min.js"><\/script>')</script>
+<%--<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"--%>
+        <%--integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"--%>
+        <%--crossorigin="anonymous"></script>--%>
+<%--<script>window.jQuery || document.write('<script src="/resources/js/jquery-slim.min.js"><\/script>')</script>--%>
 <script src="/resources/js/popper.min.js"></script>
 <script src="/resources/js/bootstrap.min.js"></script>
 
