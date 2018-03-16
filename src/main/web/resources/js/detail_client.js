@@ -1,4 +1,73 @@
 var contractId = 0;
+
+function ajaxMethod(inputText, contractId) {
+    $.ajax({
+        url: 'changetariff',
+        type: 'GET',
+        dataType: 'json',
+        contentType: 'application/json',
+        mimeType: 'application/json',
+        data: ({
+            tariffId: inputText,
+            contractId: contractId
+        }),
+        success: function (data) {
+            console.log(data);
+            var s = '';
+            s += '<h4 style="margin-top: 15px;">Options</h4>';
+            for (var i = 0; i < data.length; i++) {
+                var dis = data[i].disable ? "disabled" : "";
+                if (data[i].chacked) {
+                    s += '<input name="checkbox"  onclick="checkBoxChange()" id="box_' + data[i].idOption + '" type="checkbox" ' + dis + ' checked value="' + data[i].idOption + '"/>' + data[i].optionEntity.nameOption + '<br>';
+                } else {
+                    s += '<input name="checkbox" onclick="checkBoxChange()" id="box_' + data[i].idOption + '"  type="checkbox" ' + dis + ' value="' + data[i].idOption + '"/>' + data[i].optionEntity.nameOption + '<br>';
+                }
+            }
+            $("#chekboxes").html('').append(s);
+        }
+    });
+}
+
+function checkBoxChange() {
+    var checkValues = $('input[type=checkbox]:checked').map(function () {
+        return $(this).val();
+    }).get();
+    var idContract = $("#idContract").val();
+    var idTariff = $('#selector').val();
+
+    console.log(checkValues);
+
+    $.ajax({
+        url: 'optionsUser',
+        type: 'GET',
+        dataType: 'json',
+        contentType: 'application/json',
+        mimeType: 'application/json',
+        data: ({
+            tariffId: idTariff,
+            contractId: idContract,
+            optionList: JSON.stringify(checkValues)
+        }),
+        success: function (data) {
+            console.log(data);
+            for (var i = 0; i < data.length; i++) {
+                if (data[i].disable) {
+                    $("#box_" + data[i].idOption).attr("disabled", true);
+                } else {
+                    $("#box_" + data[i].idOption).removeAttr("disabled");
+                }
+
+                if (data[i].chacked) {
+                    $("#box_" + data[i].idOption).attr('checked', 'checked');
+                } else {
+                    $("#box_" + data[i].idOption).prop('checked', false);
+                }
+            }
+        }
+    });
+}
+
+
 $(function () {
     $("a").click(function () {
         console.log(this.id);
@@ -7,36 +76,7 @@ $(function () {
             console.log(contractId);
             $('#idContract').val(contractId);
             var inputText = $('#selector').val();
-            $.ajax({
-                url: 'changetariff',
-                type: 'GET',
-                dataType: 'json',
-                contentType: 'application/json',
-                mimeType: 'application/json',
-                data: ({
-                    tariffId: inputText,
-                    contractId: contractId
-                }),
-                success: function (data) {
-                    console.log(data);
-                    var s = '';
-                    s += '<h4 style="margin-top: 15px;">Options</h4>';
-                    for (var j = 0; j < data.optionEntities.length; j++) {
-                        var flag = false;
-                        for (var i = 0; i < data.connectedOptions.length; i++) {
-                            if (data.optionEntities[j].idOption == data.connectedOptions[i].idOption) {
-                                s += '<input name="checkbox" type="checkbox" checked value="' + data.optionEntities[j].idOption + '"/>' + data.optionEntities[j].nameOption + '<br>';
-                                flag = true;
-                                break;
-                            }
-                        }
-                        if (!flag) {
-                            s += '<input name="checkbox" type="checkbox" value="' + data.optionEntities[j].idOption + '"/>' + data.optionEntities[j].nameOption + '<br>';
-                        }
-                    }
-                    $("#chekboxes").html('').append(s);
-                }
-            });
+            ajaxMethod(inputText, contractId);
         }
     });
 
@@ -44,38 +84,8 @@ $(function () {
     $("#selector").bind('input', function () {
         console.log(contractId);
         var inputText = $('#selector').val();
-        $.ajax({
-            url: 'changetariff',
-            type: 'GET',
-            dataType: 'json',
-            contentType: 'application/json',
-            mimeType: 'application/json',
-            data: ({
-                tariffId: inputText,
-                contractId: contractId
-            }),
-            success: function (data) {
-                console.log(data);
-
-
-                var s = '';
-                s += '<h5 style="margin-top: 15px;">Options</h5>';
-                for (var j = 0; j < data.optionEntities.length; j++) {
-                    var flag = false;
-                    for (var i = 0; i < data.connectedOptions.length; i++) {
-                        if (data.optionEntities[j].idOption == data.connectedOptions[i].idOption) {
-                            s += '<input name="checkbox" type="checkbox" checked value="' + data.optionEntities[j].idOption + '"/>' + data.optionEntities[j].nameOption + '<br>';
-                            flag = true;
-                            break;
-                        }
-                    }
-                    if (!flag) {
-                        s += '<input name="checkbox" type="checkbox" value="' + data.optionEntities[j].idOption + '"/>' + data.optionEntities[j].nameOption + '<br>';
-                    }
-                }
-                $("#chekboxes").html('').append(s);
-            }
-        });
+        ajaxMethod(inputText, contractId);
     });
+
 
 });

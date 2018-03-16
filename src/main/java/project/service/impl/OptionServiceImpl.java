@@ -78,13 +78,13 @@ public class OptionServiceImpl implements OptionService {
                     selectedOptionsModel.setDisable(true);
                 }
             }
-            selectedOptionsModel.setOptionEntity(optionEntity);
+            selectedOptionsModel.setOptionEntity(generateOptionModel(optionEntity));
             selected.add(selectedOptionsModel);
         }
 
         for (OptionEntity checked : checkedList) {
             for (SelectedOptionsModel selectedOptionsModel : selected) {
-                OptionEntity selectedEntity = selectedOptionsModel.getOptionEntity();
+                OptionModel selectedEntity = selectedOptionsModel.getOptionEntity();
                 if (checked.getCompatibility().equals("Noncompatible") && checked.getIdOption() != selectedEntity.getIdOption()
                         && selectedEntity.getCompatibility().equals("Noncompatible")) {
                     selectedOptionsModel.setDisable(true);
@@ -96,6 +96,18 @@ public class OptionServiceImpl implements OptionService {
         }
         return selected;
     }
+
+
+    private OptionModel generateOptionModel(OptionEntity optionEntity) {
+        OptionModel optionModel = new OptionModel();
+        optionModel.setIdOption(optionEntity.getIdOption());
+        optionModel.setPriceOption(optionEntity.getPriceOption());
+        optionModel.setNameOption(optionEntity.getNameOption());
+        optionModel.setConnectionCostOption(optionEntity.getConnectionCostOption());
+        optionModel.setCompatibility(optionEntity.getCompatibility());
+        return optionModel;
+    }
+
 
     @Override
     @Transactional
@@ -177,20 +189,5 @@ public class OptionServiceImpl implements OptionService {
         }
 
         return selected;
-    }
-
-    @Override
-    @Transactional
-    public List<OptionModel> getOptionModel(List<OptionEntity> optionEntities) {
-        List<OptionModel> optionModelList = new ArrayList<>();
-        for (OptionEntity optionEntity : optionEntities) {
-            OptionModel optionModel = new OptionModel();
-            optionModel.setIdOption(optionEntity.getIdOption());
-            optionModel.setConnectionCostOption(optionEntity.getConnectionCostOption());
-            optionModel.setNameOption(optionEntity.getNameOption());
-            optionModel.setPriceOption(optionEntity.getPriceOption());
-            optionModelList.add(optionModel);
-        }
-        return optionModelList;
     }
 }

@@ -14,7 +14,7 @@ public class ContractModel {
     private List<Integer> options;
     private int tariffId;
     private TariffEntity tariffEntity;
-    private  List<OptionEntity> optionEntityList;
+    private List<OptionEntity> optionEntityList;
 
     public int getIdContract() {
         return idContract;

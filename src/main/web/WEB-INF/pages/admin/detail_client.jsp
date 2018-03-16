@@ -33,7 +33,10 @@
 </head>
 
 <body>
+
 <script type="text/javascript" src="/resources/js/detail_client.js"></script>
+
+
 
 <!-- Модальное окно -->
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">

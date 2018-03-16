@@ -1,12 +1,11 @@
 package project.utils;
 
-import project.model.OptionEntity;
-
 public class SelectedOptionsModel {
+
     private int idOption;
     private boolean chacked;
     private boolean disable;
-    private OptionEntity optionEntity;
+    private OptionModel optionModel;
 
     public int getIdOption() {
         return idOption;
@@ -32,12 +31,12 @@ public class SelectedOptionsModel {
         this.disable = disable;
     }
 
-    public OptionEntity getOptionEntity() {
-        return optionEntity;
+    public OptionModel getOptionEntity() {
+        return optionModel;
     }
 
-    public void setOptionEntity(OptionEntity optionEntity) {
-        this.optionEntity = optionEntity;
+    public void setOptionEntity(OptionModel optionModel) {
+        this.optionModel = optionModel;
     }
 
     @Override
@@ -46,7 +45,7 @@ public class SelectedOptionsModel {
                 "idOption=" + idOption +
                 ", chacked=" + chacked +
                 ", disable=" + disable +
-                ", optionEntity=" + optionEntity +
+                ", optionEntity=" + optionModel +
                 '}';
     }
 }

@@ -67,9 +67,9 @@ public class ClientController {
 
         model.addAttribute("contracts", clientEntity.getContracts());
         if (clientEntity.getExistingClient().equals("Blocked")) {
-            return "blocked_user";
+            return "client/blocked_user";
         } else {
-            return "welcome";
+            return "client/welcome";
         }
     }
 
@@ -81,7 +81,7 @@ public class ClientController {
         ClientEntity clientEntity = authentication(model);
 
         model.addAttribute("contracts", clientEntity.getContracts());
-        return "welcome";
+        return "client/welcome";
     }
 
     @RequestMapping(value = "/unblock", method = RequestMethod.GET)
@@ -93,7 +93,7 @@ public class ClientController {
         ClientEntity clientEntity = authentication(model);
 
         model.addAttribute("contracts", clientEntity.getContracts());
-        return "welcome";
+        return "client/welcome";
     }
 
     @RequestMapping(value = "/tariffs_user", method = RequestMethod.GET)
@@ -103,7 +103,7 @@ public class ClientController {
 
         List<TariffEntity> tarifs = tariffService.listTariffs();
         model.addAttribute("tariffs", tarifs);
-        return "tariffs_user";
+        return "client/tariffs_user";
     }
 
     @RequestMapping(value = "/show_tariff", method = RequestMethod.GET)
@@ -125,7 +125,7 @@ public class ClientController {
         ContractEntity contractEntity = contractService.getContract(idContract);
         model.addAttribute("contractEntity", contractEntity);
         model.addAttribute("contract", new ContractModel());
-        return "options_user";
+        return "client/options_user";
     }
 
     @RequestMapping(value = "/optionsUser", method = RequestMethod.GET, produces = {MediaType.APPLICATION_JSON_VALUE})
@@ -139,7 +139,8 @@ public class ClientController {
         ObjectMapper mapper = new ObjectMapper();
         String json = null;
         try {
-            List<String> checkedList = mapper.readValue(optionList, new TypeReference<List<String>>() {});
+            List<String> checkedList = mapper.readValue(optionList, new TypeReference<List<String>>() {
+            });
             List<OptionEntity> optionEntities = optionService.listOptions(tariffId);
             List<SelectedOptionsModel> selectedOptionsModels = optionService.getChangedOptions(optionEntities, checkedList);
             ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();

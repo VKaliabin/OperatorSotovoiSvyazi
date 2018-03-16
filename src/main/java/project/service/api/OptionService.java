@@ -23,5 +23,4 @@ public interface OptionService {
 
      List<SelectedOptionsModel> getChangedOptions(List<OptionEntity> optionEntities, List<String> checkedList);
 
-     List<OptionModel> getOptionModel(List<OptionEntity> optionEntities);
 }

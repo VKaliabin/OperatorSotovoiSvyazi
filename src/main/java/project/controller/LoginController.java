@@ -30,7 +30,7 @@ public class LoginController {
     @RequestMapping(value = "/registration", method = RequestMethod.GET)
     public String registration(Model model) {
         model.addAttribute("userForm", new ClientEntity());
-        return "registration";
+        return "loginAndOther/registration";
     }
 
     @RequestMapping(value = "/registration", method = RequestMethod.POST)
@@ -38,7 +38,7 @@ public class LoginController {
 
         clientValidatorImpl.validate(userForm, bindingResult, clientService);
         if (bindingResult.hasErrors()) {
-            return "registration";
+            return "login&regist/registration";
         }
         userForm.setExistingClient("Unblocked");
         clientService.addClient(userForm);
@@ -55,7 +55,7 @@ public class LoginController {
         if (logout != null) {
             model.addAttribute("message", "Logged out successfully.");
         }
-        return "login";
+        return "loginAndOther/login";
     }
 
     @RequestMapping(value = "/logout", method = RequestMethod.GET)

@@ -34,9 +34,10 @@
         <url-pattern>/</url-pattern>
     </servlet-mapping>
 
+
     <error-page>
         <error-code>403</error-code>
-        <location>/WEB-INF/pages/accessDenied.jsp</location>
+        <location>/WEB-INF/pages/loginAndOther/accessDenied.jsp</location>
     </error-page>
 
     <listener>

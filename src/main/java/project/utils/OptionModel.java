@@ -6,6 +6,7 @@ public class OptionModel {
     private String nameOption;
     private int priceOption;
     private int connectionCostOption;
+    private String compatibility;
 
     public int getIdOption() {
         return idOption;
@@ -37,5 +38,13 @@ public class OptionModel {
 
     public void setConnectionCostOption(int connectionCostOption) {
         this.connectionCostOption = connectionCostOption;
+    }
+
+    public String getCompatibility() {
+        return compatibility;
+    }
+
+    public void setCompatibility(String compatibility) {
+        this.compatibility = compatibility;
     }
 }

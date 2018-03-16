@@ -11,17 +11,23 @@
 
     <http auto-config="true">
         <intercept-url pattern="/" access="hasAnyRole('ROLE_USER', 'ROLE_ADMIN')"/>
-        <!--<intercept-url pattern="/login" access="hasAnyRole('ROLE_USER', 'ROLE_ADMIN')"/>-->
         <intercept-url pattern="/welcome" access="hasRole('ROLE_USER')"/>
         <intercept-url pattern="/block" access="hasRole('ROLE_USER')"/>
         <intercept-url pattern="/unblock" access="hasRole('ROLE_USER')"/>
         <intercept-url pattern="/tariffs_user" access="hasRole('ROLE_USER')"/>
         <intercept-url pattern="/show_tariff" access="hasRole('ROLE_USER')"/>
+        <intercept-url pattern="/cart" access="hasRole('ROLE_USER')"/>
+        <intercept-url pattern="/acceptCart" access="hasRole('ROLE_USER')"/>
+        <intercept-url pattern="/deleteModel" access="hasRole('ROLE_USER')"/>
         <intercept-url pattern="/admin" access="hasRole('ROLE_ADMIN')"/>
         <intercept-url pattern="/tariffs_admin" access="hasRole('ROLE_ADMIN')"/>
         <intercept-url pattern="/options_admin" access="hasRole('ROLE_ADMIN')"/>
         <intercept-url pattern="/addnewtariff" access="hasRole('ROLE_ADMIN')"/>
         <intercept-url pattern="/new_tariff" access="hasRole('ROLE_ADMIN')"/>
+        <intercept-url pattern="/edit_tariff" access="hasRole('ROLE_ADMIN')"/>
+        <intercept-url pattern="/edit_option" access="hasRole('ROLE_ADMIN')"/>
+        <intercept-url pattern="/edit_nameAndprice_tariff" access="hasRole('ROLE_ADMIN')"/>
+        <intercept-url pattern="/edit_nameAndprice_option" access="hasRole('ROLE_ADMIN')"/>
         <intercept-url pattern="/delete_tariff" access="hasRole('ROLE_ADMIN')"/>
         <intercept-url pattern="/addnewoption" access="hasRole('ROLE_ADMIN')"/>
         <intercept-url pattern="/new_option" access="hasRole('ROLE_ADMIN')"/>

@@ -50,7 +50,7 @@ public class CartController {
         if (user != null) {
             modelAndView.addObject("user", user.getUsername());
         } else {
-            modelAndView.setViewName("login");
+            modelAndView.setViewName("login&regist/login");
             return modelAndView;
         }
         modelAndView.addObject("user", user.getUsername());
@@ -80,7 +80,7 @@ public class CartController {
             }
             modelAndView.addObject("contract", contractModelList);
         }
-        modelAndView.setViewName("cart");
+        modelAndView.setViewName("client/cart");
         return modelAndView;
     }
 
@@ -93,7 +93,7 @@ public class CartController {
         if (user != null) {
             modelAndView.addObject("user", user.getUsername());
         } else {
-            modelAndView.setViewName("login");
+            modelAndView.setViewName("login&regist/login");
             return modelAndView;
         }
         modelAndView.addObject("user", user.getUsername());
@@ -131,7 +131,7 @@ public class CartController {
         User user = (User) authentication.getPrincipal();
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("user", user.getUsername());
-        modelAndView.setViewName("cart");
+        modelAndView.setViewName("client/cart");
         Object object = session.getAttribute("contract");
 
         List<ContractModel> contractModelList = null;

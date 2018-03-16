@@ -18,8 +18,7 @@ import project.model.ContractEntity;
 import project.model.OptionEntity;
 import project.model.TariffEntity;
 import project.service.api.*;
-import project.utils.AllOptionsModel;
-import project.utils.OptionModel;
+import project.utils.SelectedOptionsModel;
 import project.validator.impl.ContractValidatorImpl;
 import project.validator.impl.OptionValidatorImpl;
 import project.validator.impl.TariffValidatorImpl;
@@ -67,7 +66,7 @@ public class AdminController {
 
         model.addAttribute("clients", clientService.listClients());
         model.addAttribute("role", roleService.getRole(2));
-        return "admin";
+        return "admin/admin";
     }
 
     @RequestMapping(value = "/tariffs_admin", method = RequestMethod.GET)
@@ -76,7 +75,7 @@ public class AdminController {
 
         List<TariffEntity> tariffEntities = tariffService.listTariffs();
         model.addAttribute("tariffs", tariffEntities);
-        return "tariffs_admin";
+        return "admin/tariffs_admin";
     }
 
     @RequestMapping(value = "/addnewtariff", method = RequestMethod.GET)
@@ -84,7 +83,7 @@ public class AdminController {
         authentication(model);
 
         model.addAttribute("tariff", new TariffEntity());
-        return "new_tariff";
+        return "admin/new_tariff";
     }
 
     @RequestMapping(value = "/new_tariff", method = RequestMethod.POST)
@@ -92,7 +91,7 @@ public class AdminController {
         authentication(model);
         tariffValidatorImpl.validate(tariff, bindingResult, tariffService.listTariffs());
         if (bindingResult.hasErrors()) {
-            return "new_tariff";
+            return "admin/new_tariff";
         }
         tariffService.add(tariff);
 
@@ -111,7 +110,7 @@ public class AdminController {
     public String editTariff(Model model, @RequestParam(value = "id") int idTariff) {
         authentication(model);
         model.addAttribute("tariff", tariffService.getTariff(idTariff));
-        return "edit_tariff";
+        return "admin/edit_tariff";
     }
 
     @RequestMapping(value = "/edit_nameAndprice_tariff", method = RequestMethod.POST)
@@ -136,7 +135,7 @@ public class AdminController {
 
         List<OptionEntity> optionEntities = optionService.listAllOptions();
         model.addAttribute("options", optionEntities);
-        return "options_admin";
+        return "admin/options_admin";
     }
 
     @RequestMapping(value = "/addnewoption", method = RequestMethod.GET)
@@ -158,7 +157,7 @@ public class AdminController {
         optionValidatorImpl.validate(option, bindingResult, list);
         if (bindingResult.hasErrors()) {
             model.addAttribute("tariffs", tariffService.listTariffs());
-            return "new_option";
+            return "admin/new_option";
         }
         if (idTariff != 0) {
             TariffEntity tariffEntity = tariffService.getTariff(idTariff);
@@ -175,7 +174,7 @@ public class AdminController {
 
         model.addAttribute("option", optionService.getOption(idOption));
         model.addAttribute("tariffs", tariffService.listTariffs());
-        return "edit_option";
+        return "admin/edit_option";
     }
 
     @RequestMapping(value = "/edit_nameAndprice_option", method = RequestMethod.POST)
@@ -183,7 +182,8 @@ public class AdminController {
                                          @RequestParam("optionName") String optionName,
                                          @RequestParam("optionPrice") Integer optionPrice,
                                          @RequestParam("optionCost") Integer optionCost,
-                                         @RequestParam("id") Integer idTariff) {
+                                         @RequestParam("id") Integer idTariff,
+                                         @RequestParam("typeOption") String typeOption) {
         authentication(model);
         OptionEntity optionEntity = optionService.getOption(idOption);
         optionEntity.setTariff(tariffService.getTariff(idTariff));
@@ -194,6 +194,11 @@ public class AdminController {
             optionEntity.setNameOption(optionName);
         }
         optionEntity.setPriceOption(optionPrice);
+        if (typeOption.length() == 0) {
+            optionEntity.setCompatibility(optionService.getOption(idOption).getCompatibility());
+        } else {
+            optionEntity.setCompatibility(typeOption);
+        }
         optionService.update(optionEntity);
         return "redirect:/options_admin";
     }
@@ -211,7 +216,7 @@ public class AdminController {
         authentication(model);
 
         model.addAttribute("clients", clientService.listClients());
-        return "contracts_admin";
+        return "admin/contracts_admin";
     }
 
     @RequestMapping(value = "/new_contract", method = RequestMethod.GET)
@@ -221,7 +226,7 @@ public class AdminController {
         model.addAttribute("tariffs", tariffService.listTariffs());
         model.addAttribute("client", clientService.getClientId(idClient));
         model.addAttribute("contract", new ContractEntity());
-        return "new_contract";
+        return "admin/new_contract";
     }
 
     @RequestMapping(value = "/addContract", method = RequestMethod.POST)
@@ -236,7 +241,7 @@ public class AdminController {
             model.addAttribute("tariffs", tariffService.listTariffs());
             model.addAttribute("client", clientService.getClientId(idClient));
             model.addAttribute("contract", new ContractEntity());
-            return "new_contract";
+            return "admin/new_contract";
         }
         if (idTariff != 0) {
             TariffEntity tariffEntity = tariffService.getTariff(idTariff);
@@ -259,7 +264,7 @@ public class AdminController {
         clientService.updateClient(clientEntity);
         model.addAttribute("clients", clientService.listClients());
         model.addAttribute("role", roleService.getRole(2));
-        return "admin";
+        return "admin/admin";
     }
 
     @RequestMapping(value = "/block_client", method = RequestMethod.GET)
@@ -271,7 +276,7 @@ public class AdminController {
         clientService.updateClient(clientEntity);
         model.addAttribute("clients", clientService.listClients());
         model.addAttribute("role", roleService.getRole(2));
-        return "admin";
+        return "admin/admin";
     }
 
     @RequestMapping(value = "/show_client", method = RequestMethod.GET)
@@ -282,7 +287,7 @@ public class AdminController {
         model.addAttribute("client", clientService.getClientId(idClient));
         model.addAttribute("contracts", contractService.listById(idClient));
 
-        return "detail_client";
+        return "admin/detail_client";
     }
 
     @RequestMapping(value = "/block_contract", method = RequestMethod.GET)
@@ -317,7 +322,7 @@ public class AdminController {
         }
         model.addAttribute("contract", searchcontract);
         model.addAttribute("role", roleService.getRole(2));
-        return "search_result";
+        return "admin/search_result";
     }
 
     @RequestMapping(value = "/changetariff", method = RequestMethod.GET, produces = {MediaType.APPLICATION_JSON_VALUE})
@@ -326,13 +331,12 @@ public class AdminController {
                         @RequestParam("contractId") int contractId) {
         List<OptionEntity> optionEntities = optionService.listOptions(tariffId);
         List<OptionEntity> connectedOptionsList = contractService.getContract(contractId).getOptions();
-        List<OptionModel> alloptions = optionService.getOptionModel(optionEntities);
-        List<OptionModel> connectedoptions = optionService.getOptionModel(connectedOptionsList);
-        AllOptionsModel allOptionsModel = new AllOptionsModel(alloptions, connectedoptions);
+
+        List<SelectedOptionsModel> selected = optionService.getOptions(optionEntities, connectedOptionsList);
         ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
         String json = null;
         try {
-            json = ow.writeValueAsString(allOptionsModel);
+            json = ow.writeValueAsString(selected);
         } catch (IOException e) {
             e.printStackTrace();
         }

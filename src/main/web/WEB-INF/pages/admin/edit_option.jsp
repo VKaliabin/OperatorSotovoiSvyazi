@@ -90,14 +90,14 @@
                 <input type="hidden" name="idOption" value="${option.getIdOption()}"/>
                 <div class="row">
 
-                        <div class="col-md-3 mb-3">
+                        <div class="col-md-2 mb-3">
                             <label for="optionName">Name of an option</label>
                             <input type="text" class="form-control" id="optionName" name="optionName"
                                        value ="${option.getNameOption()}" autofocus="true"/>
 
                         </div>
 
-                        <div class="col-md-3 mb-3">
+                        <div class="col-md-2 mb-3">
                             <label for="optionPrice">Price</label>
                             <input type="number" class="form-control" id="optionPrice" name="optionPrice"
                                         value ="${option.getPriceOption()}" autofocus="true"/>
@@ -113,8 +113,8 @@
 
                     <div class="col-md-3 mb-3">
                         <label for="tariff">Tariff</label>
-                        <select name="id" id="id" class="custom-select d-block w-100" id="tariff" required>
-                            <option value="">Choose...</option>
+                        <select name="id"  class="custom-select d-block w-100" id="tariff" required>
+                            <option value="">Default (${option.getTariff().getNameTariff()})</option>
                             <c:forEach items="${tariffs}" var="tariff">
                                 <option value="${tariff.getIdTariff()}">${tariff.getNameTariff()}</option>
                             </c:forEach>
@@ -122,6 +122,20 @@
                         </select>
                         <div class="invalid-feedback">
                             Please select a tariff for an option.
+                        </div>
+                    </div>
+
+                    <div class="col-md-3 mb-3">
+                        <label for="tariff">Type of the option</label>
+                        <select name="typeOption"  class="custom-select d-block w-100" id="typeOption" required>
+                            <option value="">Default (${option.getCompatibility()})</option>
+                            <option value="Compatible">Compatible</option>
+                            <option value="Noncompatible">Noncompatible</option>
+                            <option value="Compatible+">Compatible+</option>
+                            <option value="Double">Double</option>
+                        </select>
+                        <div class="invalid-feedback">
+                            Please select a type of an option.
                         </div>
                     </div>
 
