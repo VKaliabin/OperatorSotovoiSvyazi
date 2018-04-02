@@ -47,4 +47,15 @@ public class OptionModel {
     public void setCompatibility(String compatibility) {
         this.compatibility = compatibility;
     }
+
+    @Override
+    public String toString() {
+        return "OptionModel{" +
+                "idOption=" + idOption +
+                ", nameOption='" + nameOption + '\'' +
+                ", priceOption=" + priceOption +
+                ", connectionCostOption=" + connectionCostOption +
+                ", compatibility='" + compatibility + '\'' +
+                '}';
+    }
 }

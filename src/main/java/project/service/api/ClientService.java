@@ -11,9 +11,13 @@ public interface ClientService {
 
      void updateClient(ClientEntity client);
 
-     void removeClient(int id);
+     void unblockClient(int idClient);
 
-     ClientEntity getClientId(int id);
+     void blockClient(int idClient);
+
+     void removeClient(int idClient);
+
+     ClientEntity getClientId(int idClient);
 
      List<ClientEntity> listClients();
 }

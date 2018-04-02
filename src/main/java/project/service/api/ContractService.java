@@ -1,6 +1,9 @@
 package project.service.api;
 
+import project.model.ClientEntity;
 import project.model.ContractEntity;
+import project.model.TariffEntity;
+
 import java.util.List;
 
 public interface ContractService {
@@ -11,7 +14,11 @@ public interface ContractService {
 
      void deleteConnectOptions(int idContract);
 
-     void addContract(ContractEntity contractEntity);
+     void blockContract(int idClient);
+
+     void unblockContract(int idClient);
+
+     void addContract(ContractEntity contractEntity, TariffEntity tariffEntity, ClientEntity clientEntity);
 
      List<ContractEntity> list();
 

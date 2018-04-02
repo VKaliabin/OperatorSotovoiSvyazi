@@ -18,6 +18,7 @@ import project.model.ContractEntity;
 import project.model.OptionEntity;
 import project.model.TariffEntity;
 import project.service.api.*;
+import project.utils.JsonUtil;
 import project.utils.SelectedOptionsModel;
 import project.validator.impl.ContractValidatorImpl;
 import project.validator.impl.OptionValidatorImpl;
@@ -245,12 +246,8 @@ public class AdminController {
         }
         if (idTariff != 0) {
             TariffEntity tariffEntity = tariffService.getTariff(idTariff);
-            contract.setTariff(tariffEntity);
-            contract.setBlockedContract("Unblocked");
-            contract.setAdminBlock("N");
-            contract.setClientEntity(clientService.getClientId(idClient));
-            logger.debug("contract = {}", contract.toString());
-            contractService.addContract(contract);
+            ClientEntity clientEntity = clientService.getClientId(idClient);
+            contractService.addContract(contract, tariffEntity, clientEntity);
         }
         return "redirect:/contracts";
     }
@@ -258,10 +255,7 @@ public class AdminController {
     @RequestMapping(value = "/unblock_client", method = RequestMethod.GET)
     public String unblockClient(Model model, @RequestParam("id") int idClient) {
         authentication(model);
-
-        ClientEntity clientEntity = clientService.getClientId(idClient);
-        clientEntity.setExistingClient("Unblocked");
-        clientService.updateClient(clientEntity);
+        clientService.unblockClient(idClient);
         model.addAttribute("clients", clientService.listClients());
         model.addAttribute("role", roleService.getRole(2));
         return "admin/admin";
@@ -270,10 +264,7 @@ public class AdminController {
     @RequestMapping(value = "/block_client", method = RequestMethod.GET)
     public String blockClient(Model model, @RequestParam("id") int idClient) {
         authentication(model);
-
-        ClientEntity clientEntity = clientService.getClientId(idClient);
-        clientEntity.setExistingClient("Blocked");
-        clientService.updateClient(clientEntity);
+        clientService.blockClient(idClient);
         model.addAttribute("clients", clientService.listClients());
         model.addAttribute("role", roleService.getRole(2));
         return "admin/admin";
@@ -333,14 +324,9 @@ public class AdminController {
         List<OptionEntity> connectedOptionsList = contractService.getContract(contractId).getOptions();
 
         List<SelectedOptionsModel> selected = optionService.getOptions(optionEntities, connectedOptionsList);
-        ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
-        String json = null;
-        try {
-            json = ow.writeValueAsString(selected);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return json;
+
+        JsonUtil json = new JsonUtil();
+        return json.json(selected);
     }
 
     @RequestMapping(value = "/changeContract", method = RequestMethod.POST)

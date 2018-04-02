@@ -41,6 +41,22 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     @Transactional
+    public void unblockClient(int idClient) {
+        ClientEntity clientEntity = getClientId(idClient);
+        clientEntity.setExistingClient("Unblocked");
+        clientDao.updateClient(clientEntity);
+    }
+
+    @Override
+    @Transactional
+    public void blockClient(int idClient) {
+        ClientEntity clientEntity = getClientId(idClient);
+        clientEntity.setExistingClient("Blocked");
+        clientDao.updateClient(clientEntity);
+    }
+
+    @Override
+    @Transactional
     public ClientEntity findByEMail(String clientEmail) {
         return clientDao.findByEmailOfEmail(clientEmail);
     }

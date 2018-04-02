@@ -42,6 +42,9 @@ public class CartController {
         return new ContractModel();
     }
 
+    /*
+        Display the cart
+     */
     @RequestMapping(value = "/cart")
     public ModelAndView addContractCart(HttpSession session, @ModelAttribute("contractt") ContractModel contract) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -85,6 +88,9 @@ public class CartController {
     }
 
 
+    /*
+    Accept the changes
+     */
     @RequestMapping(value = "/acceptCart")
     public ModelAndView addContractCart(HttpSession session, SessionStatus status) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -125,6 +131,9 @@ public class CartController {
         return modelAndView;
     }
 
+    /*
+    Cancel he changes
+     */
     @RequestMapping(value = "/deleteModel")
     public ModelAndView addContractCart(HttpSession session, @RequestParam("number") String contractNumber) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();

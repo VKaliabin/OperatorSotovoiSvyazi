@@ -75,9 +75,8 @@ public class ClientController {
 
     @RequestMapping(value = "/block", method = RequestMethod.GET)
     public String block(Model model, @RequestParam(value = "id") int id) {
-        ContractEntity contractEntity = contractService.getContract(id);
-        contractEntity.setBlockedContract("Blocked");
-        contractService.update(contractEntity);
+
+        contractService.blockContract(id);
         ClientEntity clientEntity = authentication(model);
 
         model.addAttribute("contracts", clientEntity.getContracts());
@@ -86,10 +85,8 @@ public class ClientController {
 
     @RequestMapping(value = "/unblock", method = RequestMethod.GET)
     public String unblock(Model model, @RequestParam(value = "id") int id) {
-        logger.debug("contract id ={}", id);
-        ContractEntity contractEntity = contractService.getContract(id);
-        contractEntity.setBlockedContract("Unblocked");
-        contractService.update(contractEntity);
+
+        contractService.unblockContract(id);
         ClientEntity clientEntity = authentication(model);
 
         model.addAttribute("contracts", clientEntity.getContracts());
@@ -133,9 +130,6 @@ public class ClientController {
     String optionsUser(Model model, @RequestParam(value = "optionList") String optionList,
                        @RequestParam(value = "tariffId") int tariffId,
                        @RequestParam(value = "contractId") int contractId) {
-
-        logger.debug("optionList = {}", optionList);
-        logger.debug("contractId = {}", contractId);
         ObjectMapper mapper = new ObjectMapper();
         String json = null;
         try {
