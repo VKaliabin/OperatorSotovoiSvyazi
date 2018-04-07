@@ -2,7 +2,6 @@ package project.dao.api;
 
 
 
-import org.springframework.stereotype.Repository;
 import project.model.RoleEntity;
 
 

@@ -5,6 +5,7 @@ import org.springframework.stereotype.Repository;
 import project.dao.api.TariffDao;
 import project.hibernate.HibernateUtil;
 import project.model.TariffEntity;
+
 import java.util.List;
 
 @Repository

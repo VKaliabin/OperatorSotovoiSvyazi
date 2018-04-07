@@ -48,6 +48,11 @@
         <property name="hibernateUtil" ref="hibernateUtil"/>
     </bean>
 
+    <bean id="rabbitListenerContainerFactory" class="org.springframework.amqp.rabbit.config.SimpleRabbitListenerContainerFactory">
+        <property name="connectionFactory" ref="connectionFactory" />
+    </bean>
+    <bean id="mqSentModel" class="project.RabbitMQ.MQSentModel"/>
+
     <bean id="clientService" class="project.service.impl.ClientServiceImpl">
         <property name="clientDao" ref="clientDao"/>
     </bean>

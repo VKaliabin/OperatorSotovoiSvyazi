@@ -5,13 +5,13 @@ import java.util.List;
 
 public interface TariffDao {
 
-    public List<TariffEntity> listTariffs();
+     List<TariffEntity> listTariffs();
 
-    public TariffEntity getTariff(int idTariff);
+     TariffEntity getTariff(int idTariff);
 
-    public TariffEntity update(TariffEntity tariffEntity);
+     TariffEntity update(TariffEntity tariffEntity);
 
-    public void add(TariffEntity tariffEntity);
+     void add(TariffEntity tariffEntity);
 
-    public void remove(int idTariff);
+     void remove(int idTariff);
 }

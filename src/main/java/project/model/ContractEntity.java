@@ -25,11 +25,11 @@ public class ContractEntity {
             inverseJoinColumns = @JoinColumn(name = "idOption"))
     private List<OptionEntity> options;
 
-    @ManyToOne(optional = false, cascade = CascadeType.ALL)
+    @ManyToOne(optional = false)
     @JoinColumn(name = "idTARIFF")
     private TariffEntity tariff;
 
-    @ManyToOne(optional = false, cascade = CascadeType.ALL)
+    @ManyToOne(optional = false)
     @JoinColumn(name = "idCLIENT")
     private ClientEntity clientEntity;
 

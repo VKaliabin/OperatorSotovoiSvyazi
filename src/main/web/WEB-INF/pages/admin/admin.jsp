@@ -106,6 +106,7 @@
                         <th>Address</th>
                         <th>Email</th>
                         <th>Blocking</th>
+                        <th></th>
                     </tr>
                     </thead>
                     <tbody>
@@ -149,6 +150,11 @@
                                 </c:choose>
                             </c:if>
 
+                        </td>
+                        <td>
+                            <c:if test="${client.getRoles().contains(role)}">
+                                <a href="/removeClient?id=${client.getIdClient()}">Delete</a>
+                            </c:if>
                         </td>
                         </tr>
                     </c:forEach>

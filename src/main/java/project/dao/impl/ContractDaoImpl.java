@@ -15,7 +15,7 @@ public class ContractDaoImpl implements ContractDao {
 
     @Override
     public ContractEntity getContract(int idContcract) {
-        return (ContractEntity) hibernateUtil.fetchById(idContcract, ContractEntity.class);
+        return hibernateUtil.fetchById(idContcract, ContractEntity.class);
     }
 
     @Override
@@ -43,5 +43,10 @@ public class ContractDaoImpl implements ContractDao {
     public List<ContractEntity> listById(int idClient) {
         String query = "select * from contract where idCLIENT=:id";
         return hibernateUtil.fetchAllById(query, ContractEntity.class, idClient);
+    }
+
+    @Override
+    public void removeContract(int idContract) {
+        hibernateUtil.delete(idContract, ContractEntity.class);
     }
 }

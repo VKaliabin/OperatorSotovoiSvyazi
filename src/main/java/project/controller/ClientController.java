@@ -1,5 +1,6 @@
 package project.controller;
 
+
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.map.ObjectWriter;
 import org.codehaus.jackson.type.TypeReference;
@@ -137,6 +138,7 @@ public class ClientController {
             });
             List<OptionEntity> optionEntities = optionService.listOptions(tariffId);
             List<SelectedOptionsModel> selectedOptionsModels = optionService.getChangedOptions(optionEntities, checkedList);
+
             ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
             json = ow.writeValueAsString(selectedOptionsModels);
         } catch (IOException e) {

@@ -48,8 +48,8 @@
                     <spring:bind path="name">
                         <div class="col-md-6 mb-3">
                             <label for="firstName">First name</label>
-                            <form:input type="text" class="form-control" id="firstName"
-                                        placeholder="First name" path="name" autofocus="true"/>
+                            <form:input required="required" type="text" class="form-control" id="firstName"
+                                       placeholder="First name" path="name" autofocus="true" />
                         </div>
                     </spring:bind>
 
@@ -58,7 +58,7 @@
                         <div class="col-md-6 mb-3">
                             <label for="lastName">Last name</label>
                             <form:input type="text" class="form-control" id="lastName" placeholder="Last name"
-                                        path="surname" autofocus="true"/>
+                                        path="surname" autofocus="true" required="required"/>
 
                         </div>
                     </spring:bind>
@@ -67,15 +67,15 @@
                     <div class="mb-3">
                         <label for="passport">Passport data</label>
                         <form:input type="text" class="form-control" id="passport" placeholder="Passport data"
-                                    path="passportData" autofocus="true"/>
+                                    path="passportData" autofocus="true" required="required"/>
                     </div>
                 </spring:bind>
 
                 <spring:bind path="emailOfEmail">
                     <div class="mb-3">
                         <label for="emailOfEmail">Email</label>
-                        <form:input type="text" class="form-control" id="emailOfEmail" placeholder="Email"
-                                    path="emailOfEmail" autofocus="true"/>
+                        <form:input type="email" class="form-control" id="emailOfEmail" placeholder="Email"
+                                    path="emailOfEmail" autofocus="true" required="required"/>
                         <form:errors path="emailOfEmail"/>
                     </div>
                 </spring:bind>
@@ -84,7 +84,7 @@
                     <div class="mb-3">
                         <label for="address">Address</label>
                         <form:input type="text" class="form-control" id="address" placeholder="1234 Main St"
-                                    path="adress" autofocus="true"/>
+                                    path="adress" autofocus="true" required="required"/>
                     </div>
                 </spring:bind>
 
@@ -92,7 +92,7 @@
                     <div class="mb-3 ${status.error ? 'has-error' : ''}">
                         <label for="password"> Password</label>
                         <form:input type="password" path="password" class="form-control" placeholder="Password"
-                        id="password"/>
+                        id="password" required="required"/>
                         <form:errors path="password"/>
                     </div>
                 </spring:bind>
@@ -101,7 +101,7 @@
                     <div class="form-group ${status.error ? 'has-error' : ''}">
                         <label for="confirmpassword">Confirm passord</label>
                         <form:input type="password" path="confirmPassword" class="form-control" id ="confirmpassword"
-                                    placeholder="Confirm your password"/>
+                                    placeholder="Confirm your password" required="required"/>
                         <form:errors path="confirmPassword"/>
                     </div>
                 </spring:bind>
@@ -112,7 +112,7 @@
                     <spring:bind path="dateOfBirth">
                     <div class="input-group" style="width: 30%;">
                         <form:input class="form-control" data-format="yyyy-MM-dd" type="text" id="birthday" path="dateOfBirth"
-                        placeholder="2010-10-10"/>
+                        placeholder="2010-10-10" required="required"/>
                         <span class=" add-on input-group-addon" id="basic-addon1">
                                 <i data-time-icon="icon-time" data-date-icon="icon-calendar" class="fa fa-calendar"></i>
                             </span>

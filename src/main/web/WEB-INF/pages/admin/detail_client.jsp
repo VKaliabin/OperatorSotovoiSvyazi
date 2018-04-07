@@ -134,7 +134,7 @@
                         <th>Tariff</th>
                         <th>Options</th>
                         <th>Action</th>
-                        <%--<th>Header</th>--%>
+                        <th></th>
                     </tr>
                     </thead>
                     <tbody>
@@ -171,7 +171,11 @@
                                 </c:otherwise>
                             </c:choose>
                         </td>
-                        <%--<td>sit</td>--%>
+                        <td>
+                            <a href="/removeContract?id=${contract.getIdContract()}&idClient=${client.getIdClient()}">
+                                Delete
+                            </a>
+                        </td>
 
                         </tr>
                     </c:forEach>

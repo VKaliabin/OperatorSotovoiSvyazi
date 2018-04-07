@@ -1,5 +1,7 @@
 package project.service.impl;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,18 +16,21 @@ import java.util.List;
 
 @Service
 public class OptionServiceImpl implements OptionService {
+    private static final Logger logger = LoggerFactory.getLogger(OptionServiceImpl.class);
     @Autowired
     private OptionDao optionDao;
 
     @Override
     @Transactional
     public List<OptionEntity> listOptions(int idTariff) {
+        logger.info("List of options by Tariff ID " + idTariff + " was obtained");
         return optionDao.listOptions(idTariff);
     }
 
     @Override
     @Transactional
     public List<OptionEntity> listAllOptions() {
+        logger.info("List of all options was obtained");
         return optionDao.listAllOptions();
     }
 
@@ -33,11 +38,13 @@ public class OptionServiceImpl implements OptionService {
     @Transactional
     public void addOption(OptionEntity optionEntity) {
         optionDao.addOption(optionEntity);
+        logger.info("Option " + optionEntity.getIdOption() + " was added");
     }
 
     @Override
     @Transactional
     public OptionEntity update(OptionEntity optionEntity) {
+        logger.info("Option " + optionEntity.getIdOption() + " was updated");
         return optionDao.update(optionEntity);
     }
 
@@ -45,11 +52,13 @@ public class OptionServiceImpl implements OptionService {
     @Transactional
     public void deleteOption(int idOption) {
         optionDao.deleteOption(idOption);
+        logger.info("Option " + idOption + " was removed");
     }
 
     @Override
     @Transactional
     public OptionEntity getOption(int idOption) {
+        logger.info("Option " + idOption + " was obtained");
         return optionDao.getOption(idOption);
     }
 
@@ -94,6 +103,7 @@ public class OptionServiceImpl implements OptionService {
                 }
             }
         }
+        logger.info("List of SelectedOptionsModel was obtained");
         return selected;
     }
 
@@ -187,7 +197,7 @@ public class OptionServiceImpl implements OptionService {
                 }
             }
         }
-
+        logger.info("Changed list of SelectedOptionsModel was obtained");
         return selected;
     }
 }

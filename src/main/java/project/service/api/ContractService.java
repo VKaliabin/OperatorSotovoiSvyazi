@@ -14,13 +14,15 @@ public interface ContractService {
 
      void deleteConnectOptions(int idContract);
 
-     void blockContract(int idClient);
+     void blockContract(int idContract);
 
-     void unblockContract(int idClient);
+     void unblockContract(int idContract);
 
      void addContract(ContractEntity contractEntity, TariffEntity tariffEntity, ClientEntity clientEntity);
 
      List<ContractEntity> list();
 
     List<ContractEntity> listById(int idClient);
+
+    void removeContract(int idContract);
 }

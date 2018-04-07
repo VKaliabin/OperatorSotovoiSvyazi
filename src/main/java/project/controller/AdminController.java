@@ -1,7 +1,6 @@
 package project.controller;
 
-import org.codehaus.jackson.map.ObjectMapper;
-import org.codehaus.jackson.map.ObjectWriter;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import project.RabbitMQ.MQSentModel;
 import project.model.ClientEntity;
 import project.model.ContractEntity;
 import project.model.OptionEntity;
@@ -24,7 +24,7 @@ import project.validator.impl.ContractValidatorImpl;
 import project.validator.impl.OptionValidatorImpl;
 import project.validator.impl.TariffValidatorImpl;
 
-import java.io.IOException;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,6 +48,8 @@ public class AdminController {
     private RoleService roleService;
     @Autowired
     private TariffValidatorImpl tariffValidatorImpl;
+    @Autowired
+    private MQSentModel mqSentModel;
 
 
     private String authentication(Model model) {
@@ -56,7 +58,7 @@ public class AdminController {
         if (user != null) {
             model.addAttribute("user", user.getUsername());
         } else {
-            return "login";
+            return "loginAndOther/login";
         }
         return "";
     }
@@ -84,6 +86,7 @@ public class AdminController {
         authentication(model);
 
         model.addAttribute("tariff", new TariffEntity());
+
         return "admin/new_tariff";
     }
 
@@ -95,7 +98,7 @@ public class AdminController {
             return "admin/new_tariff";
         }
         tariffService.add(tariff);
-
+        mqSentModel.sendModel();
         return "redirect:/tariffs_admin";
     }
 
@@ -103,6 +106,7 @@ public class AdminController {
     public String deleteTariff(Model model, @RequestParam(value = "id") int idTariff) {
         authentication(model);
         tariffService.remove(idTariff);
+        mqSentModel.sendModel();
         return "redirect:/tariffs_admin";
     }
 
@@ -126,7 +130,9 @@ public class AdminController {
             tariffEntity.setNameTariff(nameTariff);
         }
         tariffEntity.setPriceTariff(priceTariff);
+
         tariffService.update(tariffEntity);
+        mqSentModel.sendModel();
         return "redirect:/tariffs_admin";
     }
 
@@ -145,7 +151,7 @@ public class AdminController {
 
         model.addAttribute("tariffs", tariffService.listTariffs());
         model.addAttribute("option", new OptionEntity());
-        return "new_option";
+        return "admin/new_option";
     }
 
     @RequestMapping(value = "/new_option", method = RequestMethod.POST)
@@ -166,6 +172,7 @@ public class AdminController {
             option.setCompatibility(typeOption);
             optionService.addOption(option);
         }
+        mqSentModel.sendModel();
         return "redirect:/options_admin";
     }
 
@@ -187,20 +194,28 @@ public class AdminController {
                                          @RequestParam("typeOption") String typeOption) {
         authentication(model);
         OptionEntity optionEntity = optionService.getOption(idOption);
-        optionEntity.setTariff(tariffService.getTariff(idTariff));
+
         optionEntity.setConnectionCostOption(optionCost);
+        optionEntity.setPriceOption(optionPrice);
         if (optionName.length() == 0) {
             optionEntity.setNameOption(optionService.getOption(idOption).getNameOption());
         } else {
             optionEntity.setNameOption(optionName);
         }
-        optionEntity.setPriceOption(optionPrice);
+
         if (typeOption.length() == 0) {
             optionEntity.setCompatibility(optionService.getOption(idOption).getCompatibility());
         } else {
             optionEntity.setCompatibility(typeOption);
         }
+        if (idTariff == null) {
+            optionEntity.setTariff(optionService.getOption(idOption).getTariff());
+        } else {
+            optionEntity.setTariff(tariffService.getTariff(idTariff));
+        }
+
         optionService.update(optionEntity);
+        mqSentModel.sendModel();
         return "redirect:/options_admin";
     }
 
@@ -209,6 +224,7 @@ public class AdminController {
         authentication(model);
 
         optionService.deleteOption(idOption);
+        mqSentModel.sendModel();
         return "redirect:/options_admin";
     }
 
@@ -324,9 +340,9 @@ public class AdminController {
         List<OptionEntity> connectedOptionsList = contractService.getContract(contractId).getOptions();
 
         List<SelectedOptionsModel> selected = optionService.getOptions(optionEntities, connectedOptionsList);
-
         JsonUtil json = new JsonUtil();
         return json.json(selected);
+
     }
 
     @RequestMapping(value = "/changeContract", method = RequestMethod.POST)
@@ -347,6 +363,22 @@ public class AdminController {
         contractEntity.setOptions(listConOptions);
         contractService.update(contractEntity);
         int idClient = contractService.getContract(idContract).getClientEntity().getIdClient();
+        model.addAttribute("id", idClient);
+        return "redirect:/show_client";
+    }
+
+    @RequestMapping(value = "/removeClient", method = RequestMethod.GET)
+    public String removeClient(Model model, @RequestParam("id") int idClient) {
+        authentication(model);
+        clientService.removeClient(idClient);
+        return "redirect:/admin";
+    }
+
+    @RequestMapping(value = "/removeContract", method = RequestMethod.GET)
+    public String removeContract(Model model, @RequestParam("id") int idContract,
+                                 @RequestParam("idClient") int idClient) {
+        authentication(model);
+        contractService.removeContract(idContract);
         model.addAttribute("id", idClient);
         return "redirect:/show_client";
     }

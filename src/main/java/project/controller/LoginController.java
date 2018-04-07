@@ -10,6 +10,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
 import project.model.ClientEntity;
 import project.service.api.ClientService;
 import project.service.api.SecurityService;
@@ -27,6 +28,7 @@ public class LoginController {
     @Autowired
     private ClientValidatorImpl clientValidatorImpl;
 
+
     @RequestMapping(value = "/registration", method = RequestMethod.GET)
     public String registration(Model model) {
         model.addAttribute("userForm", new ClientEntity());
@@ -38,7 +40,7 @@ public class LoginController {
 
         clientValidatorImpl.validate(userForm, bindingResult, clientService);
         if (bindingResult.hasErrors()) {
-            return "login&regist/registration";
+            return "loginAndOther/registration";
         }
         userForm.setExistingClient("Unblocked");
         clientService.addClient(userForm);

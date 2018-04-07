@@ -37,6 +37,7 @@ public class CartController {
     @Autowired
     private OptionService optionService;
 
+
     @ModelAttribute("contractt")
     public ContractModel contractCart() {
         return new ContractModel();
@@ -53,7 +54,7 @@ public class CartController {
         if (user != null) {
             modelAndView.addObject("user", user.getUsername());
         } else {
-            modelAndView.setViewName("login&regist/login");
+            modelAndView.setViewName("loginAndOther/login");
             return modelAndView;
         }
         modelAndView.addObject("user", user.getUsername());
@@ -99,7 +100,7 @@ public class CartController {
         if (user != null) {
             modelAndView.addObject("user", user.getUsername());
         } else {
-            modelAndView.setViewName("login&regist/login");
+            modelAndView.setViewName("loginAndOther/login");
             return modelAndView;
         }
         modelAndView.addObject("user", user.getUsername());
@@ -132,7 +133,7 @@ public class CartController {
     }
 
     /*
-    Cancel he changes
+    Cancel the changes
      */
     @RequestMapping(value = "/deleteModel")
     public ModelAndView addContractCart(HttpSession session, @RequestParam("number") String contractNumber) {
