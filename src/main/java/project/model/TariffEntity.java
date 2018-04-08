@@ -10,13 +10,12 @@ public class TariffEntity {
     @Column(name = "idTARIFF")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idTariff;
-    @Basic
+
     @Column(name = "NAME_TARIFF")
     private String nameTariff;
-    @Basic
+
     @Column(name = "PRICE_TARIFF")
     private int priceTariff;
-
 
     @OneToMany(mappedBy = "tariff", fetch = FetchType.EAGER)
     private List<OptionEntity> options;

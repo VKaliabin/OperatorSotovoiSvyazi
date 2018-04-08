@@ -9,6 +9,7 @@ import java.util.List;
 
 @Component
 public class ContractModel {
+
     private int idContract;
     private String contractNumber;
     private List<Integer> options;

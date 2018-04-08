@@ -11,15 +11,25 @@ import project.service.api.OptionService;
 import project.utils.OptionModel;
 import project.utils.SelectedOptionsModel;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class OptionServiceImpl implements OptionService {
     private static final Logger logger = LoggerFactory.getLogger(OptionServiceImpl.class);
+    /**
+     * The layer which work with hibernate and provides specified methods
+     */
     @Autowired
     private OptionDao optionDao;
 
+    /**
+     * This method get list of all options of a tariff by id last one
+     *
+     * @param idTariff - id of required tariff
+     * @return - return list of all options for one tariff
+     */
     @Override
     @Transactional
     public List<OptionEntity> listOptions(int idTariff) {
@@ -27,6 +37,11 @@ public class OptionServiceImpl implements OptionService {
         return optionDao.listOptions(idTariff);
     }
 
+    /**
+     * This method get list of all options
+     *
+     * @return - list of options
+     */
     @Override
     @Transactional
     public List<OptionEntity> listAllOptions() {
@@ -34,27 +49,49 @@ public class OptionServiceImpl implements OptionService {
         return optionDao.listAllOptions();
     }
 
+    /**
+     * This method add a option to database
+     *
+     * @param optionEntity - new option
+     */
     @Override
     @Transactional
     public void addOption(OptionEntity optionEntity) {
         optionDao.addOption(optionEntity);
         logger.info("Option " + optionEntity.getIdOption() + " was added");
     }
-
+    /**
+     * This method update a option
+     *
+     * @param optionEntity - required option
+     * @return - return updated option
+     *
+     */
     @Override
     @Transactional
     public OptionEntity update(OptionEntity optionEntity) {
         logger.info("Option " + optionEntity.getIdOption() + " was updated");
         return optionDao.update(optionEntity);
     }
-
+    /**
+     * This method delete a option by id
+     *
+     * @param idOption - id of required option
+     *
+     */
     @Override
     @Transactional
     public void deleteOption(int idOption) {
         optionDao.deleteOption(idOption);
         logger.info("Option " + idOption + " was removed");
     }
-
+    /**
+     * This method get a option
+     *
+     * @param idOption - id of a required option
+     * @return - return found option
+     *
+     */
     @Override
     @Transactional
     public OptionEntity getOption(int idOption) {
@@ -62,12 +99,17 @@ public class OptionServiceImpl implements OptionService {
         return optionDao.getOption(idOption);
     }
 
+    /**
+     * Method recieve list option (in DTO form) connected with some contract.
+     * @param optionEntities - all options
+     * @param currentOptions - options which connected with contract
+     * @return - return dto model
+     */
     @Override
     @Transactional
     public List<SelectedOptionsModel> getOptions(List<OptionEntity> optionEntities, List<OptionEntity> currentOptions) {
         List<SelectedOptionsModel> selected = new ArrayList<>();
         List<OptionEntity> checkedList = new ArrayList<>();
-
         for (OptionEntity optionEntity : optionEntities) {
             boolean flag = false;
             SelectedOptionsModel selectedOptionsModel = new SelectedOptionsModel();
@@ -90,7 +132,6 @@ public class OptionServiceImpl implements OptionService {
             selectedOptionsModel.setOptionEntity(generateOptionModel(optionEntity));
             selected.add(selectedOptionsModel);
         }
-
         for (OptionEntity checked : checkedList) {
             for (SelectedOptionsModel selectedOptionsModel : selected) {
                 OptionModel selectedEntity = selectedOptionsModel.getOptionEntity();
@@ -107,7 +148,11 @@ public class OptionServiceImpl implements OptionService {
         return selected;
     }
 
-
+    /**
+     * Generate dto model (Option Model) from entity (Option Entity)
+     * @param optionEntity - some option
+     * @return - dto model from entity
+     */
     private OptionModel generateOptionModel(OptionEntity optionEntity) {
         OptionModel optionModel = new OptionModel();
         optionModel.setIdOption(optionEntity.getIdOption());
@@ -118,7 +163,12 @@ public class OptionServiceImpl implements OptionService {
         return optionModel;
     }
 
-
+    /**
+     * Method recieve list option (in DTO form) connected with some contract. It's using in ajax
+     * @param optionEntities - list of all options
+     * @param checkedList - choosed value (option which has been choosed by user)
+     * @return - return dto model which applying in json
+     */
     @Override
     @Transactional
     public List<SelectedOptionsModel> getChangedOptions(List<OptionEntity> optionEntities, List<String> checkedList) {
@@ -169,7 +219,6 @@ public class OptionServiceImpl implements OptionService {
                 } else if (optionEntity.getCompatibility().equals("Noncompatible") && !noncap) {
                     notSelectedNoncap.add(optionEntity.getIdOption());
                 }
-
                 //com+
                 if (optionEntity.getCompatibility().equals("Double") && comPlus) {
                     selectedOptionsModel.setDisable(false);
@@ -190,7 +239,6 @@ public class OptionServiceImpl implements OptionService {
             }
         }
         if (idDouble != 0) {
-
             for (SelectedOptionsModel optionsModel : selected) {
                 if (doubleList.contains(optionsModel.getIdOption()) && idDouble != optionsModel.getIdOption()) {
                     optionsModel.setDisable(true);

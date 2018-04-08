@@ -18,6 +18,9 @@ public class RoleEntity {
     @ManyToMany(mappedBy = "roles", fetch = FetchType.EAGER)
     private List<ClientEntity> users;
 
+    public RoleEntity() {
+    }
+
     public List<ClientEntity> getUsers() {
         return users;
     }
@@ -26,8 +29,6 @@ public class RoleEntity {
         this.users = users;
     }
 
-    public RoleEntity() {
-    }
 
     public int getIdRoles() {
         return idRoles;

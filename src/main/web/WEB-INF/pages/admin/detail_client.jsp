@@ -18,7 +18,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <%--<link rel="icon" href="../../../../favicon.ico">--%>
+
 
     <title>Details of a client</title>
 
@@ -29,11 +29,11 @@
     <!-- Custom styles for this template -->
     <link href="/resources/css/dashboard.css" rel="stylesheet">
     <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
 </head>
 
 <body>
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script type="text/javascript" src="/resources/js/detail_client.js"></script>
 
 
@@ -53,7 +53,6 @@
                         <label for="tariff">Tariff</label>
                         <select name="selector" id="selector" class="custom-select d-block w-100 selectpicker"
                                 id="tariff" required>
-                            <%--<option value="">${contract.getTariff().getNameTariff()}</option>--%>
                             <c:forEach items="${tariffs}" var="tariff">
                                 <option value="${tariff.getIdTariff()}">${tariff.getNameTariff()}</option>
 
@@ -125,7 +124,7 @@
             </div>
 
 
-            <%--<h2>Section title</h2>--%>
+
             <div class="table-responsive">
                 <table class="table table-striped table-sm">
                     <thead>

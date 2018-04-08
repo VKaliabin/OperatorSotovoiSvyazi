@@ -10,15 +10,16 @@ public class OptionEntity {
     @Column(name = "idOPTION")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idOption;
-    @Basic
+
     @Column(name = "NAME_OPTION")
     private String nameOption;
-    @Basic
+
     @Column(name = "PRICE_OPTION")
     private int priceOption;
-    @Basic
+
     @Column(name = "CONNECTION_COST_OPTION")
     private int connectionCostOption;
+
     @Column(name = "COMPATIBILITY")
     private String compatibility;
 
@@ -31,7 +32,6 @@ public class OptionEntity {
 
     public OptionEntity() {
     }
-
 
     public List<ContractEntity> getContracts() {
         return contracts;
@@ -50,6 +50,7 @@ public class OptionEntity {
         this.tariff = tariff;
     }
 
+
     public String getCompatibility() {
         return compatibility;
     }
@@ -57,6 +58,7 @@ public class OptionEntity {
     public void setCompatibility(String compatibility) {
         this.compatibility = compatibility;
     }
+
 
     public int getIdOption() {
         return idOption;

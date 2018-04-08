@@ -1,5 +1,7 @@
 package project.validator.impl;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
@@ -9,8 +11,16 @@ import project.validator.api.ClientValidator;
 
 @Component
 public class ClientValidatorImpl implements ClientValidator {
+    private static final Logger logger = LoggerFactory.getLogger(ClientValidatorImpl.class);
 
-
+    /**
+     * This method check an object for errors
+     *
+     * @param o             - checked object
+     * @param errors        - some errors
+     * @param clientService - service for work with ClientEntity
+     * @see project.service.impl.ClientServiceImpl
+     */
     @Override
     public void validate(Object o, Errors errors, ClientService clientService) {
         ClientEntity client = (ClientEntity) o;
@@ -28,6 +38,6 @@ public class ClientValidatorImpl implements ClientValidator {
         if (!client.getConfirmPassword().equals(client.getPassword())) {
             errors.rejectValue("confirmPassword", "Different.userForm.password");
         }
-
+        logger.info("Client validation is completed");
     }
 }

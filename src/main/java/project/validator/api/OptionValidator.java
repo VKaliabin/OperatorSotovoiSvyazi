@@ -1,6 +1,5 @@
 package project.validator.api;
 
-
 import org.springframework.validation.Errors;
 import project.model.OptionEntity;
 

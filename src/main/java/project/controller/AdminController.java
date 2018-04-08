@@ -1,6 +1,8 @@
 package project.controller;
 
-
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import project.RabbitMQ.MQSentModel;
+import project.rabbitmq.MQSentModel;
 import project.model.ClientEntity;
 import project.model.ContractEntity;
 import project.model.OptionEntity;
@@ -24,7 +26,7 @@ import project.validator.impl.ContractValidatorImpl;
 import project.validator.impl.OptionValidatorImpl;
 import project.validator.impl.TariffValidatorImpl;
 
-
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,6 +44,7 @@ public class AdminController {
     private OptionValidatorImpl optionValidatorImpl;
     @Autowired
     private ContractValidatorImpl contractValidatorImpl;
+
     @Autowired
     private ContractService contractService;
     @Autowired
@@ -194,7 +197,6 @@ public class AdminController {
                                          @RequestParam("typeOption") String typeOption) {
         authentication(model);
         OptionEntity optionEntity = optionService.getOption(idOption);
-
         optionEntity.setConnectionCostOption(optionCost);
         optionEntity.setPriceOption(optionPrice);
         if (optionName.length() == 0) {
@@ -202,7 +204,6 @@ public class AdminController {
         } else {
             optionEntity.setNameOption(optionName);
         }
-
         if (typeOption.length() == 0) {
             optionEntity.setCompatibility(optionService.getOption(idOption).getCompatibility());
         } else {
@@ -213,7 +214,6 @@ public class AdminController {
         } else {
             optionEntity.setTariff(tariffService.getTariff(idTariff));
         }
-
         optionService.update(optionEntity);
         mqSentModel.sendModel();
         return "redirect:/options_admin";
@@ -222,7 +222,6 @@ public class AdminController {
     @RequestMapping(value = "/delete_option", method = RequestMethod.GET)
     public String deleteOption(Model model, @RequestParam("id") int idOption) {
         authentication(model);
-
         optionService.deleteOption(idOption);
         mqSentModel.sendModel();
         return "redirect:/options_admin";
@@ -231,7 +230,6 @@ public class AdminController {
     @RequestMapping(value = "/contracts", method = RequestMethod.GET)
     public String contracts(Model model) {
         authentication(model);
-
         model.addAttribute("clients", clientService.listClients());
         return "admin/contracts_admin";
     }
@@ -239,7 +237,6 @@ public class AdminController {
     @RequestMapping(value = "/new_contract", method = RequestMethod.GET)
     public String newContract(Model model, @RequestParam("id") int idClient) {
         authentication(model);
-
         model.addAttribute("tariffs", tariffService.listTariffs());
         model.addAttribute("client", clientService.getClientId(idClient));
         model.addAttribute("contract", new ContractEntity());
@@ -289,11 +286,9 @@ public class AdminController {
     @RequestMapping(value = "/show_client", method = RequestMethod.GET)
     public String showDetatils(Model model, @RequestParam("id") int idClient) {
         authentication(model);
-
         model.addAttribute("tariffs", tariffService.listTariffs());
         model.addAttribute("client", clientService.getClientId(idClient));
         model.addAttribute("contracts", contractService.listById(idClient));
-
         return "admin/detail_client";
     }
 
@@ -338,10 +333,16 @@ public class AdminController {
                         @RequestParam("contractId") int contractId) {
         List<OptionEntity> optionEntities = optionService.listOptions(tariffId);
         List<OptionEntity> connectedOptionsList = contractService.getContract(contractId).getOptions();
-
         List<SelectedOptionsModel> selected = optionService.getOptions(optionEntities, connectedOptionsList);
-        JsonUtil json = new JsonUtil();
-        return json.json(selected);
+        Gson json2 = new GsonBuilder().create();
+        Type typetoken = new TypeToken<List<SelectedOptionsModel>>() {
+        }.getType();
+        String message = json2.toJson(selected, typetoken);
+
+//        JsonUtil json = new JsonUtil();
+        String message2 = new JsonUtil().json(selected);
+        logger.info("JSON was sent from /changetariff");
+        return message2;
 
     }
 

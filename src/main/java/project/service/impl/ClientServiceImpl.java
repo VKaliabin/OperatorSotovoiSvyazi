@@ -15,12 +15,13 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 
-
 @Service
 public class ClientServiceImpl implements ClientService {
     private static final Logger logger = LoggerFactory.getLogger(ClientServiceImpl.class);
+
     @Autowired
     private ClientDao clientDao;
+
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 

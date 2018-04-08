@@ -1,10 +1,8 @@
 package project.utils;
 
-
 import java.util.List;
 
 public class EjbModel {
-
 
     private List<TariffModel> tariffs;
 

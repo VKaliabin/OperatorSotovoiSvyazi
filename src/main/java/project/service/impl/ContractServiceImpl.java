@@ -16,9 +16,16 @@ import java.util.List;
 @Service
 public class ContractServiceImpl implements ContractService {
     private static final Logger logger = LoggerFactory.getLogger(ContractServiceImpl.class);
+
     @Autowired
     ContractDao contractDao;
 
+    /**
+     * This method get a contract by id of this one
+     *
+     * @param idContract - id of a contract
+     * @return - return a contract(ContractEntity) found by id
+     */
     @Override
     @Transactional
     public ContractEntity getContract(int idContract) {
@@ -26,6 +33,12 @@ public class ContractServiceImpl implements ContractService {
         return contractDao.getContract(idContract);
     }
 
+    /**
+     * This method update a contract
+     *
+     * @param contract - required contract(ContractEntity) for update
+     * @return - return updated contract
+     */
     @Override
     @Transactional
     public ContractEntity update(ContractEntity contract) {
@@ -33,6 +46,12 @@ public class ContractServiceImpl implements ContractService {
         return contractDao.update(contract);
     }
 
+    /**
+     * This method delete options(relationships) which are connected with this contract
+     * but do not delete from database
+     *
+     * @param idContract - ID of required contract
+     */
     @Override
     @Transactional
     public void deleteConnectOptions(int idContract) {
@@ -40,7 +59,11 @@ public class ContractServiceImpl implements ContractService {
         logger.info("Connected options of contract " + idContract + " was deleted");
     }
 
-
+    /**
+     * Blocking a contract by ID
+     *
+     * @param idContract - id some contract
+     */
     @Override
     @Transactional
     public void blockContract(int idContract) {
@@ -50,6 +73,11 @@ public class ContractServiceImpl implements ContractService {
         logger.info("Contract " + idContract + " was blocked");
     }
 
+    /**
+     * Unblocking a contract by ID
+     *
+     * @param idContract - id some contract
+     */
     @Override
     @Transactional
     public void unblockContract(int idContract) {
@@ -59,6 +87,13 @@ public class ContractServiceImpl implements ContractService {
         logger.info("Contract " + idContract + " was unblocked");
     }
 
+    /**
+     * Create new contract with binding a tariff and a client
+     *
+     * @param contractEntity - new contract
+     * @param tariffEntity   - some tariff
+     * @param clientEntity   - some client
+     */
     @Override
     @Transactional
     public void addContract(ContractEntity contractEntity, TariffEntity tariffEntity, ClientEntity clientEntity) {
@@ -70,6 +105,11 @@ public class ContractServiceImpl implements ContractService {
         logger.info("Contract " + contractEntity.getIdContract() + " was added");
     }
 
+    /**
+     * This method get a list of all contracts
+     *
+     * @return - return list of all contracts
+     */
     @Override
     @Transactional
     public List<ContractEntity> list() {
@@ -77,6 +117,12 @@ public class ContractServiceImpl implements ContractService {
         return contractDao.list();
     }
 
+    /**
+     * This method get a list of contracts which are connected with one client
+     *
+     * @param idClient - ID required client
+     * @return - return contracts list of a client by client ID
+     */
     @Override
     @Transactional
     public List<ContractEntity> listById(int idClient) {
@@ -84,6 +130,11 @@ public class ContractServiceImpl implements ContractService {
         return contractDao.listById(idClient);
     }
 
+    /**
+     * This method delete a contract by contract ID
+     *
+     * @param idContract - id of a required contract
+     */
     @Override
     @Transactional
     public void removeContract(int idContract) {

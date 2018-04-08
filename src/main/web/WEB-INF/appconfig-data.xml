@@ -51,7 +51,7 @@
     <bean id="rabbitListenerContainerFactory" class="org.springframework.amqp.rabbit.config.SimpleRabbitListenerContainerFactory">
         <property name="connectionFactory" ref="connectionFactory" />
     </bean>
-    <bean id="mqSentModel" class="project.RabbitMQ.MQSentModel"/>
+    <bean id="mqSentModel" class="project.rabbitmq.MQSentModel"/>
 
     <bean id="clientService" class="project.service.impl.ClientServiceImpl">
         <property name="clientDao" ref="clientDao"/>

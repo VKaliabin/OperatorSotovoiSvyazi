@@ -1,8 +1,5 @@
-package project.RabbitMQ;
+package project.rabbitmq;
 
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.amqp.core.*;
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
@@ -14,10 +11,8 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class RabbitConfiguration {
-    private Logger logger = LoggerFactory.getLogger(RabbitConfiguration.class);
 
     private final static String queueName = "request";
-
 
     @Bean
     public ConnectionFactory connectionFactory() {

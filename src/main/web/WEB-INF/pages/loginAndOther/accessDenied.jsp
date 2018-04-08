@@ -18,18 +18,27 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <%--<link rel="icon" href="../../../../favicon.ico">--%>
-
     <title>Access Denied</title>
+
 
     <!-- Bootstrap core CSS -->
     <link href="/resources/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <link href="/resources/css/signin.css" rel="stylesheet">
+    <%--<link href="/resources/css/signin.css" rel="stylesheet">--%>
 </head>
 
-<body class="text-center">
-<h1>Access denied</h1>
+<body class="text-center" style="background-color: #f5f5f5;">
+<h1 style="margin-top: 15%;">Access denied</h1>
 
+<div class="container">
+    <div class="row">
+        <a class="btn btn-lg btn-primary btn-block center-block" style="width: 200px;background-color: #343a40; border-color: #343a40 ;"
+                        href="/login">To login page</a>
+    </div>
+
+</div>
+
+<%--<div></div>--%>
 </body>
 </html>

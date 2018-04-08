@@ -1,6 +1,5 @@
 package project.service;
 
-
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
@@ -22,7 +21,6 @@ import project.service.impl.TariffServiceImpl;
 import java.sql.Date;
 import java.util.*;
 
-import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.*;
 
@@ -57,6 +55,7 @@ public class ServiceTest {
 
     @InjectMocks
     private BCryptPasswordEncoder bCryptPasswordEncoder;
+    private ClientEntity clientEntity2;
 
     @BeforeClass
     public void setUp() {
@@ -68,13 +67,6 @@ public class ServiceTest {
     }
 
 //____ClientService___________________________________________________________________
-
-    @Test //!!!!!!!!!!!!!
-    public void addClient() {
-        doNothing().when(clientDao).addClient(any(ClientEntity.class));
-        clientService.addClient(any(ClientEntity.class));
-        verify(clientDao, atLeastOnce()).addClient(any(ClientEntity.class));
-    }
 
     @Test
     public void findByEmail() {
@@ -128,18 +120,6 @@ public class ServiceTest {
         verify(contractDao, atLeastOnce()).getContract(anyInt());
     }
 
-    @Test//!!!!!!!!!!!!!!1
-    public void blockContract() {
-
-    }
-
-    @Test //!!!!!!!!!!!!!!!!!
-    public void addContract() {
-        doNothing().when(contractDao).addContract(any(ContractEntity.class));
-        contractService.addContract(any(ContractEntity.class), any(TariffEntity.class), any(ClientEntity.class));
-        verify(contractDao, atLeastOnce()).addContract(any(ContractEntity.class));
-    }
-
     @Test
     public void listContract() {
         when(contractDao.list()).thenReturn(contracts);
@@ -163,13 +143,6 @@ public class ServiceTest {
     }
 
 // ___OptionService_____________________________________________________________________
-
-    @Test
-    public void addOption() {
-        doNothing().when(optionDao).addOption(any(OptionEntity.class));
-        optionService.addOption(any(OptionEntity.class));
-        verify(optionDao, atLeastOnce()).addOption(any(OptionEntity.class));
-    }
 
     @Test
     public void updateOptions() {
@@ -210,13 +183,6 @@ public class ServiceTest {
 //______TariffService_______________________________________
 
     @Test
-    public void addTariff() {
-        doNothing().when(tariffDao).add(any(TariffEntity.class));
-        tariffService.add(any(TariffEntity.class));
-        verify(tariffDao, atLeastOnce()).add(any(TariffEntity.class));
-    }
-
-    @Test
     public void updateTariffs() {
         TariffEntity tariffEntity = tariffs.get(0);
         when(tariffDao.getTariff(anyInt())).thenReturn(tariffEntity);
@@ -244,7 +210,6 @@ public class ServiceTest {
         Assert.assertEquals(tariffService.listTariffs(), tariffs);
     }
 
-
     private List<ClientEntity> getClientList() {
         ClientEntity clientEntity1 = new ClientEntity();
         clientEntity1.setIdClient(0);
@@ -255,6 +220,7 @@ public class ServiceTest {
         clientEntity1.setName("wert");
         clientEntity1.setPassportData("12345");
         clientEntity1.setExistingClient("Unblocked");
+        clientEntity1.setPassword("12345");
 
         ClientEntity clientEntity2 = new ClientEntity();
         clientEntity2.setIdClient(1);
@@ -265,10 +231,10 @@ public class ServiceTest {
         clientEntity2.setName("sdfg");
         clientEntity2.setPassportData("09876");
         clientEntity2.setExistingClient("Unblocked");
+        clientEntity2.setPassword("12345");
 
         clients.add(clientEntity1);
         clients.add(clientEntity2);
-
         return clients;
     }
 
@@ -311,7 +277,6 @@ public class ServiceTest {
 
         options.add(optionEntity1);
         options.add(optionEntity2);
-
         return options;
     }
 
@@ -332,7 +297,6 @@ public class ServiceTest {
 
         tariffs.add(tariffEntity1);
         tariffs.add(tariffEntity2);
-
         return tariffs;
     }
 }

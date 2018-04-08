@@ -18,16 +18,24 @@ import java.util.Set;
 
 public class ClientDetailServiceImpl implements UserDetailsService {
     private static final Logger logger = LoggerFactory.getLogger(ClientDetailServiceImpl.class);
+    /**
+     * Provides methods for working with DB
+     */
     @Autowired
     private ClientDao clientDao;
 
+    /**
+     * Method get an user from DB by email and do authorities
+     * @param clientEmail - email of an user
+     * @return - return required data for autologin
+     * @see SecurityServiceImpl#autoLogin(String, String)
+     * @throws UsernameNotFoundException - throws if person not found
+     */
     @Override
     @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String clientEmail) throws UsernameNotFoundException {
         ClientEntity client = clientDao.findByEmailOfEmail(clientEmail);
-
         Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
-
         for (RoleEntity role : client.getRoles()) {
             grantedAuthorities.add(new SimpleGrantedAuthority(role.getTypeUser()));
         }

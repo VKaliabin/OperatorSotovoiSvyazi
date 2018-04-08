@@ -11,12 +11,13 @@ public class ContractEntity {
     @Column(name = "idCONTRACT")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idContract;
-    @Basic
+
     @Column(name = "CONTRACT_NUMBER")
     private String contractNumber;
-    @Basic
+
     @Column(name = "BLOCKED_CONTRACT")
     private String blockedContract;
+
     @Column(name = "ADMIN_BLOCK")
     private String adminBlock;
 
@@ -44,6 +45,7 @@ public class ContractEntity {
         this.options = options;
     }
 
+
     public int getIdContract() {
         return idContract;
     }
@@ -51,6 +53,7 @@ public class ContractEntity {
     public void setIdContract(int idContract) {
         this.idContract = idContract;
     }
+
 
     public void setTariff(TariffEntity tariff) {
         this.tariff = tariff;
@@ -60,6 +63,7 @@ public class ContractEntity {
         return tariff;
     }
 
+
     public ClientEntity getClientEntity() {
         return clientEntity;
     }
@@ -67,6 +71,7 @@ public class ContractEntity {
     public void setClientEntity(ClientEntity clientEntity) {
         this.clientEntity = clientEntity;
     }
+
 
     public String getContractNumber() {
         return contractNumber;
@@ -84,6 +89,7 @@ public class ContractEntity {
     public void setBlockedContract(String blockedContract) {
         this.blockedContract = blockedContract;
     }
+
 
     public String getAdminBlock() {
         return adminBlock;

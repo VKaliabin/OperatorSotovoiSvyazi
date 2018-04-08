@@ -7,7 +7,7 @@ import java.io.IOException;
 
 public class JsonUtil {
 
-    public String json(Object object){
+    public String json(Object object) {
         ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
         String json = null;
         try {

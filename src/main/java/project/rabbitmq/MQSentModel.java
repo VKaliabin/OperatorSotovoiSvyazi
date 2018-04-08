@@ -1,4 +1,4 @@
-package project.RabbitMQ;
+package project.rabbitmq;
 
 import com.google.gson.Gson;
 
@@ -23,20 +23,27 @@ import java.util.List;
 @Component
 public class MQSentModel {
     private static final Logger logger = LoggerFactory.getLogger(MQSentModel.class);
+    /**
+     * this object provides method for working with tariffs
+     */
     @Autowired
     private TariffService tariffService;
+    /**
+     * this object provides method for working with options
+     */
     @Autowired
     private OptionService optionService;
 
+    /**
+     * This method send the list tariffs with list options in each, packed in one object(EjbModel),
+     * in the form of JSON to queue "banner"
+     */
     public void sendModel() {
 
         String queueName = "banner";
         AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext();
         ctx.register(RabbitConfiguration.class);
         ctx.refresh();
-        System.out.println("---Message is being sent---");
-
-
         EjbModel ejbModel = new EjbModel();
         List<TariffModel> tariffs = new ArrayList<>();
         for (TariffEntity ejbTarif : tariffService.listTariffs()) {
@@ -44,7 +51,6 @@ public class MQSentModel {
             tariffModel.setIdTariff(ejbTarif.getIdTariff());
             tariffModel.setNameTariff(ejbTarif.getNameTariff());
             tariffModel.setPriceTariff(ejbTarif.getPriceTariff());
-
             List<OptionModel> options = new ArrayList<>();
             for (OptionEntity ejbOption : optionService.listOptions(ejbTarif.getIdTariff())) {
                 OptionModel optionModel = new OptionModel();
@@ -55,7 +61,6 @@ public class MQSentModel {
                 optionModel.setCompatibility(ejbOption.getCompatibility());
                 options.add(optionModel);
             }
-
             tariffModel.setOptionModels(options);
             tariffs.add(tariffModel);
         }
@@ -64,7 +69,6 @@ public class MQSentModel {
         Gson gson = new Gson();
         String json = gson.toJson(ejbModel);
         RabbitTemplate rabbitTemplate = (RabbitTemplate) ctx.getBean("rabbitTemplate");
-
         rabbitTemplate.convertAndSend(queueName, json);
 
         logger.info("Message was send to banner ");

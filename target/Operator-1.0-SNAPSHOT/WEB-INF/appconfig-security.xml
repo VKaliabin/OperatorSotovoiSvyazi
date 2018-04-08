@@ -16,7 +16,7 @@
         <intercept-url pattern="/unblock" access="hasRole('ROLE_USER')"/>
         <intercept-url pattern="/tariffs_user" access="hasRole('ROLE_USER')"/>
         <intercept-url pattern="/show_tariff" access="hasRole('ROLE_USER')"/>
-        <intercept-url pattern="/optionsUser" access="hasRole('ROLE_USER')"/>
+        <intercept-url pattern="/optionsUser" access="hasAnyRole('ROLE_USER', 'ROLE_ADMIN')"/>
         <intercept-url pattern="/cart" access="hasRole('ROLE_USER')"/>
         <intercept-url pattern="/acceptCart" access="hasRole('ROLE_USER')"/>
         <intercept-url pattern="/deleteModel" access="hasRole('ROLE_USER')"/>

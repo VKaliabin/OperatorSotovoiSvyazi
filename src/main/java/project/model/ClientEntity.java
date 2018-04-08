@@ -37,7 +37,6 @@ public class ClientEntity {
     @Column(name = "EXISTING_CLIENT")
     private String existingClient;
 
-
     @OneToMany(mappedBy = "clientEntity", fetch = FetchType.EAGER)
     private List<ContractEntity> contracts;
 
@@ -53,7 +52,6 @@ public class ClientEntity {
     public void setRoles(Set<RoleEntity> roles) {
         this.roles = roles;
     }
-
 
     @Transient
     private String confirmPassword;
@@ -76,6 +74,7 @@ public class ClientEntity {
     public void setContracts(List<ContractEntity> contracts) {
         this.contracts = contracts;
     }
+
 
     public int getIdClient() {
         return idClient;
@@ -138,6 +137,7 @@ public class ClientEntity {
     public void setEmailOfEmail(String emailOfEmail) {
         this.emailOfEmail = emailOfEmail;
     }
+
 
     public String getPassword() {
         return password;

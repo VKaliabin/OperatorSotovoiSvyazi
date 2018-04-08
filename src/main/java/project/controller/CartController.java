@@ -1,6 +1,5 @@
 package project.controller;
 
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,22 +28,44 @@ import java.util.List;
 @SessionAttributes(value = "contract")
 public class CartController {
     private static final Logger logger = LoggerFactory.getLogger(CartController.class);
-
+    /**
+     * Service providing the methods for work with contractEntity
+     *
+     * @see project.service.impl.ContractServiceImpl
+     */
     @Autowired
     private ContractService contractService;
+    /**
+     * Service providing the methods for work with tariffEntity
+     *
+     * @see project.service.impl.TariffServiceImpl
+     */
     @Autowired
     private TariffService tariffService;
+    /**
+     * Service providing the methods for work with optionEntity
+     *
+     * @see project.service.impl.OptionServiceImpl
+     */
     @Autowired
     private OptionService optionService;
 
-
+    /**
+     * Method creating a new ContractModel
+     *
+     * @return - return new ContracModel(DTO)
+     */
     @ModelAttribute("contractt")
     public ContractModel contractCart() {
         return new ContractModel();
     }
 
-    /*
-        Display the cart
+    /**
+     * Method creating client cart where any changes are kept due to session
+     *
+     * @param session  - session which keep some data
+     * @param contract - dto of contract
+     * @return - return a page(view)
      */
     @RequestMapping(value = "/cart")
     public ModelAndView addContractCart(HttpSession session, @ModelAttribute("contractt") ContractModel contract) {
@@ -88,9 +109,12 @@ public class CartController {
         return modelAndView;
     }
 
-
-    /*
-    Accept the changes
+    /**
+     * Method accepting changes which are kept in a cart
+     *
+     * @param session - session which keep some data
+     * @param status  - complete a session
+     * @return - return an url
      */
     @RequestMapping(value = "/acceptCart")
     public ModelAndView addContractCart(HttpSession session, SessionStatus status) {
@@ -106,7 +130,6 @@ public class CartController {
         modelAndView.addObject("user", user.getUsername());
         modelAndView.setViewName("redirect:/welcome");
         Object object = session.getAttribute("contract");
-
         List<ContractModel> contractModelList = null;
         if (object != null) {
             contractModelList = (List<ContractModel>) object;
@@ -115,7 +138,6 @@ public class CartController {
                     break;
                 }
                 ContractEntity newcontract = contractService.getContract(contractModel.getIdContract());
-
                 newcontract.setTariff(tariffService.getTariff(contractModel.getTariffId()));
                 if (contractModel.getOptions() != null) {
                     List<OptionEntity> optionEntities = new ArrayList<>();
@@ -128,12 +150,15 @@ public class CartController {
             }
             status.setComplete();
         }
-
         return modelAndView;
     }
 
-    /*
-    Cancel the changes
+    /**
+     * Method deleting data from a cart(from session)
+     *
+     * @param session        - session which keep some data
+     * @param contractNumber - some contractnumber of some contract
+     * @return - return a page(view)
      */
     @RequestMapping(value = "/deleteModel")
     public ModelAndView addContractCart(HttpSession session, @RequestParam("number") String contractNumber) {
@@ -143,7 +168,6 @@ public class CartController {
         modelAndView.addObject("user", user.getUsername());
         modelAndView.setViewName("client/cart");
         Object object = session.getAttribute("contract");
-
         List<ContractModel> contractModelList = null;
         if (object != null) {
             contractModelList = (List<ContractModel>) object;
@@ -158,6 +182,12 @@ public class CartController {
         return modelAndView;
     }
 
+    /**
+     * Method getting contractmodel(dto)
+     *
+     * @param contractModel - dto
+     * @return - return contractmodel
+     */
     private ContractModel getContractModel(ContractModel contractModel) {
         contractModel.setTariffEntity(tariffService.getTariff(contractModel.getTariffId()));
         if (contractModel.getOptions() != null) {

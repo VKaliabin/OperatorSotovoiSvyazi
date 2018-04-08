@@ -12,6 +12,12 @@ import javax.servlet.http.HttpServletResponse;
 public class AuthenticationSuccess extends SavedRequestAwareAuthenticationSuccessHandler {
     private static final Logger logger = LoggerFactory.getLogger(AuthenticationSuccess.class);
 
+    /**
+     * This method determine url depends on a role of user
+     * @param request - servler request
+     * @param response - servlet response
+     * @return - return url
+     */
     @Override
     protected String determineTargetUrl(HttpServletRequest request, HttpServletResponse response) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
